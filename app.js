@@ -12,6 +12,8 @@ const port = 8080;// use whatever port to test
 // CORS Middleware
 // we want to make this public so any domain can access it but also restrict
 // routes if the correct token is not provided.
+// Note: this is the same as app.user('/', cors());
+// Documentation: app.use(path='/', middleware)
 app.use(cors()); // set whole app to use cors
 
 // Body Parser Middleware
