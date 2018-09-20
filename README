@@ -8,6 +8,10 @@ Directions for testing:
 Install node packages:
 npm install
 
+Run the mongodb service locally:
+MAC:
+brew services start mongodb
+
 Run server:
 npm start
 
@@ -25,15 +29,9 @@ To install nodemon globally:
 sudo npm install -g nodemon
 
 
-
-
-
-
-
-
-Run the mongodb service locally.
+Stop mongodb service:
 MAC:
-brew services start mongodb
+brew services stop mongodb
 
 Notes:
 "npm start" calls "node app", as defined in package.json.
