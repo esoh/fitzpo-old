@@ -30,6 +30,11 @@ nodemon will search package.json for the main property, and start it there.
 To install nodemon globally:
 sudo npm install -g nodemon
 
+If you're developing the frontend, it's recommended to have Angular CLI
+installed for automatic installation and configuration of dependencies.
+To install angular-cli globally:
+sudo npm install -g angular-cli
+
 Testing the backend:
 You can test the requests via the google chrome extension "Postman" or any other
 request testing application.
