@@ -8,19 +8,22 @@ const mongoose = require('mongoose');
 const app = express(); // create an express application
 const port = 8080;// use whatever port to test
 
+// CORS Middleware
 // we want to make this public so any domain can access it but also restrict
 // routes if the correct token is not provided.
 app.use(cors()); // set whole app to use cors
 
-//body parser middleware
+// Body Parser Middleware
 app.use(bodyParser.json());
 
+// Index Route
 // route http: / to the callback function defined below.
 // This function is called when a GET http request to "/" is made.
 app.get('/', (req, res) => {
    res.send('Invalid Endpoint');
 });
 
+// Start Server
 // () => {//code here} is a callback function that is called inside listen.
 // You can also replace it with function(){//code here}
 app.listen(port, () => {
