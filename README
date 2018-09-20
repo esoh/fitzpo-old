@@ -30,6 +30,34 @@ nodemon will search package.json for the main property, and start it there.
 To install nodemon globally:
 sudo npm install -g nodemon
 
+Testing the backend:
+You can test the requests via the google chrome extension "Postman" or any other
+request testing application.
+
+Things to test:
+POST ./users/register
+   ex:
+      HEADERS:
+         Content-Type: application/json
+      BODY:
+         {
+            "name": "John Doe",
+            "email": "jdoe@gmail.com",
+            "username": "jdoe",
+            "password": "123456"
+         }
+POST ./users/authenticate
+      HEADERS:
+         Content-Type: application/json
+      BODY:
+         {
+            "username": "jdoe",
+            "password": "123456"
+         }
+GET ./users/profile
+      HEADERS:
+         Authorization: Bearer .... (token generated from authenticate request)
+
 
 Stop mongodb service:
 MAC:
@@ -70,3 +98,6 @@ passport-jwt uses a login strategy with json web tokens.
 
 The secret in ./config/database.js is the key with which token hashes are
 computed.
+
+TODO:
+   implement https (tls/ssl)

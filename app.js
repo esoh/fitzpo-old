@@ -37,6 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body Parser Middleware
 app.use(bodyParser.json());
 
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 // We want to put user related code in ./routes/users.js. This says that
 // site/users* will be handled by routes/users.js.
 app.use('/users', users);

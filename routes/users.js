@@ -42,13 +42,15 @@ router.post('/authenticate', (req, res, next) => {
       User.comparePassword(password, user.password, (err, isMatch) => {
          if(err) throw err;
          if(isMatch){
-            const token = jwt.sign({data: user}, config.secret, {
+            // we don't want the payload to contain any sensitive information.
+            const payload = { _id : user._id };
+            const token = jwt.sign(payload, config.secret, {
                expiresIn: 604800 // 1 week
             });
 
             res.json({
                success: true,
-               token: 'JWT ' + token,
+               token: `Bearer ${token}`,
                user: {
                   id: user._id,
                   name: user.name,
@@ -64,8 +66,9 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 // Profile
-router.get('/profile', (req, res, next) => {
-   res.send('PROFILE');
+// protect route with authentication token
+router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+   res.json({user: req.user});
 });
 
 // module.exports is what is returned by this file when require is called on it.
