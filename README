@@ -9,8 +9,11 @@ Run the mongodb service locally.
 MAC:
 brew services start mongodb
 
+npm start can be used to run "node app."
+
 
 
 Notes:
 npm is the node js package handler.
 
+nodemon allows us to make changes without having to rerun the service manually.
