@@ -16,6 +16,10 @@ const port = 8080;// use whatever port to test
 // Documentation: app.use(path='/', middleware)
 app.use(cors()); // set whole app to use cors
 
+// Set Static Folder
+// this is the entire frontend, inside ./public/
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Body Parser Middleware
 app.use(bodyParser.json());
 
