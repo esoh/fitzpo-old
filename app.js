@@ -8,6 +8,10 @@ const mongoose = require('mongoose');
 const app = express(); // create an express application
 const port = 8080;// use whatever port to test
 
+// we want to make this public so any domain can access it but also restrict
+// routes if the correct token is not provided.
+app.use(cors()); // set whole app to use cors
+
 // route http: / to the callback function defined below.
 // This function is called when a GET http request to "/" is made.
 app.get('/', (req, res) => {

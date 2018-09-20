@@ -56,6 +56,8 @@ allowed from them. Without it, the app cannot access resources from other
 domains.
 Locally, it allows us to make requests from front end even if it's on a
 different port.
+Including this automatically sets up CORS so that we don't have to do it
+manually using express.
 
 jsonwebtoken (JWT) is used as an authentication token that is generated from
 authentication, and is used for API calls by authenticated users.
