@@ -8,15 +8,20 @@ Directions for testing:
 Install node packages:
 npm install
 
+Run server:
+npm start
+
+
+
+
+
 Run the mongodb service locally.
 MAC:
 brew services start mongodb
 
-npm start can be used to run "node app."
-
-
-
 Notes:
+"npm start" calls "node app", as defined in packages.json.
+
 npm is the node js package handler.
 
 nodemon allows us to make changes without having to rerun the service manually.
