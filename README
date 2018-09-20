@@ -12,6 +12,8 @@ Run the mongodb service locally:
 MAC:
 brew services start mongodb
 
+Define your own session secret string in ./config/database.js
+
 Run server:
 npm start
 
@@ -65,3 +67,6 @@ body-parser parses requests.
 passport handles the success/failure of authenticating requests. It can provide
 for persistent logins, authenticate requests, verify passwords, and more.
 passport-jwt uses a login strategy with json web tokens.
+
+The secret in ./config/database.js is the key with which token hashes are
+computed.
