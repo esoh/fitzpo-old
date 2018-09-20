@@ -29,9 +29,11 @@ module.exports.getUserById = function(id, callback){
    User.findById(id, callback);
 }
 
-module.exports.getUserByUsername = function(username, callback){
-   const query = {username: username}
-   User.findOne(query, callback);
+module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
+   // check if it's an email by checking if it contains the "@"
+   const searchCriteria = (usernameOrEmail.indexOf('@') === -1) ?
+      { username: usernameOrEmail } : { email: usernameOrEmail };
+   User.findOne(searchCriteria, callback);
 }
 
 module.exports.addUser = function(newUser, callback){
