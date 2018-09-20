@@ -20,10 +20,5 @@ router.get('/profile', (req, res, next) => {
    res.send('PROFILE');
 });
 
-// Validate
-router.get('/validate', (req, res, next) => {
-   res.send('VALIDATE');
-});
-
 // module.exports is what is returned by this file when require is called on it.
 module.exports = router;
