@@ -104,5 +104,8 @@ passport-jwt uses a login strategy with json web tokens.
 The secret in ./config/database.js is the key with which token hashes are
 computed.
 
+For the front end, we are using angular 6. The front end angular app is
+initialized using 'ng new angular-src' using the angular-cli.
+
 TODO:
    implement https (tls/ssl)
