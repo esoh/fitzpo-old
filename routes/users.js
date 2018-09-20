@@ -1,3 +1,7 @@
+// We could define router within ./app.js and pass it into
+// app.use(/users, router) if we wanted, but instead we are returning the router
+// from this file using module.exports
+
 const express = require('express');
 const router = express.Router();
 
