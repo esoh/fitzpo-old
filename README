@@ -20,7 +20,9 @@ MAC:
 brew services start mongodb
 
 Notes:
-"npm start" calls "node app", as defined in packages.json.
+"npm start" calls "node app", as defined in package.json.
+
+The "main" is set to "app.js" as our entry point at npm initilalization.
 
 npm is the node js package handler.
 
