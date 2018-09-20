@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const app = express(); // create an express application
 const port = 8080;// use whatever port to test
 
+// () => {//code here} is a callback function that is called inside listen.
 app.listen(port, () => {
    console.log('Server started on port ' + port);
 });
