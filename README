@@ -1,9 +1,12 @@
 This backend service requires:
 
-node.js
+npm (node)
 mongodb
 
 Directions for testing:
+
+Install node packages:
+npm install
 
 Run the mongodb service locally.
 MAC:
@@ -17,3 +20,25 @@ Notes:
 npm is the node js package handler.
 
 nodemon allows us to make changes without having to rerun the service manually.
+
+express is a popular node framework that allows for less code and effort.
+
+mongoose translates objects in code to objects in mongodb.
+
+bcrypt is encryption.
+
+cors specifies the handling of cross-origin requests (requests from different
+origins than the app), specifying who can request and which requests are
+allowed from them. Without it, the app cannot access resources from other
+domains.
+Locally, it allows us to make requests from front end even if it's on a
+different port.
+
+jsonwebtoken (JWT) is used as an authentication token that is generated from
+authentication, and is used for API calls by authenticated users.
+
+body-parser parses requests.
+
+passport handles the success/failure of authenticating requests. It can provide
+for persistent logins, authenticate requests, verify passwords, and more.
+passport-jwt uses a login strategy with json web tokens.
