@@ -11,6 +11,22 @@ npm install
 Run server:
 npm start
 
+OR if you have nodemon installed globally:
+nodemon
+
+If you're developing, it's highly recommended to use nodemon instead of
+the defined npm start to avoid having to restart the server every time we make a
+file change. It's a development package, so it should be installed globally or
+as a development dependency, there is no reason for a normal browser to require
+nodemon as it is a development tool. Here, it does not exist as a development
+dependency, and is installed globally, per machine.
+nodemon will search package.json for the main property, and start it there.
+To install nodemon globally:
+sudo npm install -g nodemon
+
+
+
+
 
 
 
