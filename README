@@ -35,6 +35,9 @@ installed for automatic installation and configuration of dependencies.
 To install angular-cli globally:
 sudo npm install -g angular-cli
 
+To run the frontend with angular cli, cd into the angular-src folder and run:
+ng serve -o
+
 Testing the backend:
 You can test the requests via the google chrome extension "Postman" or any other
 request testing application.
