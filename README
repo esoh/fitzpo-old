@@ -1,0 +1,16 @@
+This backend service requires:
+
+node.js
+mongodb
+
+Directions for testing:
+
+Run the mongodb service locally.
+MAC:
+brew services start mongodb
+
+
+
+Notes:
+npm is the node js package handler.
+
