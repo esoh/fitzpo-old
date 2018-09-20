@@ -6,6 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 const app = express(); // create an express application
+const users = require('./routes/users'); // require ./routes/users.js
 const port = 8080;// use whatever port to test
 
 // CORS Middleware
@@ -15,6 +16,10 @@ app.use(cors()); // set whole app to use cors
 
 // Body Parser Middleware
 app.use(bodyParser.json());
+
+// We want to put user related code in ./routes/users.js. This says that
+// site/users* will be handled by routes/users.js.
+app.use('/users', users);
 
 // Index Route
 // route http: / to the callback function defined below.
