@@ -5,8 +5,8 @@
 
    <!-- Name field -->
    <div class="form-group">
-      <input type="text" class="form-control" name="name" placeholder="Name"
-         required formControlName="name">
+      <input type="text" class="form-control" placeholder="Name"
+         formControlName="name">
       <div *ngIf="formErrors.name" class="alert alert-danger">
          {{ formErrors.name }}
       </div>
@@ -14,9 +14,8 @@
 
    <!-- Username field -->
    <div class="form-group">
-      <input type="text" class="form-control" name="username"
-      placeholder="Username" required autocomplete="username"
-      formControlName="username">
+      <input type="text" class="form-control" placeholder="Username"
+         autocomplete="username" formControlName="username">
       <div *ngIf="formErrors.username" class="alert alert-danger">
          {{ formErrors.username }}
       </div>
@@ -24,8 +23,8 @@
 
    <!-- Email field -->
    <div class="form-group">
-      <input type="email" class="form-control" name="email" placeholder="Email"
-         required autocomplete="email" formControlName="email">
+      <input type="email" class="form-control" placeholder="Email"
+         autocomplete="email" formControlName="email">
       <div *ngIf="formErrors.email" class="alert alert-danger">
          {{ formErrors.email }}
       </div>
@@ -33,9 +32,8 @@
 
    <!-- Password field -->
    <div class="form-group">
-      <input type="password" class="form-control" name="password"
-      placeholder="Password" required autocomplete="new-password"
-      formControlName="password">
+      <input type="password" class="form-control" placeholder="Password"
+         autocomplete="new-password" formControlName="password">
       <div *ngIf="formErrors.password" class="alert alert-danger">
          {{ formErrors.password }}
       </div>
