@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit {
                Validators.minLength(6),
                Validators.maxLength(256)],
             updateOn: 'blur'
-         }));
+         })});
          this.signupForm.valueChanges.subscribe(data => this.onValueChanged(data));
          this.onValueChanged();
    }
