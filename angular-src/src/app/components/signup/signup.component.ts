@@ -16,7 +16,10 @@ export class SignupComponent implements OnInit {
       this.buildForm();
    }
 
-   isValidForm(form): boolean {
+   // isSubmission means error will show if this is true, designated to be used
+   // when pressing the submit button. The errors will be hidden if the fields
+   // haven't been touched un
+   isValidForm(isSubmission, form): boolean {
       var valid = true;
       const checkform = form;
 
@@ -25,7 +28,8 @@ export class SignupComponent implements OnInit {
          this.formErrors[field] = '';
          const control = checkform.get(field);
 
-         if (!control.valid) {
+         if(control && !control.valid &&
+            (isSubmission || control.dirty)) {
             valid = false;
             const messages = this.validationMessages[field];
             for (const key in control.errors) {
@@ -39,7 +43,7 @@ export class SignupComponent implements OnInit {
 
    onSignupSubmit() {
       console.log(this.signupForm.value);
-      if(!this.isValidForm(this.signupForm)) return false
+      if(!this.isValidForm(true, this.signupForm)) return false
    }
 
    buildForm() {
@@ -72,26 +76,8 @@ export class SignupComponent implements OnInit {
          this.onValueChanged();
    }
 
-   persistentErrorDisplay(form) {
-      if (!form) { return; }
-      const checkform = form;
-
-      for (const field in this.formErrors) {
-         // clear previous error message (if any)
-         this.formErrors[field] = '';
-         const control = checkform.get(field);
-
-         if (control && control.dirty && !control.valid) {
-         const messages = this.validationMessages[field];
-            for (const key in control.errors) {
-               this.formErrors[field] += messages[key] + ' ';
-            }
-         }
-      }
-   }
-
    onValueChanged(data?: any) {
-      this.persistentErrorDisplay(this.signupForm);
+      this.isValidForm(false, this.signupForm);
    }
 
    formErrors = {
