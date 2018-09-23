@@ -113,4 +113,4 @@ initialized using 'ng new angular-src' using the angular-cli.
 
 TODO:
    implement https (tls/ssl)
-   validate email on server side before adding it to the database
+   validate all signup form fields before adding it to database on server end

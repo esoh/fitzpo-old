@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,8 +10,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
-
-import { ValidateService } from './services/validate.service';
 
 @NgModule({
   declarations: [
@@ -24,11 +22,12 @@ import { ValidateService } from './services/validate.service';
     HomeComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
+     BrowserModule,
+     AppRoutingModule,
+     FormsModule,
+     ReactiveFormsModule
   ],
-  providers: [ValidateService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

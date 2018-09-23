@@ -1,24 +1,48 @@
-<form (submit)="onRegisterSubmit()" class="signup-form">
+<form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()"
+   class="signup-form">
    <h2>Sign Up</h2>
    <div class="hint-text">Start your fitness journey with GymMate today.</div>
+
+   <!-- Name field -->
    <div class="form-group">
-      <input type="text" class="form-control" name="name"
-      placeholder="Name" required="required" [(ngModel)]="name">
+      <input type="text" class="form-control" name="name" placeholder="Name"
+         required formControlName="name">
+      <div *ngIf="formErrors.name" class="alert alert-danger">
+         {{ formErrors.name }}
+      </div>
    </div>
+
+   <!-- Username field -->
    <div class="form-group">
       <input type="text" class="form-control" name="username"
-      placeholder="Username" required="required" [(ngModel)]="username">
+      placeholder="Username" required autocomplete="username"
+      formControlName="username">
+      <div *ngIf="formErrors.username" class="alert alert-danger">
+         {{ formErrors.username }}
+      </div>
    </div>
+
+   <!-- Email field -->
    <div class="form-group">
       <input type="email" class="form-control" name="email" placeholder="Email"
-      required="required" [(ngModel)]="email">
+         required autocomplete="email" formControlName="email">
+      <div *ngIf="formErrors.email" class="alert alert-danger">
+         {{ formErrors.email }}
+      </div>
    </div>
+
+   <!-- Password field -->
    <div class="form-group">
       <input type="password" class="form-control" name="password"
-      placeholder="Password" required="required" [(ngModel)]="password">
+      placeholder="Password" required autocomplete="new-password"
+      formControlName="password">
+      <div *ngIf="formErrors.password" class="alert alert-danger">
+         {{ formErrors.password }}
+      </div>
    </div>
-   <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
-   </div>
+
+   <button type="submit" class="btn btn-primary btn-lg btn-block" >
+      Sign Up
+   </button>
    <div class="login-text">Already have an account? <a routerLink="/login">Log in</a></div>
 </form>
