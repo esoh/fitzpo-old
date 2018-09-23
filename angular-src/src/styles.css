@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Entry form is used for entry and login */
+.entry-form{
+   width: 400px;
+   margin: 0 auto;
+   padding: 30px;
+
+   border-radius: 3px;
+   margin-bottom: 15px;
+}
+
+.entry-form h2{
+   margin: 0 0 15px;
+   position: relative;
+   text-align: center;
+}
+
+.entry-form .hint-text{
+   color: #999;
+   font-size: 14px;
+   margin-bottom: 30px;
+   text-align: center;
+}
+
+.entry-form .login-text{
+   color: #999;
+   font-size: 14px;
+   text-align: center;
+}
+
+.entry-form .btn{
+   margin-top: 30px;
+   margin-bottom: 5px;
+}
+
