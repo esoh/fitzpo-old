@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
          const control = checkform.get(field);
 
          if(control && !control.valid &&
-            (isSubmission || control.dirty)) {
+            (isSubmission || control.touched)) {
             valid = false;
             const messages = this.validationMessages[field];
             for (const key in control.errors) {
@@ -47,6 +47,8 @@ export class SignupComponent implements OnInit {
    }
 
    buildForm() {
+      // can't use formbuilder because angular does not support onBlur updates
+      // with formbuilder yet
       this.signupForm = new FormGroup ({
          name: new FormControl('', {
             validators: [
@@ -62,16 +64,14 @@ export class SignupComponent implements OnInit {
             validators: [
                Validators.required,
                Validators.email,
-               Validators.maxLength(255)],
-            updateOn: 'blur'
+               Validators.maxLength(255)]
          }),
          password: new FormControl('', {
             validators: [
                Validators.required,
                Validators.minLength(6),
-               Validators.maxLength(256)],
-            updateOn: 'blur'
-         })});
+               Validators.maxLength(256)]
+         })}, { updateOn: 'blur' });
          this.signupForm.valueChanges.subscribe(data => this.onValueChanged(data));
          this.onValueChanged();
    }
