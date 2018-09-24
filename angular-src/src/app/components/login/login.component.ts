@@ -22,5 +22,6 @@ export class LoginComponent implements OnInit {
 
    buildForm() {
       this.loginForm
+   }
 
 }
