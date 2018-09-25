@@ -5,6 +5,7 @@
    width: 400px;
    margin: 0 auto;
    padding: 30px;
+   background-color: #f8f8f8;
 
    border-radius: 3px;
    margin-bottom: 15px;
@@ -30,7 +31,37 @@
 }
 
 .entry-form .btn{
-   margin-top: 30px;
+   margin-top: 50px;
    margin-bottom: 5px;
 }
 
+.entry-form label{
+   font-size: 14px;
+   color: #888;
+   margin-left: 5px;
+}
+
+.entry-form input{
+   font-size: 14px;
+}
+
+.entry-form .form-group {
+   min-height: 90px;
+}
+
+.entry-form .form-control {
+   border-radius: 30px;
+}
+
+.entry-form .invalid-feedback{
+   font-size: 12px;
+   max-height: 0;
+   font-style: italic;
+   margin-left: 5px;
+}
+
+.entry-form .valid-feedback{
+   font-size: 12px;
+   max-height: 0;
+   margin-left: 5px;
+}

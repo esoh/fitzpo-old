@@ -4,34 +4,44 @@
 
    <!-- Name field -->
    <div class="form-group">
-      <input type="text" class="form-control"
-         placeholder="Name" formControlName="name"
-         [ngClass] = "{ 'is-invalid': formErrors.name }">
+      <label for="nameField">Name</label>
+      <input type="text" class="form-control" id="nameField"
+         autocomplete="given-name" formControlName="name"
+         [ngClass] = "setValidOrInvalidInput('name')">
       <div class="invalid-feedback"> {{ formErrors.name }} </div>
+      <div class="valid-feedback"> Welcome {{ signupForm.value.name }}! We'll call you this from now on. </div>
    </div>
 
    <!-- Username field -->
    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Username"
+      <label for="usernameField">Username</label>
+      <input type="text" class="form-control" id="usernameField"
          autocomplete="username" formControlName="username"
-         [ngClass] = "{ 'is-invalid': formErrors.username }">
+         [ngClass] = "setValidOrInvalidInput('username')">
       <div class="invalid-feedback"> {{ formErrors.username }} </div>
+      <div class="valid-feedback"> Great, this community name hasn't been taken
+      yet!</div>
    </div>
 
    <!-- Email field -->
    <div class="form-group">
-      <input type="email" class="form-control" placeholder="Email"
+      <label for="emailField">Email Address</label>
+      <input type="email" class="form-control" id="emailField"
          autocomplete="email" formControlName="email"
-         [ngClass] = "{ 'is-invalid': formErrors.email }">
+         [ngClass] = "setValidOrInvalidInput('email')">
       <div class="invalid-feedback"> {{ formErrors.email }} </div>
+      <div class="valid-feedback"> We'll only use this if you forget your
+         password. </div>
    </div>
 
    <!-- Password field -->
    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password"
+      <label for="passwordField">Password</label>
+      <input type="password" class="form-control" id="passwordField"
          autocomplete="new-password" formControlName="password"
-         [ngClass] = "{ 'is-invalid': formErrors.password }">
+         [ngClass] = "setValidOrInvalidInput('password')">
       <div class="invalid-feedback"> {{ formErrors.password }} </div>
+      <div class="valid-feedback"> Password set! </div>
    </div>
 
    <button type="submit" class="btn btn-primary btn-lg btn-block" >

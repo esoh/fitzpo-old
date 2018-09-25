@@ -45,6 +45,15 @@ export class SignupComponent implements OnInit {
       if(!this.isValidForm(true, this.signupForm)) return false
    }
 
+   // used by the html to determine whether to show errors or not by changing
+   // the form field's class
+   setValidOrInvalidInput(field: string) {
+      return {
+         'is-invalid': this.formErrors[field],
+         'is-valid': !this.formErrors[field] && this.signupForm.get(field).dirty
+      }
+   }
+
    buildForm() {
       // can't use formbuilder because angular does not support onBlur updates
       // with formbuilder yet
