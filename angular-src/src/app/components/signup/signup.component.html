@@ -5,12 +5,15 @@
    <!-- Username field -->
    <div class="form-group">
       <label for="usernameField">Username</label>
-      <input type="text" class="form-control" id="usernameField"
-         autocomplete="username" formControlName="username"
-         [ngClass] = "setValidOrInvalidInput('username')">
-      <div class="invalid-feedback"> {{ formErrors.username }} </div>
-      <div class="valid-feedback"> Great, this username hasn't been taken
-      yet!</div>
+      <div class="inner-addon left-addon">
+         <label for="usernameField" class="fas fa-user"></label>
+         <input type="text" class="form-control" id="usernameField"
+            autocomplete="username" formControlName="username"
+            [ngClass] = "setValidOrInvalidInput('username')">
+         <div class="invalid-feedback"> {{ formErrors.username }} </div>
+         <div class="valid-feedback"> Great, this username hasn't been taken
+         yet!</div>
+      </div>
    </div>
 
    <!-- Email field -->
