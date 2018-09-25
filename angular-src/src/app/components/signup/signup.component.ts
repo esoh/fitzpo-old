@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
          const control = checkform.get(field);
 
          if(control && !control.valid &&
-            (isSubmission || control.touched)) {
+            (isSubmission || !control.pristine)) {
             valid = false;
             const validationMessages = ValidateService.getValidationMessages(field, control.errors);
             for (var i = 0; i < validationMessages.length; i++) {
@@ -90,6 +90,8 @@ export class SignupComponent implements OnInit {
 
    onValueChanged(data?: any) {
       this.isValidForm(false, this.signupForm);
+      console.log(this.signupForm);
+      console.log(this.formErrors);
    }
 
    formErrors = {

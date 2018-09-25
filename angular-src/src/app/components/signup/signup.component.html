@@ -4,38 +4,34 @@
 
    <!-- Name field -->
    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Name"
-         formControlName="name">
-      <div *ngIf="formErrors.name" class="alert alert-danger">
-         {{ formErrors.name }}
-      </div>
+      <input type="text" class="form-control"
+         placeholder="Name" formControlName="name"
+         [ngClass] = "{ 'is-invalid': formErrors.name }">
+      <div class="invalid-feedback"> {{ formErrors.name }} </div>
    </div>
 
    <!-- Username field -->
    <div class="form-group">
       <input type="text" class="form-control" placeholder="Username"
-         autocomplete="username" formControlName="username">
-      <div *ngIf="formErrors.username" class="alert alert-danger">
-         {{ formErrors.username }}
-      </div>
+         autocomplete="username" formControlName="username"
+         [ngClass] = "{ 'is-invalid': formErrors.username }">
+      <div class="invalid-feedback"> {{ formErrors.username }} </div>
    </div>
 
    <!-- Email field -->
    <div class="form-group">
       <input type="email" class="form-control" placeholder="Email"
-         autocomplete="email" formControlName="email">
-      <div *ngIf="formErrors.email" class="alert alert-danger">
-         {{ formErrors.email }}
-      </div>
+         autocomplete="email" formControlName="email"
+         [ngClass] = "{ 'is-invalid': formErrors.email }">
+      <div class="invalid-feedback"> {{ formErrors.email }} </div>
    </div>
 
    <!-- Password field -->
    <div class="form-group">
       <input type="password" class="form-control" placeholder="Password"
-         autocomplete="new-password" formControlName="password">
-      <div *ngIf="formErrors.password" class="alert alert-danger">
-         {{ formErrors.password }}
-      </div>
+         autocomplete="new-password" formControlName="password"
+         [ngClass] = "{ 'is-invalid': formErrors.password }">
+      <div class="invalid-feedback"> {{ formErrors.password }} </div>
    </div>
 
    <button type="submit" class="btn btn-primary btn-lg btn-block" >
