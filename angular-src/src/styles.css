@@ -6,8 +6,8 @@
    margin: 0 auto;
    padding-top: 30px;
    padding-bottom: 30px;
-   padding-left: 60px;
-   padding-right: 60px;
+   padding-left: 55px;
+   padding-right: 55px;
    background-color: #f8f8f8;
 
    border-radius: 3px;
@@ -27,7 +27,7 @@
    text-align: center;
 }
 
-.entry-form .login-text{
+.entry-form .alt-entry-text{
    color: #999;
    font-size: 14px;
    text-align: center;

@@ -1,22 +1,36 @@
 <!--Note that we use ngSubmit instead of submit because ngSubmit submits a post
    request-->
-<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit" class="entry-form">
+<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="entry-form">
    <h2>Log In</h2>
 
    <!-- Username/Email field -->
    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Username or Email"
-         autocomplete="username email" formControlName="usernameOrEmail">
+      <label for="usernameOrEmailField">Username or Email Address</label>
+      <div class="inner-addon left-addon">
+         <label for="usernameOrEmailField" class="fas fa-user"></label>
+         <input type="text" class="form-control" id="usernameOrEmailField"
+            autocomplete="username email" formControlName="usernameOrEmail"
+            [ngClass] = "setValidOrInvalidInput('usernameOrEmail')">
+         <div class="invalid-feedback"> {{ formErrors.name }} </div>
+      </div>
    </div>
 
    <!-- Password field -->
    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password"
-         autocomplete="password" formControlName="password">
+      <label for="passwordField">Password</label>
+      <div class="inner-addon left-addon">
+         <label for="passwordField" class="fas fa-key"></label>
+         <input type="password" class="form-control" id="passwordField"
+            autocomplete="password" formControlName="password"
+            [ngClass] = "setValidOrInvalidInput('password')">
+         <div class="invalid-feedback"> {{ formErrors.name }} </div>
+      </div>
    </div>
 
    <!-- Submit button -->
    <button type="submit" class="btn btn-primary btn-lg btn-block" >
       Log In
    </button>
+      <div class="alt-entry-text">Don't have an account yet? <a
+            routerLink="/signup">Sign Up</a></div>
 </form>
