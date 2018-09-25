@@ -11,7 +11,7 @@
          <input type="text" class="form-control" id="usernameOrEmailField"
             autocomplete="username email" formControlName="usernameOrEmail"
             [ngClass] = "setValidOrInvalidInput('usernameOrEmail')">
-         <div class="invalid-feedback"> {{ formErrors.name }} </div>
+         <div class="invalid-feedback"> {{ formErrors.usernameOrEmail }} </div>
       </div>
    </div>
 
@@ -23,7 +23,7 @@
          <input type="password" class="form-control" id="passwordField"
             autocomplete="password" formControlName="password"
             [ngClass] = "setValidOrInvalidInput('password')">
-         <div class="invalid-feedback"> {{ formErrors.name }} </div>
+         <div class="invalid-feedback"> {{ formErrors.password }} </div>
       </div>
    </div>
 
