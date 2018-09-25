@@ -42,7 +42,6 @@ export class SignupComponent implements OnInit {
 
 
    onSignupSubmit() {
-      console.log(this.signupForm.value);
       if(!this.isValidForm(true, this.signupForm)) return false
    }
 
@@ -90,8 +89,6 @@ export class SignupComponent implements OnInit {
 
    onValueChanged(data?: any) {
       this.isValidForm(false, this.signupForm);
-      console.log(this.signupForm);
-      console.log(this.formErrors);
    }
 
    formErrors = {
