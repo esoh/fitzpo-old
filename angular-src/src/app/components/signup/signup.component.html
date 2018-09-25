@@ -2,16 +2,6 @@
    <h2>Sign Up</h2>
    <div class="hint-text">Start your fitness journey with GymMate today.</div>
 
-   <!-- Name field -->
-   <div class="form-group">
-      <label for="nameField">Name</label>
-      <input type="text" class="form-control" id="nameField"
-         autocomplete="given-name" formControlName="name"
-         [ngClass] = "setValidOrInvalidInput('name')">
-      <div class="invalid-feedback"> {{ formErrors.name }} </div>
-      <div class="valid-feedback"> Welcome {{ signupForm.value.name }}! We'll call you this from now on. </div>
-   </div>
-
    <!-- Username field -->
    <div class="form-group">
       <label for="usernameField">Username</label>

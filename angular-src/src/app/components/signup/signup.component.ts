@@ -67,12 +67,6 @@ export class SignupComponent implements OnInit {
       //    release mouse click from same position. submit button is not
       //    pressed.
       this.signupForm = new FormGroup ({
-         name: new FormControl('', {
-            validators:
-               ValidateService.getLengthValidators('name').concat([
-                  Validators.required
-               ])
-         }),
          username: new FormControl('', {
             validators:
                ValidateService.getLengthValidators('username').concat([
@@ -101,7 +95,6 @@ export class SignupComponent implements OnInit {
    }
 
    formErrors = {
-      'name': '',
       'username': '',
       'email': '',
       'password': ''

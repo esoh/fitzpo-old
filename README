@@ -50,7 +50,6 @@ POST ./users/register
          Content-Type: application/json
       BODY:
          {
-            "name": "John Doe",
             "email": "jdoe@gmail.com",
             "username": "jdoe",
             "password": "123456"
