@@ -4,7 +4,10 @@
 .entry-form{
    width: 400px;
    margin: 0 auto;
-   padding: 30px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   padding-left: 60px;
+   padding-right: 60px;
    background-color: #f8f8f8;
 
    border-radius: 3px;
@@ -42,6 +45,7 @@
 }
 
 .entry-form input{
+   border-color: #eee;
    font-size: 14px;
 }
 
@@ -65,3 +69,22 @@
    max-height: 0;
    margin-left: 5px;
 }
+
+.inner-addon {
+   position: relative;
+}
+
+/* style icon */
+.inner-addon .fas{
+   position: absolute;
+   padding-left: 19px;
+   padding-top: 16px;
+   color: #888;
+   font-size: 13px;
+}
+
+/* align icon */
+.left-addon .fas { left:  0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  46px; }
