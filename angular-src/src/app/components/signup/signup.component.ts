@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ValidateService } from '../../services/validate.service';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user';
 
 @Component({
    selector: 'app-signup',
@@ -10,7 +13,8 @@ import { ValidateService } from '../../services/validate.service';
 export class SignupComponent implements OnInit {
 
    signupForm: FormGroup;
-   constructor() { }
+   constructor(private authService: AuthService,
+               private router: Router) { }
 
    ngOnInit() {
       this.buildForm();
@@ -42,7 +46,19 @@ export class SignupComponent implements OnInit {
 
 
    onSignupSubmit() {
-      if(!this.isValidForm(true, this.signupForm)) return false
+      if(!this.isValidForm(true, this.signupForm)){
+         return;
+      }
+
+      this.authService.registerUser(this.signupForm.value)
+         .subscribe(authResponse => {
+            if(authResponse.success){
+               console.log("Registered!")
+               this.router.navigate(['/dashboard']);
+            } else {
+               console.log("Something went wrong!");
+            }
+         });
    }
 
    // used by the html to determine whether to show errors or not by changing

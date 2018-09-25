@@ -37,7 +37,7 @@ sudo npm install -g angular-cli
 
 To run the frontend with angular cli, cd into the angular-src folder and run:
 npm install
-ng serve -o
+ng serve -o --prod
 
 Testing the backend:
 You can test the requests via the google chrome extension "Postman" or any other
