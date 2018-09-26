@@ -5,6 +5,8 @@ import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 
+import { first } from 'rxjs/operators';
+
 @Component({
    selector: 'app-signup',
    templateUrl: './signup.component.html',
@@ -51,6 +53,7 @@ export class SignupComponent implements OnInit {
       }
 
       this.authService.registerUser(this.signupForm.value)
+         .pipe(first())// by piping through first/last/etc, the observable gets a finite lifespan
          .subscribe(authResponse => {
             if(authResponse.success){
                console.log("Registered!")
