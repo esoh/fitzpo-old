@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
+import { HttpErrorHandlerService } from './http-error-handler.service';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -22,14 +23,14 @@ export class AuthService {
 
    private baseUrl = environment.baseUrl;
 
-
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient,
+               private httpErrorHandlerService: HttpErrorHandlerService) { }
 
    registerUser(user: User): Observable<AuthResponse>{
       return this.http.post<AuthResponse>(this.baseUrl + '/users/register', user, httpOptions)
          .pipe(
-            retry(3)
-            //catchError(this.handleError('registerUser', user))
+            retry(3),
+            catchError(this.httpErrorHandlerService.handleError<AuthResponse>('registerUser'))
          );
    }
 }

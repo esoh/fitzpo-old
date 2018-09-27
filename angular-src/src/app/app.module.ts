@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { HttpErrorHandlerService } from'./services/http-error-handler.service';
 
 @NgModule({
    declarations: [
@@ -34,7 +35,8 @@ import { AuthService } from './services/auth.service';
    ],
    providers: [
       ValidateService,
-      AuthService
+      AuthService,
+      HttpErrorHandlerService
    ],
   bootstrap: [AppComponent]
 })

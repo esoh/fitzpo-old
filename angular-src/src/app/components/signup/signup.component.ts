@@ -55,11 +55,11 @@ export class SignupComponent implements OnInit {
       this.authService.registerUser(this.signupForm.value)
          .pipe(first())// by piping through first/last/etc, the observable gets a finite lifespan
          .subscribe(authResponse => {
-            if(authResponse.success){
+            if(!authResponse || !authResponse.success){
+               console.log("Something went wrong!");
+            } else if(authResponse.success){
                console.log("Registered!")
                this.router.navigate(['/dashboard']);
-            } else {
-               console.log("Something went wrong!");
             }
          });
    }
