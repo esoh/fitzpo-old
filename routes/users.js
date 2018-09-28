@@ -9,6 +9,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 
+const auth = require('./auth'); // require ./routes/users.js
+
+router.use('/auth', auth);
+
 // Register
 router.post('/register', (req, res, next) => {
    let newUser = new User({
@@ -61,12 +65,6 @@ router.post('/authenticate', (req, res, next) => {
          }
       });
    });
-});
-
-// Profile
-// protect route with authentication token
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-   res.json({user: req.user});
 });
 
 // module.exports is what is returned by this file when require is called on it.

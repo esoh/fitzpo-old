@@ -33,4 +33,12 @@ export class AuthService {
             catchError(this.httpErrorHandlerService.handleError<AuthResponse>('registerUser'))
          );
    }
+
+   lookupUser(username: string): Observable<User> {
+      return this.http.get<User>(this.baseUrl + '/users/' + username)
+         .pipe(
+            retry(3),
+            catchError(this.httpErrorHandlerService.handleError<User>('lookupUser'))
+         );
+   }
 }
