@@ -70,24 +70,40 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 });
 
 // Get another user
-router.get('/:username', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-   const username = req.params.username;
-   User.getUserByUsernameOrEmail(username, (err, user) => {
-      if(err) throw err;
+router.get('/:username', (req, res, next) => {
+   passport.authenticate('jwt', (err, user, info) => {
+      // throw errors first
+      if(err) { return next(err); }
 
-      if(!user){
-         return res.json({success: false, msg: 'User not found'});
-      }
+      // fetch target user info
+      const targetUsername = req.params.username;
+      User.getUserByUsernameOrEmail(targetUsername, (err, targetUser) => {
+         if(err) { return next(err); }
 
-      res.json({
-         success: true,
-         user: {
-            username: user.username,
-            email: user.email
+         if(!targetUser){
+            return res.json({success: false, msg: 'User not found'});
          }
-      });
-   });
 
+         if(info && info.message !== 'No auth token') {
+            return res.json({success: false, msg: info.message});
+         }
+
+         // put public-viewable info in
+         var data = {
+            success: true,
+            user: {
+               username: targetUser.username
+            }
+         };
+
+         // put registered user viewable info in
+         if(user){
+            data.user.email = targetUser.email;
+         }
+
+         return res.json(data);
+      });
+   })(req, res, next);
 });
 
 // module.exports is what is returned by this file when require is called on it.
