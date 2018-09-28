@@ -42,7 +42,7 @@ router.post('/authenticate', (req, res, next) => {
          if(err) throw err;
          if(isMatch){
             // we don't want the payload to contain any sensitive information.
-            const payload = { _id : user._id };
+            const payload = { username : user.username };
             const token = jwt.sign(payload, config.secret, {
                expiresIn: 604800 // 1 week
             });
