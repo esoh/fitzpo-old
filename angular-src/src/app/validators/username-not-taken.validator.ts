@@ -14,9 +14,8 @@ export class UsernameNotTakenValidator implements AsyncValidator {
    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
       return this.authService.lookupUser(ctrl.value).pipe(
          map(res => {
-            console.log(res);
-            if(res){
-               return { usernameTaken: true }
+            if(res.username){
+               return { 'taken': true };
             } else {
                return null;
             }

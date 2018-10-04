@@ -35,7 +35,6 @@ export class SignupComponent implements OnInit {
          // clear previous error message (if any)
          this.formErrors[field] = '';
          const control = checkform.get(field);
-
          if(control && !control.valid &&
             (isSubmission || !control.pristine)) {
             valid = false;
@@ -71,7 +70,7 @@ export class SignupComponent implements OnInit {
    setValidOrInvalidInput(field: string) {
       return {
          'is-invalid': this.formErrors[field],
-         'is-valid': !this.formErrors[field] && this.signupForm.get(field).dirty
+         'is-valid': !this.formErrors[field] && this.signupForm.get(field).dirty && !this.signupForm.get(field).pending
       }
    }
 
@@ -108,11 +107,11 @@ export class SignupComponent implements OnInit {
                   Validators.required
                ])
          })}, { updateOn: 'blur' });
-      this.signupForm.valueChanges.subscribe(data => this.onValueChanged(data));
-      this.onValueChanged();
+      this.signupForm.statusChanges.subscribe(data => this.onStatusChanged(data));
+      this.onStatusChanged();
    }
 
-   onValueChanged(data?: any) {
+   onStatusChanged(data?: any) {
       this.isValidForm(false, this.signupForm);
    }
 

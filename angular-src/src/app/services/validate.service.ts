@@ -25,7 +25,8 @@ export class ValidateService {
       },
       'username': {
          'required':       'Username is required.',
-         'maxlength':      'Username cannot be more than 20 characters long.'
+         'maxlength':      'Username cannot be more than 20 characters long.',
+         'taken':          'Username is taken. Please choose a different one.'
       },
       'email': {
          'required':       'Email is required.',

@@ -90,15 +90,12 @@ router.get('/:username', (req, res, next) => {
 
          // put public-viewable info in
          var data = {
-            success: true,
-            user: {
-               username: targetUser.username
-            }
+            username: targetUser.username
          };
 
          // put registered user viewable info in
          if(user){
-            data.user.email = targetUser.email;
+            data.email = targetUser.email;
          }
 
          return res.json(data);
