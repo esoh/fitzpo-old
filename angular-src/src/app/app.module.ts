@@ -16,6 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { HttpErrorHandlerService } from'./services/http-error-handler.service';
+import { UsernameNotTakenValidator } from './validators/username-not-taken.validator';
 
 @NgModule({
    declarations: [
@@ -36,7 +37,8 @@ import { HttpErrorHandlerService } from'./services/http-error-handler.service';
    providers: [
       ValidateService,
       AuthService,
-      HttpErrorHandlerService
+      HttpErrorHandlerService,
+      UsernameNotTakenValidator
    ],
   bootstrap: [AppComponent]
 })

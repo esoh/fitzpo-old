@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
+import { UsernameNotTakenValidator } from '../../validators/username-not-taken.validator';
 
 import { first } from 'rxjs/operators';
 
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
 
    signupForm: FormGroup;
    constructor(private authService: AuthService,
-               private router: Router) { }
+               private router: Router,
+               private usernameValidator: UsernameNotTakenValidator) { }
 
    ngOnInit() {
       this.buildForm();
@@ -90,7 +92,8 @@ export class SignupComponent implements OnInit {
             validators:
                ValidateService.getLengthValidators('username').concat([
                   Validators.required
-               ])
+               ]),
+            asyncValidators: [this.usernameValidator.validate.bind(this.usernameValidator)]
          }),
          email: new FormControl('', {
             validators:
