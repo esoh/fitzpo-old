@@ -35,9 +35,13 @@
       <label for="passwordField">Password</label>
       <div class="inner-addon left-addon">
          <label for="passwordField" class="fas fa-key"></label>
-         <input type="password" class="form-control" id="passwordField"
+         <input type="{{ isHidden ? 'password' : 'text' }}"
+            class="form-control" id="passwordField"
             autocomplete="new-password" formControlName="password"
             [ngClass] = "setValidOrInvalidInput('password')">
+         <button type="button" tabindex="-1" id="pw-toggle" class="btn btn-outline-secondary"
+            (click)="isHidden = !isHidden">
+            {{ isHidden ? 'SHOW' : 'HIDE' }}</button>
          <div class="invalid-feedback"> {{ formErrors.password }} </div>
          <div class="valid-feedback"> Password set! </div>
       </div>

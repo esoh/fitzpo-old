@@ -16,6 +16,8 @@ import { first } from 'rxjs/operators';
 export class SignupComponent implements OnInit {
 
    signupForm: FormGroup;
+   isHidden: boolean = true;
+
    constructor(private authService: AuthService,
                private router: Router,
                private usernameValidator: UsernameNotTakenValidator) { }
