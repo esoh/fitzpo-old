@@ -113,3 +113,6 @@ initialized using 'ng new angular-src' using the angular-cli.
 TODO:
    implement https (tls/ssl)
    validate all signup form fields before adding it to database on server end
+   what if servers go down? Will angular signup usernameNotTaken still say
+   "username not taken! go ahead!" even if it is, because it cannot connect to
+   the db?
