@@ -74,6 +74,10 @@
    position: relative;
 }
 
+#passwordField {
+   padding-right: 65px;
+}
+
 #pw-toggle {
    position: absolute;
    right: 0px;
