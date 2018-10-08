@@ -49,3 +49,7 @@ module.exports.comparePassword = function(candidateHash, hash, callback){
       callback(null, isMatch);
    });
 }
+
+module.exports.emailExists = function(email, callback){
+   User.findOne({ email: email }, callback);
+}
