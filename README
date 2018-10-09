@@ -116,3 +116,4 @@ TODO:
    what if servers go down? Will angular signup usernameNotTaken still say
    "username not taken! go ahead!" even if it is, because it cannot connect to
    the db?
+   convert improper emails (abc@gmail) to proper ones (abc@gmail.com)
