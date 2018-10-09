@@ -31,7 +31,8 @@ export class ValidateService {
       'email': {
          'required':       'Email is required.',
          'email':          'Please enter a valid email.',
-         'maxlength':      'Email cannot be more than 255 characters long.'
+         'maxlength':      'Email cannot be more than 255 characters long.',
+         'taken':          'Email is already in use!'
       },
       'password': {
          'required':       'Password is required.',
@@ -40,13 +41,19 @@ export class ValidateService {
       }
    };
 
+   private static readonly unknownErrorMessage = "Unknown error. Please try again later.";
+
    constructor() {
    }
 
    public static getValidationMessages(field, errors){
       var messages = [];
       for(const errortype in errors) {
-         messages.push(this.validationMessages[field][errortype]);
+         if(errortype == 'unknown'){
+            messages.push(this.unknownErrorMessage);
+         } else {
+            messages.push(this.validationMessages[field][errortype]);
+         }
       }
       return messages;
    }

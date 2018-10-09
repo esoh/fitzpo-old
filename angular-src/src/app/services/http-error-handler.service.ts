@@ -16,6 +16,11 @@ export class HttpErrorHandlerService {
       * @param result: optional value to return as the observable result
     */
 
+
+   /*
+    * returns a function that takes in an error and spits out an empty
+    * observable
+   */
    handleError<T> (operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {
 
