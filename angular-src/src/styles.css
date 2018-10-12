@@ -1,34 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-image{
+   padding: 30px;
+   background-image: url("https://images.pexels.com/photos/347134/pexels-photo-347134.jpeg");
+   background-size:     cover;
+   background-repeat:   no-repeat;
+   background-position: center center;
+}
 
 /* Entry form is used for entry and login */
 .entry-form{
-   width: 400px;
-   margin: 0 auto;
-   padding-top: 30px;
-   padding-bottom: 30px;
-   padding-left: 55px;
-   padding-right: 55px;
-   background-color: #f8f8f8;
-
-   border-radius: 3px;
-   margin-bottom: 15px;
+   width: 370px;
+   padding: 30px 40px;
+   background-color: rgba(6, 6, 6, 0.4);
+   margin: auto;
+   border-radius: 10px;
 }
 
 .entry-form h2{
    margin: 0 0 15px;
    position: relative;
    text-align: center;
+   font-weight: normal;
+   color: #fff;
 }
 
 .entry-form .hint-text{
-   color: #999;
+   color: #ddd;
    font-size: 14px;
    margin-bottom: 30px;
    text-align: center;
 }
 
 .entry-form .alt-entry-text{
-   color: #999;
+   color: #ddd;
    font-size: 14px;
    text-align: center;
 }
@@ -40,7 +44,7 @@
 
 .entry-form label{
    font-size: 14px;
-   color: #888;
+   color: #eee;
    margin-left: 5px;
 }
 
@@ -62,12 +66,52 @@
    max-height: 0;
    font-style: italic;
    margin-left: 5px;
+   color: #ef5b57;
 }
 
 .entry-form .valid-feedback{
    font-size: 12px;
    max-height: 0;
    margin-left: 5px;
+   color: #659dff;
+}
+
+.entry-form .was-validated .form-control:valid, .form-control.is-valid, 
+.was-validated .custom-select:valid, .custom-select.is-valid {
+  border-color: #659dff;
+}
+
+.entry-form .was-validated .form-control:valid:focus,
+.entry-form .form-control.is-valid:focus,
+.entry-form .was-validated .custom-select:valid:focus,
+.entry-form .custom-select.is-valid:focus {
+  border-color: #659dff;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(101, 157, 255, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(101, 157, 255, 0.5);
+}
+
+.entry-form .was-validated .form-control:invalid,
+.entry-form .form-control.is-invalid,
+.entry-form .was-validated .custom-select:invalid,
+.entry-form .custom-select.is-invalid {
+  border-color: #ef5b57;
+}
+
+.entry-form .was-validated .form-control:invalid:focus,
+.entry-form .form-control.is-invalid:focus,
+.entry-form .was-validated .custom-select:invalid:focus,
+.entry-form .custom-select.is-invalid:focus {
+  border-color: #ef5b57;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
+          box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
+}
+
+.entry-form a {
+   color: #659dff;
+}
+
+.entry-form a:hover {
+  color: #196cff;
 }
 
 .inner-addon {
