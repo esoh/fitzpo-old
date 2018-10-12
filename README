@@ -117,3 +117,5 @@ TODO:
    "username not taken! go ahead!" even if it is, because it cannot connect to
    the db?
    convert improper emails (abc@gmail) to proper ones (abc@gmail.com)
+   compress background image for faster loading. Image currently used is too
+   high of a resolution.
