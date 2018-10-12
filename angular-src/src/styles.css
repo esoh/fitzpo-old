@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .bg-image{
    padding: 30px;
-   background-image: url("https://images.pexels.com/photos/347134/pexels-photo-347134.jpeg");
+   background-image: url("./assets/img/bg.jpg");
    background-size:     cover;
    background-repeat:   no-repeat;
    background-position: center center;
@@ -76,7 +76,7 @@
    color: #659dff;
 }
 
-.entry-form .was-validated .form-control:valid, .form-control.is-valid, 
+.entry-form .was-validated .form-control:valid, .form-control.is-valid,
 .was-validated .custom-select:valid, .custom-select.is-valid {
   border-color: #659dff;
 }
