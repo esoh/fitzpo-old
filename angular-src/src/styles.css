@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-.bg-image{
-   padding: 30px;
-   background-image: url("./assets/img/bg.jpg");
-   background-size:     cover;
-   background-repeat:   no-repeat;
-   background-position: center center;
+body, html {
+    height: 100%;
 }
 
 /* Entry form is used for entry and login */
