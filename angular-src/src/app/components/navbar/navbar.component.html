@@ -5,26 +5,39 @@
       <!-- Brand -->
       <a class="navbar-brand" [routerLink]="['/']">GymMate</a>
 
-      <!-- Collapse toggler button -->
+      <!-- Collapse toggler button.  -->
       <button class="navbar-toggler" type="button" data-toggle="collapse"
-         data-target="#navbarDefault" aria-controls="navbarDefault"
-         aria-expanded="true" aria-label="Toggle navigation">
-
+         data-target="#navbarDefault">
          <span class="navbar-toggler-icon"></span>
       </button>
 
       <!-- Collapsible navbar items-->
       <div class="collapse navbar-collapse" id="navbarDefault">
          <ul class="navbar-nav ml-auto">
+
             <li class="nav-item" routerLinkActive='active'
                [routerLinkActiveOptions]="{exact:true}">
                <a class="nav-link" routerLink="/">Home</a>
             </li>
+
             <li class="nav-item" routerLinkActive='active'>
-               <a class="nav-link" routerLink="/signup">Sign Up</a>
+               <a class="nav-link" routerLink="/programs">Programs</a>
             </li>
+
             <li class="nav-item" routerLinkActive='active'>
-               <a class="nav-link" routerLink="/login">Log In</a>
+               <a class="nav-link" routerLink="/exercises">Exercises</a>
+            </li>
+
+            <li class="nav-item" routerLinkActive='active'>
+               <a class="nav-link" routerLink="/profile">Profile</a>
+            </li>
+
+            <li class="nav-item" routerLinkActive='active'>
+               <a class="nav-link" routerLink="/signup">Sign up</a>
+            </li>
+
+            <li class="nav-item" routerLinkActive='active'>
+               <a class="nav-link" routerLink="/login">Log in</a>
             </li>
          </ul>
       </div>
