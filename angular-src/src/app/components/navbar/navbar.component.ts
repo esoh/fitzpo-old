@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+   public currentUser: User;
 
-  constructor() { }
+   constructor() { }
 
-  ngOnInit() {
-  }
+   ngOnInit() {
+   }
 
+   //TODO: remove this function
+   testLogin(){
+      const tempUser = new User();
+      tempUser.username = "tempUser";
+      this.currentUser = tempUser;
+   }
+
+   //TODO: remove this function
+   testLogout(){
+      this.currentUser = null;
+   }
 }
