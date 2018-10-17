@@ -12,6 +12,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProgramsComponent } from './components/programs/programs.component';
+import { ExercisesComponent } from './components/exercises/exercises.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
@@ -27,7 +29,9 @@ import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
       SignupComponent,
       DashboardComponent,
       ProfileComponent,
-      HomeComponent
+      HomeComponent,
+      ExercisesComponent,
+      ProgramsComponent
    ],
    imports: [
       BrowserModule,
