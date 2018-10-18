@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 
@@ -34,6 +35,7 @@ import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
       ProgramsComponent
    ],
    imports: [
+      NgbModule,
       BrowserModule,
       ReactiveFormsModule,
       HttpClientModule,
