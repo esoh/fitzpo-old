@@ -25,8 +25,8 @@ import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
 @NgModule({
    declarations: [
       AppComponent,
-      NavbarComponent,
       LoginComponent,
+      NavbarComponent,
       SignupComponent,
       DashboardComponent,
       ProfileComponent,
@@ -48,6 +48,6 @@ import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
       UsernameNotTakenValidator,
       EmailNotTakenValidator
    ],
-  bootstrap: [AppComponent]
+   bootstrap: [AppComponent]
 })
 export class AppModule { }

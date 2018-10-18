@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidateService } from '../../services/validate.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { ValidateService } from '../../services/validate.service';
 export class LoginComponent implements OnInit {
 
    loginForm: FormGroup;
-   constructor(private fb: FormBuilder,
+   constructor(public activeModal: NgbActiveModal,
+               private fb: FormBuilder,
                private validateService: ValidateService) {
    }
 

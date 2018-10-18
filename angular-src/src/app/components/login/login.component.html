@@ -1,36 +1,43 @@
-<!--Note that we use ngSubmit instead of submit because ngSubmit submits a post
-   request-->
-<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="entry-form">
-   <h2>Log In</h2>
+<div class="modal-header">
+   <h4 class="modal-title" id="modal-basic-title">Log In</h4>
+   <button type="button" class="close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+   <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="entry-form">
+      <h2>Log In</h2>
 
-   <!-- Username/Email field -->
-   <div class="form-group">
-      <label for="usernameOrEmailField">Username or Email Address</label>
-      <div class="inner-addon left-addon">
-         <label for="usernameOrEmailField" class="fas fa-user"></label>
-         <input type="text" class="form-control" id="usernameOrEmailField"
-            autocomplete="username email" formControlName="usernameOrEmail"
-            [ngClass] = "setValidOrInvalidInput('usernameOrEmail')">
-         <div class="invalid-feedback"> {{ formErrors.usernameOrEmail }} </div>
+      <!-- Username/Email field -->
+      <div class="form-group">
+         <label for="usernameOrEmailField">Username or Email Address</label>
+         <div class="inner-addon left-addon">
+            <label for="usernameOrEmailField" class="fas fa-user"></label>
+            <input type="text" class="form-control" id="usernameOrEmailField"
+               autocomplete="username email" formControlName="usernameOrEmail"
+               [ngClass] = "setValidOrInvalidInput('usernameOrEmail')">
+            <div class="invalid-feedback"> {{ formErrors.usernameOrEmail }} </div>
+         </div>
       </div>
-   </div>
 
-   <!-- Password field -->
-   <div class="form-group">
-      <label for="passwordField">Password</label>
-      <div class="inner-addon left-addon">
-         <label for="passwordField" class="fas fa-key"></label>
-         <input type="password" class="form-control" id="passwordField"
-            autocomplete="password" formControlName="password"
-            [ngClass] = "setValidOrInvalidInput('password')">
-         <div class="invalid-feedback"> {{ formErrors.password }} </div>
+      <!-- Password field -->
+      <div class="form-group">
+         <label for="passwordField">Password</label>
+         <div class="inner-addon left-addon">
+            <label for="passwordField" class="fas fa-key"></label>
+            <input type="password" class="form-control" id="passwordField"
+               autocomplete="password" formControlName="password"
+               [ngClass] = "setValidOrInvalidInput('password')">
+            <div class="invalid-feedback"> {{ formErrors.password }} </div>
+         </div>
       </div>
-   </div>
 
-   <!-- Submit button -->
-   <button type="submit" class="btn btn-primary btn-lg btn-block" >
-      Log In
-   </button>
-      <div class="alt-entry-text">Don't have an account yet? <a
-            routerLink="/signup">Sign Up</a></div>
-</form>
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-lg btn-block" >
+         Log In
+      </button>
+         <div class="alt-entry-text">Don't have an account yet? <a
+               routerLink="/signup">Sign Up</a></div>
+   </form>
+</div>
+<div class="modal-footer">
+   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
+</div>
