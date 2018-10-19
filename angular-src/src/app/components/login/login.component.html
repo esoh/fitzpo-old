@@ -1,6 +1,9 @@
 <div class="modal-header">
    <h4 class="modal-title" id="modal-basic-title">Log In</h4>
-   <button type="button" class="close" (click)="activeModal.dismiss('Cross click')"></button>
+   <button type="button" class="close"
+      (click)="activeModal.dismiss('Cross click')">
+      <i class="far fa-times-circle"></i>
+   </button>
 </div>
 <div class="modal-body">
    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="entry-form">
@@ -31,7 +34,7 @@
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-lg btn-block" >
+      <button type="submit" ngbAutofocus class="btn btn-primary btn-lg btn-block" >
          Log In
       </button>
          <div class="alt-entry-text">Don't have an account yet? <a
