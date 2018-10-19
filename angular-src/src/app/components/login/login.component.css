@@ -1,3 +1,7 @@
 .entry-form h2{
    margin-bottom: 30px
 }
+
+.close:focus{
+   outline: none;
+}
