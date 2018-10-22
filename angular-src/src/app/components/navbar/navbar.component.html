@@ -36,12 +36,11 @@
                   {{ currentUser.username }}</a>
             </li>
 
-            <li class="nav-item" routerLinkActive='active' *ngIf="!currentUser">
-               <a class="nav-link" routerLink="/signup">Sign up</a>
+            <li class="nav-item" *ngIf="!currentUser">
+               <a class="nav-link" (click)=openSignup()>Sign up</a>
             </li>
 
             <li class="nav-item" *ngIf="!currentUser">
-               <!-- href="#!" attempts to go to ! but goes nowhere -->
                <a class="nav-link" (click)="openLogin()">Log in</a>
             </li>
 

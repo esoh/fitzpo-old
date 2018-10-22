@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from '../login/login.component';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,10 @@ export class NavbarComponent {
 
    openLogin(){
       this.modalService.open(LoginComponent, { windowClass : "entry-dialog" });
+   }
+
+   openSignup(){
+      this.modalService.open(SignupComponent, { windowClass : "entry-dialog" });
    }
 
    //TODO: remove this function

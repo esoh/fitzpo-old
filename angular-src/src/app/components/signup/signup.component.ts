@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 import { UsernameNotTakenValidator } from '../../validators/username-not-taken.validator';
 import { EmailNotTakenValidator } from '../../validators/email-not-taken.validator';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { first } from 'rxjs/operators';
 
@@ -19,7 +20,8 @@ export class SignupComponent implements OnInit {
    signupForm: FormGroup;
    isHidden: boolean = true;
 
-   constructor(private authService: AuthService,
+   constructor(public activeModal: NgbActiveModal,
+               private authService: AuthService,
                private router: Router,
                private usernameValidator: UsernameNotTakenValidator,
                private emailValidator: EmailNotTakenValidator) { }

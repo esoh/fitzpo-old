@@ -1,61 +1,72 @@
-<div class="bg-image">
-   <div class="container">
-      <div class="row justify-content-end">
-         <div class="col-6">
-            <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="entry-form">
-               <h2>Sign Up</h2>
-               <div class="hint-text">Start your fitness journey with GymMate today.</div>
+<button type="button" class="close"
+   (click)="activeModal.dismiss('Cross click')">
+   <i class="far fa-times-circle"></i>
+</button>
 
-               <!-- Username field -->
-               <div class="form-group">
-                  <label for="usernameField">Username</label>
-                  <div class="inner-addon left-addon">
-                     <label for="usernameField" class="fas fa-user"></label>
-                     <input type="text" class="form-control" id="usernameField"
-                        autocomplete="username" formControlName="username"
-                        [ngClass] = "setValidOrInvalidInput('username')">
-                     <div class="invalid-feedback"> {{ formErrors.username }} </div>
-                     <div class="valid-feedback"> Great, this username hasn't been taken
-                     yet!</div>
-                  </div>
-               </div>
+<div class="entry-content">
+   <div class="modal-header">
+      <h2>Sign Up</h2>
+   </div>
 
-               <!-- Email field -->
-               <div class="form-group">
-                  <label for="emailField">Email Address</label>
-                  <div class="inner-addon left-addon">
-                     <label for="emailField" class="fas fa-envelope"></label>
-                     <input type="email" class="form-control" id="emailField"
-                        autocomplete="email" formControlName="email"
-                        [ngClass] = "setValidOrInvalidInput('email')">
-                     <div class="invalid-feedback"> {{ formErrors.email }} </div>
-                     <div class="valid-feedback"> We'll only use this if you forget your
-                        password. </div>
-                  </div>
-               </div>
+   <div class="modal-body">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()"
+         class="entry-form">
 
-               <!-- Password field -->
-               <div class="form-group">
-                  <label for="passwordField">Password</label>
-                  <div class="inner-addon left-addon">
-                     <label for="passwordField" class="fas fa-key"></label>
-                     <input type="{{ isHidden ? 'password' : 'text' }}"
-                        class="form-control" id="passwordField"
-                        autocomplete="new-password" formControlName="password"
-                        [ngClass] = "setValidOrInvalidInput('password')">
-                     <button type="button" tabindex="-1" id="pw-toggle" class="btn btn-outline-secondary"
-                        (click)="isHidden = !isHidden">
-                        {{ isHidden ? 'SHOW' : 'HIDE' }}</button>
-                     <div class="invalid-feedback"> {{ formErrors.password }} </div>
-                     <div class="valid-feedback"> Password set! </div>
-                  </div>
-               </div>
+         <!-- Username field -->
+         <div class="form-group">
+            <label for="usernameField">Username</label>
+            <div class="inner-addon left-addon">
+               <label for="usernameField" class="fas fa-user"></label>
+               <input type="text" class="form-control" id="usernameField"
+                  autocomplete="username" formControlName="username"
+                  [ngClass] = "setValidOrInvalidInput('username')"
+                  ngbAutofocus>
+               <div class="invalid-feedback"> {{ formErrors.username }} </div>
+               <div class="valid-feedback">
+                  Great, this username hasn't been taken yet!</div>
+            </div>
+         </div>
 
-               <button type="submit" class="btn btn-primary btn-lg btn-block" >
-                  Sign Up
-               </button>
-               <div class="alt-entry-text">Already have an account? <a routerLink="/login">Log in</a></div>
-            </form>
+         <!-- Email field -->
+         <div class="form-group">
+            <label for="emailField">Email Address</label>
+            <div class="inner-addon left-addon">
+               <label for="emailField" class="fas fa-envelope"></label>
+               <input type="email" class="form-control" id="emailField"
+                  autocomplete="email" formControlName="email"
+                  [ngClass] = "setValidOrInvalidInput('email')">
+               <div class="invalid-feedback"> {{ formErrors.email }} </div>
+               <div class="valid-feedback">
+                  We'll only use this if you forget your password. </div>
+            </div>
+         </div>
+
+         <!-- Password field -->
+         <div class="form-group">
+            <label for="passwordField">Password</label>
+            <div class="inner-addon left-addon">
+               <label for="passwordField" class="fas fa-key"></label>
+               <input type="{{ isHidden ? 'password' : 'text' }}"
+                  class="form-control" id="passwordField"
+                  autocomplete="new-password" formControlName="password"
+                  [ngClass] = "setValidOrInvalidInput('password')">
+               <button type="button" tabindex="-1" id="pw-toggle"
+                  class="btn btn-outline-secondary"
+                  (click)="isHidden = !isHidden">
+                  {{ isHidden ? 'SHOW' : 'HIDE' }}</button>
+               <div class="invalid-feedback"> {{ formErrors.password }} </div>
+               <div class="valid-feedback"> Password set! </div>
+            </div>
+         </div>
+      </form>
+   </div>
+   <div class="modal-footer">
+      <div class="entry-submission">
+         <button type="submit" class="btn btn-primary btn-lg btn-block" >
+            Sign Up
+         </button>
+         <div class="alt-entry-text">Already have an account?
+            <a routerLink="/login">Log in</a>
          </div>
       </div>
    </div>
