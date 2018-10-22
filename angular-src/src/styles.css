@@ -4,60 +4,86 @@ body, html {
 }
 
 /* Entry form is used for entry and login */
-.entry-form{
-   width: 370px;
-   padding: 30px 40px;
-   background-color: rgba(6, 6, 6, 0.4);
+.entry-dialog .modal-content{
    margin: auto;
    border-radius: 10px;
+   width: 370px;
 }
 
-.entry-form h2{
-   margin: 0 0 15px;
+.entry-dialog .close {
+   color: #888;
+   text-align: center;
+   font-size: 0;
+   padding: 4px;
+}
+
+.entry-dialog .close .far {
+   font-size: 18px;
+}
+
+.entry-content{
+   padding: 30px 40px;
+}
+
+.entry-content .modal-header{
+   padding-bottom: 20px;
+}
+
+.entry-content .modal-body{
+   padding-top: 30px;
+}
+
+.entry-content h2{
+   margin: 0 auto;
    position: relative;
    text-align: center;
    font-weight: normal;
-   color: #fff;
 }
 
-.entry-form .hint-text{
-   color: #ddd;
+.entry-content .hint-text{
    font-size: 14px;
    margin-bottom: 30px;
    text-align: center;
 }
 
-.entry-form .alt-entry-text{
-   color: #ddd;
+.entry-content .alt-entry-text{
    font-size: 14px;
    text-align: center;
 }
 
-.entry-form .btn-lg{
-   margin-top: 50px;
+.entry-content .btn-lg{
    margin-bottom: 5px;
 }
 
-.entry-form label{
+.entry-content .modal-footer{
+   flex-direction: row;
+   padding-top: 30px;
+   padding-bottom: 30px;
+}
+
+.entry-content .entry-submission{
+   flex: 1;
+}
+
+.entry-content label{
    font-size: 14px;
-   color: #eee;
    margin-left: 5px;
 }
 
-.entry-form input{
-   border-color: #eee;
+.entry-content input{
+   border-color: #ddd;
    font-size: 14px;
 }
 
-.entry-form .form-group {
+.entry-content .form-group {
    min-height: 90px;
 }
 
-.entry-form .form-control {
+.entry-content .form-control {
    border-radius: 30px;
 }
 
-.entry-form .invalid-feedback{
+.entry-content .invalid-feedback{
    font-size: 12px;
    max-height: 0;
    font-style: italic;
@@ -65,48 +91,48 @@ body, html {
    color: #ef5b57;
 }
 
-.entry-form .valid-feedback{
+.entry-content .valid-feedback{
    font-size: 12px;
    max-height: 0;
    margin-left: 5px;
    color: #659dff;
 }
 
-.entry-form .was-validated .form-control:valid, .form-control.is-valid,
+.entry-content .was-validated .form-control:valid, .form-control.is-valid,
 .was-validated .custom-select:valid, .custom-select.is-valid {
   border-color: #659dff;
 }
 
-.entry-form .was-validated .form-control:valid:focus,
-.entry-form .form-control.is-valid:focus,
-.entry-form .was-validated .custom-select:valid:focus,
-.entry-form .custom-select.is-valid:focus {
+.entry-content .was-validated .form-control:valid:focus,
+.entry-content .form-control.is-valid:focus,
+.entry-content .was-validated .custom-select:valid:focus,
+.entry-content .custom-select.is-valid:focus {
   border-color: #659dff;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(101, 157, 255, 0.5);
           box-shadow: 0 0 0 0.2rem rgba(101, 157, 255, 0.5);
 }
 
-.entry-form .was-validated .form-control:invalid,
-.entry-form .form-control.is-invalid,
-.entry-form .was-validated .custom-select:invalid,
-.entry-form .custom-select.is-invalid {
+.entry-content .was-validated .form-control:invalid,
+.entry-content .form-control.is-invalid,
+.entry-content .was-validated .custom-select:invalid,
+.entry-content .custom-select.is-invalid {
   border-color: #ef5b57;
 }
 
-.entry-form .was-validated .form-control:invalid:focus,
-.entry-form .form-control.is-invalid:focus,
-.entry-form .was-validated .custom-select:invalid:focus,
-.entry-form .custom-select.is-invalid:focus {
+.entry-content .was-validated .form-control:invalid:focus,
+.entry-content .form-control.is-invalid:focus,
+.entry-content .was-validated .custom-select:invalid:focus,
+.entry-content .custom-select.is-invalid:focus {
   border-color: #ef5b57;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
 }
 
-.entry-form a {
+.entry-content a {
    color: #659dff;
 }
 
-.entry-form a:hover {
+.entry-content a:hover {
   color: #196cff;
 }
 

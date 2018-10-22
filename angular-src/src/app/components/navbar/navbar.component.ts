@@ -14,7 +14,7 @@ export class NavbarComponent {
    constructor(private modalService: NgbModal) { }
 
    openLogin(){
-      this.modalService.open(LoginComponent);
+      this.modalService.open(LoginComponent, { windowClass : "entry-dialog" });
    }
 
    //TODO: remove this function
