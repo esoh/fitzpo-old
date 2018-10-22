@@ -27,6 +27,11 @@ span.link:hover {
    padding: 4px;
 }
 
+.entry-dialog .close:focus{
+   outline: none;
+}
+
+
 .entry-dialog .close .far {
    font-size: 18px;
 }
