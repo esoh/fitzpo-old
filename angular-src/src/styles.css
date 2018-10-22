@@ -7,7 +7,7 @@ body, html {
 .entry-dialog .modal-content{
    margin: auto;
    border-radius: 10px;
-   width: 370px;
+   max-width: 370px;
 }
 
 .entry-dialog .close {
