@@ -2,7 +2,9 @@
    <h1>GymMate</h1>
    <p class="lead">Welcome to GymMate! Your fitness journey starts here.</p>
    <div>
-      <button type="button" class="btn btn-primary btn-lg mx-1" routerLink='/signup'>Sign Up</button>
-      <button type="button" class="btn btn-outline-primary btn-lg mx-1" routerLink='/login'>Log In</button>
+      <button type="button" class="btn btn-primary btn-lg mx-1"
+         (click)="modalService.openSignup()">Sign Up</button>
+      <button type="button" class="btn btn-outline-primary btn-lg mx-1"
+         (click)="modalService.openLogin()">Log In</button>
    </div>
 </div>
