@@ -11,6 +11,7 @@ import { SignupComponent } from '../signup/signup.component';
 })
 export class NavbarComponent {
    public currentUser: User;
+   isCollapsed = true;
 
    constructor(private modalService: NgbModal) { }
 
