@@ -42,8 +42,8 @@
             (click)="activeModal.close('Login click')">
             Log In
          </button>
-         <div class="alt-entry-text">Don't have an account yet? <a
-               routerLink="/signup">Sign Up</a>
+         <div class="alt-entry-text">Don't have an account yet?
+            <a (click)="activeModal.dismiss('signup')">Sign Up</a>
          </div>
       <div>
    </div>

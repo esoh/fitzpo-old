@@ -38,11 +38,11 @@
             </li>
 
             <li class="nav-item" *ngIf="!currentUser">
-               <a class="nav-link" (click)=openSignup()>Sign up</a>
+               <a class="nav-link" (click)="modalService.openSignup()">Sign up</a>
             </li>
 
             <li class="nav-item" *ngIf="!currentUser">
-               <a class="nav-link" (click)="openLogin()">Log in</a>
+               <a class="nav-link" (click)="modalService.openLogin()">Log in</a>
             </li>
 
          </ul>

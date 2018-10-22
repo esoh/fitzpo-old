@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from '../login/login.component';
-import { SignupComponent } from '../signup/signup.component';
+import { EntryModalService } from '../../services/entry-modal.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,15 +11,7 @@ export class NavbarComponent {
    public currentUser: User;
    isCollapsed = true;
 
-   constructor(private modalService: NgbModal) { }
-
-   openLogin(){
-      this.modalService.open(LoginComponent, { windowClass : "entry-dialog" });
-   }
-
-   openSignup(){
-      this.modalService.open(SignupComponent, { windowClass : "entry-dialog" });
-   }
+   constructor(public modalService: EntryModalService) { }
 
    //TODO: remove this function
    testLogin(){
