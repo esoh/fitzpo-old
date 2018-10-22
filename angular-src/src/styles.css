@@ -3,6 +3,16 @@ body, html {
     height: 100%;
 }
 
+span.link {
+   color: #659dff;
+}
+
+span.link:hover {
+   color: #196cff;
+   cursor:pointer;
+}
+
+
 /* Entry form is used for entry and login */
 .entry-dialog .modal-content{
    margin: auto;
@@ -126,14 +136,6 @@ body, html {
   border-color: #ef5b57;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(239, 91, 87, 0.25);
-}
-
-.entry-content a {
-   color: #659dff;
-}
-
-.entry-content a:hover {
-  color: #196cff;
 }
 
 .inner-addon {
