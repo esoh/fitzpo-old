@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -18,9 +20,6 @@ import { UsernameNotTakenValidator } from './validators/username-not-taken.valid
 import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
 import { EntryModalService } from './services/entry-modal.service';
 
-import { AuthModule } from './auth/auth.module';
-import { CoreModule } from './core/core.module';
-
 @NgModule({
    declarations: [
       AppComponent,
@@ -32,7 +31,6 @@ import { CoreModule } from './core/core.module';
    ],
    imports: [
       BrowserModule,
-      HttpClientModule,
       AppRoutingModule,
       CoreModule,
       AuthModule
