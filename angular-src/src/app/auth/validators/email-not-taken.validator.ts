@@ -1,25 +1,31 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { AsyncValidator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+import { AuthService } from '../auth.service';
 
-export class UsernameNotTakenValidator implements AsyncValidator {
+@Injectable({ providedIn: 'root' })
+export class EmailNotTakenValidator implements AsyncValidator {
    constructor(private authService: AuthService) {}
 
    validate(
       ctrl: AbstractControl
    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-      return this.authService.lookupUser(ctrl.value).pipe(
+      return this.authService.emailExists(ctrl.value).pipe(
          map(res => {
-            if(res.username){
-               return { 'taken': true };
-            } else {
-               return null;
+            // check for error handling
+            if(!res || !res.status){
+               return { 'unknown': true };
             }
-            //res ? { usernameTaken: true } : null;
+
+            if(res.status === 200){
+               return { 'taken': true };
+            } else if(res.status === 404){
+               return null;
+            } else {
+               return { 'unknown': true };
+            }
          }),
          catchError(() => null)
       );

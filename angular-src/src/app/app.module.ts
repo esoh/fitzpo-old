@@ -13,12 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { ProgramsComponent } from './components/programs/programs.component';
 import { ExercisesComponent } from './components/exercises/exercises.component';
 
-import { ValidateService } from './services/validate.service';
-import { AuthService } from './services/auth.service';
-import { HttpErrorHandlerService } from'./services/http-error-handler.service';
-import { UsernameNotTakenValidator } from './validators/username-not-taken.validator';
-import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
-import { EntryModalService } from './services/entry-modal.service';
 
 @NgModule({
    declarations: [
@@ -34,14 +28,6 @@ import { EntryModalService } from './services/entry-modal.service';
       AppRoutingModule,
       CoreModule,
       AuthModule
-   ],
-   providers: [
-      ValidateService,
-      AuthService,
-      EntryModalService,
-      HttpErrorHandlerService,
-      UsernameNotTakenValidator,
-      EmailNotTakenValidator
    ],
    bootstrap: [AppComponent]
 })

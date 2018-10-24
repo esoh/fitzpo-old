@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidateService } from '../../services/validate.service';
-import { AuthService } from '../../services/auth.service';
+import { ValidateService } from '../validate.service';
+import { AuthService } from '../auth.service';
 import { User } from '../../models/user';
-import { UsernameNotTakenValidator } from '../../validators/username-not-taken.validator';
-import { EmailNotTakenValidator } from '../../validators/email-not-taken.validator';
+import { UsernameNotTakenValidator } from '../validators/username-not-taken.validator';
+import { EmailNotTakenValidator } from '../validators/email-not-taken.validator';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { first } from 'rxjs/operators';
@@ -13,7 +13,12 @@ import { first } from 'rxjs/operators';
 @Component({
    selector: 'app-signup',
    templateUrl: './signup.component.html',
-   styleUrls: ['./signup.component.css']
+   styleUrls: ['./signup.component.css'],
+   providers: [
+      ValidateService,
+      UsernameNotTakenValidator,
+      EmailNotTakenValidator
+   ]
 })
 export class SignupComponent implements OnInit {
 

@@ -2,9 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { LoginComponent } from '../auth/login/login.component';
-import { SignupComponent } from '../auth/signup/signup.component';
-import { EntryModalService } from '../services/entry-modal.service';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+
+import { EntryModalService } from './entry-modal.service';
+import { ValidateService } from './validate.service';
+import { UsernameNotTakenValidator } from './validators/username-not-taken.validator';
+import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
 
 @NgModule({
    declarations: [
@@ -14,6 +18,11 @@ import { EntryModalService } from '../services/entry-modal.service';
    imports: [
       CommonModule,
       ReactiveFormsModule
+   ],
+   providers: [
+      ValidateService,
+      UsernameNotTakenValidator,
+      EmailNotTakenValidator
    ],
    entryComponents: [
       LoginComponent,

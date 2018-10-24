@@ -7,6 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { HttpErrorHandlerService } from'./http-error-handler.service';
+import { EntryModalService } from '../auth/entry-modal.service';
+import { AuthService } from '../auth/auth.service';
+
 @NgModule({
    declarations: [
       NavbarComponent
@@ -16,6 +20,11 @@ import { NavbarComponent } from './navbar/navbar.component';
       RouterModule,
       NgbModule,
       HttpClientModule
+   ],
+   providers: [
+      HttpErrorHandlerService,
+      AuthService,
+      EntryModalService
    ],
    exports: [
       NavbarComponent

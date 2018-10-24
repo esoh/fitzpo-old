@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
-import { EntryModalService } from '../../services/entry-modal.service';
+import { EntryModalService } from '../../auth/entry-modal.service';
 
 @Component({
   selector: 'app-navbar',

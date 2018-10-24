@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidateService } from '../../services/validate.service';
+import { ValidateService } from '../validate.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
