@@ -2,11 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
@@ -21,11 +19,11 @@ import { EmailNotTakenValidator } from './validators/email-not-taken.validator';
 import { EntryModalService } from './services/entry-modal.service';
 
 import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
    declarations: [
       AppComponent,
-      NavbarComponent,
       DashboardComponent,
       ProfileComponent,
       HomeComponent,
@@ -33,10 +31,10 @@ import { AuthModule } from './auth/auth.module';
       ProgramsComponent
    ],
    imports: [
-      NgbModule,
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
+      CoreModule,
       AuthModule
    ],
    providers: [
