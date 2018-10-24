@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidateService } from '../validate.service';
 import { AuthService } from '../auth.service';
-import { User } from '../../models/user';
+import { User } from '../../users/shared/user.model';
 import { UsernameNotTakenValidator } from '../validators/username-not-taken.validator';
 import { EmailNotTakenValidator } from '../validators/email-not-taken.validator';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
