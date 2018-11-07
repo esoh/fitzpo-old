@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Navbar extends React.Component {
     render() {
@@ -7,7 +8,7 @@ class Navbar extends React.Component {
                 <div class="container">
 
                     {/* Brand */}
-                    <a class="navbar-brand">GymMate</a>
+                    <Link className="navbar-brand" to="/">GymMate</Link>
 
                     {/* Collapse toggler button */}
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -19,20 +20,20 @@ class Navbar extends React.Component {
                     <div class="collapse navbar-collapse" id="navbarDefault">
                         <ul class="navbar-nav ml-auto">
 
-                            <li class="nav-item" routerLinkActive='active'>
-                                <a class="nav-link">Home</a>
+                            <li class="nav-item">
+                                <Link className="nav-link" to="/">Home</Link>
                             </li>
 
-                            <li class="nav-item" routerLinkActive='active'>
-                                <a class="nav-link">Programs</a>
+                            <li class="nav-item">
+                                <Link className="nav-link" to="/programs">Programs</Link>
                             </li>
 
-                            <li class="nav-item" routerLinkActive='active'>
-                                <a class="nav-link">Exercises</a>
+                            <li class="nav-item">
+                                <Link className="nav-link" to="/exercises">Exercises</Link>
                             </li>
 
-                            <li class="nav-item" routerLinkActive='active'>
-                                <a class="nav-link">Profile</a>
+                            <li class="nav-item">
+                                <Link className="nav-link" to="/profile">Profile</Link>
                             </li>
 
                             <li class="nav-item">
