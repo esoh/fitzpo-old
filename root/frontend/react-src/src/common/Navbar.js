@@ -29,12 +29,12 @@ class Navbar extends React.Component {
                     <Link className="navbar-brand" to="/">GymMate</Link>
 
                     {/* Collapse toggler button */}
-                    <button onClick={this.toggleNavbar} className={`${collapsibleNavbarTogglerClass}`} type="button">
+                    <button onClick={this.toggleNavbar} className={collapsibleNavbarTogglerClass} type="button">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
                     {/* Collapsible navbar items */}
-                    <div className={`${collapsibleNavbarClass}`}>
+                    <div className={collapsibleNavbarClass}>
                         <ul className="navbar-nav ml-auto">
 
                             <li className="nav-item" data-toggle="collapse"
