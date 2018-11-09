@@ -20,27 +20,33 @@ class Navbar extends React.Component {
                     <div className="collapse navbar-collapse" id="navbarDefault">
                         <ul className="navbar-nav ml-auto">
 
-                            <li className="nav-item">
-                                <NavLink className="nav-link" exact to="/">Home</NavLink>
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
+                                <NavLink className="nav-link" exact to="/" >Home</NavLink>
                             </li>
 
-                            <li className="nav-item">
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
                                 <NavLink className="nav-link" to="/programs">Programs</NavLink>
                             </li>
 
-                            <li className="nav-item">
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
                                 <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
                             </li>
 
-                            <li className="nav-item">
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
                                 <NavLink className="nav-link" to="/profile">Profile</NavLink>
                             </li>
 
-                            <li className="nav-item">
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
                                 <a className="nav-link">Sign up</a>
                             </li>
 
-                            <li className="nav-item">
+                            <li className="nav-item" data-toggle="collapse"
+                                data-target="#navbarDefault">
                                 <a className="nav-link">Log in</a>
                             </li>
 
