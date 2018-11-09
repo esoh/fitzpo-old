@@ -21,19 +21,19 @@ class Navbar extends React.Component {
                         <ul className="navbar-nav ml-auto">
 
                             <li className="nav-item">
-                                <NavLink className="nav-link" activeclass="active" exact to="/">Home</NavLink>
+                                <NavLink className="nav-link" exact to="/">Home</NavLink>
                             </li>
 
                             <li className="nav-item">
-                                <NavLink className="nav-link" activeclass="active" to="/programs">Programs</NavLink>
+                                <NavLink className="nav-link" to="/programs">Programs</NavLink>
                             </li>
 
                             <li className="nav-item">
-                                <NavLink className="nav-link" activeclass="active" to="/exercises">Exercises</NavLink>
+                                <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
                             </li>
 
                             <li className="nav-item">
-                                <NavLink className="nav-link" activeclass="active" to="/profile">Profile</NavLink>
+                                <NavLink className="nav-link" to="/profile">Profile</NavLink>
                             </li>
 
                             <li className="nav-item">
