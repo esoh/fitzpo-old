@@ -6,9 +6,9 @@ class Navbar extends React.Component {
         super(props);
         this.state = {
             collapsed: true
-            this.toggleNavbar = this.toggleNavbar.bind(this);
-            this.collapseNavbar = this.collapseNavbar.bind(this);
         };
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.collapseNavbar = this.collapseNavbar.bind(this);
     }
 
     toggleNavbar() {
