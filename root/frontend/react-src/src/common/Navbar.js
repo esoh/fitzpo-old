@@ -26,7 +26,6 @@ class Navbar extends React.Component {
     render() {
         const collapsed = this.state.collapsed;
         const collapsibleNavbarClass = collapsed ? 'collapse navbar-collapse' : 'collapse navbar-collapse show';
-        const collapsibleNavbarTogglerClass = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler'
 
         return (
             <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -36,8 +35,8 @@ class Navbar extends React.Component {
                     <Link className="navbar-brand" to="/">GymMate</Link>
 
                     {/* Collapse toggler button */}
-                    <button onClick={this.toggleNavbar} className={collapsibleNavbarTogglerClass} type="button">
-                        <span className="navbar-toggler-icon"></span>
+                    <button onClick={this.toggleNavbar} className="navbar-toggler" type="button">
+                        <span className="navbar-toggler-icon"/>
                     </button>
 
                     {/* Collapsible navbar items */}
