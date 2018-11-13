@@ -8,6 +8,7 @@ import Home from './home/Home';
 import Programs from './programs/Programs';
 import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
+import Login from './login/Login';
 
 class App extends Component {
     render() {
@@ -20,6 +21,7 @@ class App extends Component {
                         <Route path="/programs" component={Programs}/>
                         <Route path="/exercises" component={Exercises}/>
                         <Route path="/profile" component={Profile}/>
+                        <Route path="/login" component={Login}/>
                         <Route path="*" render={() => <Redirect to="/"/>}/>
                     </Switch>
                 </div>
