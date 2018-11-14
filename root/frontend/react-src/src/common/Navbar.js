@@ -118,8 +118,8 @@ class Navbar extends React.Component {
                     <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>GymMate</Link>
 
                     {/* Collapse toggler button */}
-                    <button onClick={this.toggleNavbar} className={collapsibleNavbarTogglerClass} type="button">
-                        <span className="navbar-toggler-icon"></span>
+                    <button onClick={this.toggleNavbar} className="navbar-toggler" type="button">
+                        <span className="navbar-toggler-icon"/>
                     </button>
 
                     {/* Collapsible navbar items */}
