@@ -107,9 +107,6 @@ class Navbar extends React.Component {
     }
 
     render() {
-        const collapsed = this.state.collapsed;
-        const collapsibleNavbarTogglerClass = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler';
-
         return (
             <nav className={"navbar navbar-light bg-light fixed-top" + this.getExpandClass(this.props.expand)}>
                 <div className="container">
@@ -124,7 +121,7 @@ class Navbar extends React.Component {
 
                     {/* Collapsible navbar items */}
                     <Transition
-                        in={!collapsed}
+                        in={!this.state.collapsed}
                         timeout={duration}
                         onEnter={this.onEnter}
                         onEntering={this.onEntering}
