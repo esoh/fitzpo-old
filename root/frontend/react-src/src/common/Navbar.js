@@ -15,6 +15,24 @@ const collapseStyles = {
     [ENTERING]: 'collapsing',
     [ENTERED]: 'collapse show',
 };
+const defaultProps = {
+    expand: true
+}
+
+function getExpandWidthValue(expandWidthType){
+    switch(expandWidthType){
+        case 'sm':
+            return 576;
+        case 'md':
+            return 768;
+        case 'lg':
+            return 992;
+        case 'xl':
+            return 1200;
+        default:
+            return undefined;
+    }
+}
 
 function getHeightValue(elem) {
     return (
@@ -63,16 +81,29 @@ class Navbar extends React.Component {
 
     onExit = elem => {
         elem.style['height'] = `${getHeightValue(elem)}px`;
-        console.log(elem.style['height']);
         this.forceReflow(elem);
     };
 
     onExiting = elem => {
-        elem.style['height'] = '0';
+        // prevent closing animation from closing to 0 when navbar is expanded
+        if(!this.props.expand || window.innerWidth < getExpandWidthValue(this.props.expand)){
+            elem.style['height'] = '0';
+        }
     };
 
     forceReflow(node) {
         node.offsetHeight; // eslint-disable-line no-unused-expressions
+    }
+
+    getExpandClass(expand){
+        if(!expand){
+            return '';
+        }
+        if(expand === true){
+            return ' navbar-expand';
+        } else {
+            return ' navbar-expand-' + expand;
+        }
     }
 
     render() {
@@ -80,7 +111,7 @@ class Navbar extends React.Component {
         const collapsibleNavbarTogglerClass = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler';
 
         return (
-            <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
+            <nav className={"navbar navbar-light bg-light fixed-top" + this.getExpandClass(this.props.expand)}>
                 <div className="container">
 
                     {/* Brand */}
@@ -103,7 +134,6 @@ class Navbar extends React.Component {
                     >
                         {state => { return(
                             <div className={"navbar-collapse " + collapseStyles[state]}>
-                            {console.log(state)}
                                 <ul className="navbar-nav ml-auto">
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
@@ -139,5 +169,7 @@ class Navbar extends React.Component {
         );
     }
 }
+
+Navbar.defaultProps = defaultProps;
 
 export default Navbar;
