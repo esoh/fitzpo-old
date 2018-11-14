@@ -1,14 +1,19 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import css from 'dom-helpers/style';
-import CSSTransition from 'react-transition-group/CSSTransition';
+import Transition, {
+    EXITED,
+    ENTERED,
+    ENTERING,
+    EXITING,
+} from 'react-transition-group/Transition';
 
 const duration = 300;
-const collapsibleNavClassNames={
-    enter: 'collapsing navbar-collapse',
-    enterDone: 'collapse navbar-collapse show',
-    exit: 'collapsing navbar-collapse',
-    exitDone: 'collapse navbar-collapse',
+const collapseStyles = {
+    [EXITED]: 'collapse',
+    [EXITING]: 'collapsing',
+    [ENTERING]: 'collapsing',
+    [ENTERED]: 'collapse show',
 };
 
 function getHeightValue(elem) {
@@ -43,13 +48,13 @@ class Navbar extends React.Component {
     }
 
     /* Handle css element heights for bootstrap.css animations to apply */
-    // TODO: FIX COLLAPSING ANIMATION
     onEnter = elem => {
         elem.style['height'] = '0';
     };
 
     onEntering = elem => {
         elem.style['height'] = `${elem['scrollHeight']}px`;
+        this.forceReflow(elem);
     };
 
     onEntered = elem => {
@@ -59,11 +64,16 @@ class Navbar extends React.Component {
     onExit = elem => {
         elem.style['height'] = `${getHeightValue(elem)}px`;
         console.log(elem.style['height']);
+        this.forceReflow(elem);
     };
 
     onExiting = elem => {
         elem.style['height'] = '0';
     };
+
+    forceReflow(node) {
+        node.offsetHeight; // eslint-disable-line no-unused-expressions
+    }
 
     render() {
         const collapsed = this.state.collapsed;
@@ -82,10 +92,9 @@ class Navbar extends React.Component {
                     </button>
 
                     {/* Collapsible navbar items */}
-                    <CSSTransition
+                    <Transition
                         in={!collapsed}
                         timeout={duration}
-                        classNames={collapsibleNavClassNames}
                         onEnter={this.onEnter}
                         onEntering={this.onEntering}
                         onEntered={this.onEntered}
@@ -93,7 +102,7 @@ class Navbar extends React.Component {
                         onExiting={this.onExiting}
                     >
                         {state => { return(
-                            <div className="collapse navbar-collapse">
+                            <div className={"navbar-collapse " + collapseStyles[state]}>
                             {console.log(state)}
                                 <ul className="navbar-nav ml-auto">
 
@@ -124,7 +133,7 @@ class Navbar extends React.Component {
                                 </ul>
                             </div>
                         );}}
-                    </CSSTransition>
+                    </Transition>
                 </div>
             </nav>
         );
