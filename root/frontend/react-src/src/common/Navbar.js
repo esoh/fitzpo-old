@@ -8,6 +8,8 @@ import Transition, {
     EXITING,
 } from 'react-transition-group/Transition';
 
+import './Navbar.css';
+
 const duration = 300;
 const collapseStyles = {
     [EXITED]: 'collapse',
@@ -150,11 +152,11 @@ class Navbar extends React.Component {
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <a className="nav-link">Sign up</a>
+                                        <button type="button" className="btn btn-link nav-link">Sign up</button>
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <a className="nav-link">Log in</a>
+                                        <button type="button" className="btn btn-link nav-link">Log in</button>
                                     </li>
 
                                 </ul>
