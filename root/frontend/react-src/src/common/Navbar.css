@@ -1,4 +1,6 @@
 .btn-link.nav-link {
-    padding: 0.5rem 1rem;
-    border-width: 0px;
+    width: 100%;            /* fill parent width instead of wrapping content */
+    padding: 0.5rem 0;      /* only top/bottom padding, remove .btn padding */
+    border-width: 0px;      /* remove 1px .btn padding */
 }
+

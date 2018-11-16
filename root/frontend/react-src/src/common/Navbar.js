@@ -152,11 +152,11 @@ class Navbar extends React.Component {
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button" className="btn btn-link nav-link">Sign up</button>
+                                        <button type="button" className="btn btn-link nav-link text-left">Sign up</button>
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button" className="btn btn-link nav-link">Log in</button>
+                                        <button type="button" className="btn btn-link nav-link text-left">Log in</button>
                                     </li>
 
                                 </ul>
