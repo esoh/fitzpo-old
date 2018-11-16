@@ -12,18 +12,20 @@ import Profile from './profile/Profile';
 class App extends Component {
     render() {
         return (
-            <Router className="App">
-                <div>
-                    <Navbar expand="md"/>
-                    <Switch>
-                        <Route exact path="/" component={Home}/>
-                        <Route path="/programs" component={Programs}/>
-                        <Route path="/exercises" component={Exercises}/>
-                        <Route path="/profile" component={Profile}/>
-                        <Route path="*" render={() => <Redirect to="/"/>}/>
-                    </Switch>
-                </div>
-            </Router>
+            <div id="app-root" className="App">
+                <Router>
+                    <div>
+                        <Navbar expand="md"/>
+                        <Switch>
+                            <Route exact path="/" component={Home}/>
+                            <Route path="/programs" component={Programs}/>
+                            <Route path="/exercises" component={Exercises}/>
+                            <Route path="/profile" component={Profile}/>
+                            <Route path="*" render={() => <Redirect to="/"/>}/>
+                        </Switch>
+                    </div>
+                </Router>
+            </div>
         );
     }
 }
