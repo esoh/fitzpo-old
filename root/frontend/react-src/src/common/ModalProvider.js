@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './ModalProvider.css';
-import ModalPortal from '../common/ModalPortal';
+import ModalPortal from './ModalPortal';
 import { ModalContext } from './ModalContext';
 
 
