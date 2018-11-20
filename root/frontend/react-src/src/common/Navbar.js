@@ -134,10 +134,10 @@ class Navbar extends React.Component {
                         onExiting={this.onExiting}
                     >
                         {state => { return(
-                            <ModalContext.Consumer>
-                                { /* grab showModal from ModalContext value */ }
-                                { ({showModal}) =>
-                                    <div className={"navbar-collapse " + collapseStyles[state]}>
+                            <div className={"navbar-collapse " + collapseStyles[state]}>
+                                <ModalContext.Consumer>
+                                    { /* grab showModal from ModalContext value */ }
+                                    { ({showModal}) =>
                                         <ul className="navbar-nav ml-auto">
 
                                             <li className="nav-item" onClick={this.collapseNavbar}>
@@ -172,9 +172,9 @@ class Navbar extends React.Component {
                                                 </button>
                                             </li>
                                         </ul>
-                                    </div>
-                                }
-                            </ModalContext.Consumer>
+                                    }
+                                </ModalContext.Consumer>
+                            </div>
                         );}}
                     </Transition>
                 </div>
