@@ -48,26 +48,24 @@ function getHeightValue(elem) {
 }
 
 class Navbar extends React.Component {
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             collapsed: true
         };
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.collapseNavbar = this.collapseNavbar.bind(this);
     }
 
-    toggleNavbar() {
+    toggleNavbar = () => {
         this.setState({
             collapsed: !this.state.collapsed
         });
-    }
+    };
 
-    collapseNavbar() {
+    collapseNavbar = () => {
         this.setState({
             collapsed: true
         });
-    }
+    };
 
     /* Handle css element heights for bootstrap.css animations to apply */
     onEnter = elem => {
