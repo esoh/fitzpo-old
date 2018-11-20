@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import css from 'dom-helpers/style';
 import Transition, {
     EXITED,
     ENTERED,
@@ -39,14 +38,6 @@ function getExpandWidthValue(expandWidthType){
     }
 }
 
-function getHeightValue(elem) {
-    return (
-        elem['offsetHeight'] +
-        parseInt(css(elem, 'marginTop'), 10) +
-        parseInt(css(elem, 'marginBottom'), 10)
-    );
-}
-
 class Navbar extends React.Component {
     constructor(){
         super();
@@ -82,7 +73,7 @@ class Navbar extends React.Component {
     };
 
     onExit = elem => {
-        elem.style['height'] = `${getHeightValue(elem)}px`;
+        elem.style['height'] = `${elem['offsetHeight']}px`;
         this.forceReflow(elem);
     };
 
