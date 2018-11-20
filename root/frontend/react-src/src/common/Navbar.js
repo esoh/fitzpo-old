@@ -8,7 +8,9 @@ import Transition, {
     EXITING,
 } from 'react-transition-group/Transition';
 
-import { EntryModalContext } from '../auth/EntryModalContext';
+import { ModalContext } from './ModalContext';
+import SignupContent from '../auth/SignupContent';
+import LoginContent from '../auth/LoginContent';
 import './Navbar.css';
 
 const duration = 300;
@@ -45,27 +47,6 @@ function getHeightValue(elem) {
     );
 }
 
-const CloseButton = () => (
-  <EntryModalContext.Consumer>
-    {({ hideModal }) => <button onClick={hideModal}>Close It</button>}
-  </EntryModalContext.Consumer>
-);
-
-const SignupModalContent = () => (
-  <div>
-    <h1>signup modal</h1>
-    <CloseButton />
-  </div>
-);
-
-const LoginModalContent = () => (
-  <div>
-    <h1>login modal</h1>
-    <CloseButton />
-  </div>
-);
-
-
 class Navbar extends React.Component {
     constructor(props){
         super(props);
@@ -86,16 +67,6 @@ class Navbar extends React.Component {
         this.setState({
             collapsed: true
         });
-    }
-
-    openSignup() {
-        this.setState({
-            modalType: true
-        })
-    }
-
-    openLogin() {
-        //TODO: figure out how to close modal in EntryModalProvider
     }
 
     /* Handle css element heights for bootstrap.css animations to apply */
@@ -163,7 +134,8 @@ class Navbar extends React.Component {
                         onExiting={this.onExiting}
                     >
                         {state => { return(
-                            <EntryModalContext.Consumer>
+                            <ModalContext.Consumer>
+                                { /* grab showModal from ModalContext value */ }
                                 { ({showModal}) =>
                                     <div className={"navbar-collapse " + collapseStyles[state]}>
                                         <ul className="navbar-nav ml-auto">
@@ -187,7 +159,7 @@ class Navbar extends React.Component {
                                             <li className="nav-item" onClick={this.collapseNavbar}>
                                                 <button type="button"
                                                 className="btn btn-link nav-link text-left"
-                                                onClick={() => showModal(SignupModalContent)}>
+                                                onClick={() => showModal(SignupContent)}>
                                                     Sign up
                                                 </button>
                                             </li>
@@ -195,14 +167,14 @@ class Navbar extends React.Component {
                                             <li className="nav-item" onClick={this.collapseNavbar}>
                                                 <button type="button"
                                                 className="btn btn-link nav-link text-left"
-                                                onClick={() => showModal(LoginModalContent)}>
+                                                onClick={() => showModal(LoginContent)}>
                                                     Log in
                                                 </button>
                                             </li>
                                         </ul>
                                     </div>
                                 }
-                            </EntryModalContext.Consumer>
+                            </ModalContext.Consumer>
                         );}}
                     </Transition>
                 </div>

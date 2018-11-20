@@ -2,10 +2,10 @@ import React from 'react';
 
 import './ModalProvider.css';
 import ModalPortal from '../common/ModalPortal';
-import { EntryModalContext } from './EntryModalContext';
+import { ModalContext } from './ModalContext';
 
 
-class EntryModalProvider extends React.Component {
+class ModalProvider extends React.Component {
     showModal = (content, props = {}) => {
         this.setState({
             content,
@@ -13,11 +13,12 @@ class EntryModalProvider extends React.Component {
         });
     };
 
-    hideModal = () =>
+    hideModal = () => {
         this.setState({
             content: null,
             props: {}
         });
+    };
 
     state = {
         content: null,
@@ -29,7 +30,7 @@ class EntryModalProvider extends React.Component {
     render(){
         const ModalContent = this.state.content;
         return(
-            <EntryModalContext.Provider value={this.state}>
+            <ModalContext.Provider value={this.state}>
                 {this.props.children}
                 {ModalContent ? (
                     <ModalPortal>
@@ -38,9 +39,9 @@ class EntryModalProvider extends React.Component {
                 ) : (
                     null
                 )}
-            </EntryModalContext.Provider>
+            </ModalContext.Provider>
         );
     }
 }
 
-export default EntryModalProvider;
+export default ModalProvider;
