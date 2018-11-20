@@ -8,6 +8,7 @@ import Transition, {
     EXITING,
 } from 'react-transition-group/Transition';
 
+import { EntryModalContext } from '../auth/EntryModalContext';
 import './Navbar.css';
 
 const duration = 300;
@@ -44,6 +45,26 @@ function getHeightValue(elem) {
     );
 }
 
+const CloseButton = () => (
+  <EntryModalContext.Consumer>
+    {({ hideModal }) => <button onClick={hideModal}>Close It</button>}
+  </EntryModalContext.Consumer>
+);
+
+const SignupModalContent = () => (
+  <div>
+    <h1>signup modal</h1>
+    <CloseButton />
+  </div>
+);
+
+const LoginModalContent = () => (
+  <div>
+    <h1>login modal</h1>
+    <CloseButton />
+  </div>
+);
+
 
 class Navbar extends React.Component {
     constructor(props){
@@ -65,6 +86,16 @@ class Navbar extends React.Component {
         this.setState({
             collapsed: true
         });
+    }
+
+    openSignup() {
+        this.setState({
+            modalType: true
+        })
+    }
+
+    openLogin() {
+        //TODO: figure out how to close modal in EntryModalProvider
     }
 
     /* Handle css element heights for bootstrap.css animations to apply */
@@ -132,35 +163,46 @@ class Navbar extends React.Component {
                         onExiting={this.onExiting}
                     >
                         {state => { return(
-                            <div className={"navbar-collapse " + collapseStyles[state]}>
-                                <ul className="navbar-nav ml-auto">
+                            <EntryModalContext.Consumer>
+                                { ({showModal}) =>
+                                    <div className={"navbar-collapse " + collapseStyles[state]}>
+                                        <ul className="navbar-nav ml-auto">
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <NavLink className="nav-link" exact to="/">Home</NavLink>
-                                    </li>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <NavLink className="nav-link" exact to="/">Home</NavLink>
+                                            </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <NavLink className="nav-link" to="/programs">Programs</NavLink>
-                                    </li>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <NavLink className="nav-link" to="/programs">Programs</NavLink>
+                                            </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
-                                    </li>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
+                                            </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <NavLink className="nav-link" to="/profile">Profile</NavLink>
-                                    </li>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                                            </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button" className="btn btn-link nav-link text-left">Sign up</button>
-                                    </li>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <button type="button"
+                                                className="btn btn-link nav-link text-left"
+                                                onClick={() => showModal(SignupModalContent)}>
+                                                    Sign up
+                                                </button>
+                                            </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button" className="btn btn-link nav-link text-left">Log in</button>
-                                    </li>
-
-                                </ul>
-                            </div>
+                                            <li className="nav-item" onClick={this.collapseNavbar}>
+                                                <button type="button"
+                                                className="btn btn-link nav-link text-left"
+                                                onClick={() => showModal(LoginModalContent)}>
+                                                    Log in
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
+                            </EntryModalContext.Consumer>
                         );}}
                     </Transition>
                 </div>

@@ -8,13 +8,14 @@ import Home from './home/Home';
 import Programs from './programs/Programs';
 import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
+import EntryModalProvider from './auth/EntryModalProvider';
 
 class App extends Component {
     render() {
         return (
-            <div id="app-root" className="App">
+            <div className="App">
                 <Router>
-                    <div>
+                    <EntryModalProvider>
                         <Navbar expand="md"/>
                         <Switch>
                             <Route exact path="/" component={Home}/>
@@ -23,7 +24,7 @@ class App extends Component {
                             <Route path="/profile" component={Profile}/>
                             <Route path="*" render={() => <Redirect to="/"/>}/>
                         </Switch>
-                    </div>
+                    </EntryModalProvider>
                 </Router>
             </div>
         );
