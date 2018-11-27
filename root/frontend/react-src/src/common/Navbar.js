@@ -12,13 +12,25 @@ import SignupContent from '../auth/SignupContent';
 import LoginContent from '../auth/LoginContent';
 import './Navbar.css';
 
-const duration = 300;
+const duration = 350;
 const collapseStyles = {
-    [EXITED]: 'collapse',
-    [EXITING]: 'collapsing',
-    [ENTERING]: 'collapsing',
-    [ENTERED]: 'collapse show',
-};
+    [EXITED]: {
+        display: 'none',
+    },
+    [EXITING]: {
+        position: 'relative',
+        overflow: 'hidden',
+        transition: `height ${duration}ms ease`,
+    },
+    [ENTERING]: {
+        position: 'relative',
+        overflow: 'hidden',
+        transition: `height ${duration}ms ease`,
+    },
+    [ENTERED]: {
+        display: 'block',
+    },
+}
 const defaultProps = {
     expand: true
 }
@@ -58,7 +70,7 @@ class Navbar extends React.Component {
         });
     };
 
-    /* Handle css element heights for bootstrap.css animations to apply */
+    /* Handle css element heights for animations to adjust heights*/
     onEnter = elem => {
         elem.style['height'] = '0';
     };
@@ -123,7 +135,9 @@ class Navbar extends React.Component {
                         onExiting={this.onExiting}
                     >
                         {state => { return(
-                            <div className={"navbar-collapse " + collapseStyles[state]}>
+                            <div className="navbar-collapse" style={{
+                                ...collapseStyles[state]
+                            }}>
                                 <ModalContext.Consumer>
                                     { /* grab showModal from ModalContext value */ }
                                     { ({showModal}) =>
