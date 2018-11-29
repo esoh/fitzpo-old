@@ -5,7 +5,6 @@ import { ModalContext } from './ModalContext';
 import SignupContent from '../auth/SignupContent';
 import LoginContent from '../auth/LoginContent';
 import NavbarCollapse from './NavbarCollapse';
-import './Navbar.css';
 
 const defaultProps = {
     expand: true
