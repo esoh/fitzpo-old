@@ -12,23 +12,21 @@ const appRoot = document.getElementById('root');
 const fadeDuration = 150;
 const modalDuration = 300;
 const modalFadeClasses = {
-    enter: 'fade-hide',
+    enter: 'fade-show',
     enterActive: 'fade-show',
     enterDone: 'fade-show',
     exit: 'fade-hide',
     exitActive: 'fade-hide',
     exitDone: 'fade-hide',
-    appear: 'fade-hide',
     appearActive: 'fade-show'
 };
 const backdropFadeClasses = {
-    enter: 'modal-backdrop-hide',
+    enter: 'modal-backdrop-show',
     enterActive: 'modal-backdrop-show',
     enterDone: 'modal-backdrop-show',
     exit: 'modal-backdrop-hide',
     exitActive: 'modal-backdrop-hide',
     exitDone: 'modal-backdrop-hide',
-    appear: 'modal-backdrop-hide',
     appearActive: 'modal-backdrop-show'
 };
 

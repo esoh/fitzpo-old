@@ -10,8 +10,30 @@
     display: block;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+}
+
+.fade-show {
     opacity: 1;
-    transition: opacity 150ms ease;
+}
+
+.fade-hide {
+    opacity: 0;
+}
+
+
+.modal-dialog {
+    transition: -webkit-transform 300ms ease-out;
+    transition: transform 300ms ease-out;
+    transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;
+    -webkit-transform: translate(0, -25%);
+    transform: translate(0, -25%);
+}
+
+.modal.fade-show .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
 }
 
 .modal-content {
@@ -28,14 +50,6 @@
     align-items: center;
 }
 
-.fade-show {
-    opacity: 1;
-}
-
-.fade-hide {
-    opacity: 0;
-}
-
 /* backdrop with transitions*/
 .modal-backdrop {
     position: fixed;
@@ -45,7 +59,8 @@
     left: 0;
     z-index: 1040;
     background-color: #000;
-    transition: opacity 150ms ease;
+    opacity: 0;
+    transition: opacity 150ms ease-out;
 }
 
 .modal-backdrop-show {
