@@ -71,9 +71,7 @@ class ModalPortal extends React.Component {
                             classNames="modal-backdrop"
                             appear
                         >
-                            {(state) => (
-                                <div className="modal-backdrop"/>
-                            )}
+                            <div className="modal-backdrop"/>
                         </CSSTransition>
                     </div>
                 ),
