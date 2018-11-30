@@ -19,9 +19,11 @@ class ModalPortal extends React.Component {
         };
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(!prevProps.in && this.props.in){
-            this.setState({in: this.props.in});
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if(nextProps.in && !prevState.in){
+            return {in: nextProps.in};
+        } else {
+            return null;
         }
     }
 
