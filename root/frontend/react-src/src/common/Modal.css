@@ -10,6 +10,7 @@
     z-index: 1050;
 }
 
+/* backdrop with transitions*/
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -19,3 +20,44 @@
     z-index: 1040;
     background-color: #000;
 }
+
+.modal-backdrop-enter {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.modal-backdrop-enter-active {
+    opacity: 0.5;
+    transition: opacity 150ms linear;
+}
+
+.modal-backdrop-enter-done {
+    opacity: 0.5;
+    transition: none;
+}
+
+.modal-backdrop-exit {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.modal-backdrop-exit-active {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.modal-backdrop-exit-done {
+    opacity: 0;
+    transition: none;
+}
+
+.modal-backdrop-appear {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.modal-backdrop-appear-active {
+    opacity: 0.5;
+    transition: opacity 150ms linear;
+}
+

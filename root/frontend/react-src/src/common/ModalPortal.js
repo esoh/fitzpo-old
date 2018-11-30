@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Transition, {
-    EXITED,
-    ENTERED,
-    ENTERING,
-    EXITING,
-} from 'react-transition-group/Transition';
+import { CSSTransition } from 'react-transition-group';
 
 import './Modal.css'
 
@@ -15,25 +10,6 @@ import './Modal.css'
 
 const appRoot = document.getElementById('root');
 const duration = 150;
-const defaultStyle = {
-    transition: `opacity ${duration}ms linear`,
-    opacity: 0,
-}
-// TODO: fix entering transition
-const fadeStyles = {
-    [EXITED]: {
-        opacity: 0,
-    },
-    [EXITING]: {
-        opacity: 0,
-    },
-    [ENTERING]: {
-        opacity: 0,
-    },
-    [ENTERED]: {
-        opacity: 0.5,
-    },
-}
 
 class ModalPortal extends React.Component {
     constructor(){
@@ -49,6 +25,7 @@ class ModalPortal extends React.Component {
         }
     }
 
+    //TODO: attach onClosed to modal, not modal-backdrop
     onClosed = () => {
         this.setState({ in: false })
     }
@@ -70,22 +47,17 @@ class ModalPortal extends React.Component {
                         </div>
 
                         {/* backdrop */}
-                        <Transition
+                        <CSSTransition
                             in={this.props.in}
                             timeout={duration}
+                            classNames="modal-backdrop"
                             appear
                             onExited={this.onClosed}
                         >
                             {(state) => (
-                                <div
-                                    className="modal-backdrop"
-                                    style={{
-                                        ...defaultStyle,
-                                        ...fadeStyles[state]
-                                    }}
-                                >{console.log(state)}</div>
+                                <div className="modal-backdrop"/>
                             )}
-                        </Transition>
+                        </CSSTransition>
                     </div>
                 ),
                 appRoot
