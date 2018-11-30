@@ -14,12 +14,12 @@
 
 .fade-enter {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .fade-enter-active {
     opacity: 1;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .fade-enter-done {
@@ -29,12 +29,12 @@
 
 .fade-exit {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .fade-exit-active {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .fade-exit-done {
@@ -44,12 +44,12 @@
 
 .fade-appear {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .fade-appear-active {
     opacity: 1;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 /* backdrop with transitions*/
@@ -65,12 +65,12 @@
 
 .modal-backdrop-enter {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-backdrop-enter-active {
     opacity: 0.5;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-backdrop-enter-done {
@@ -80,12 +80,12 @@
 
 .modal-backdrop-exit {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-backdrop-exit-active {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-backdrop-exit-done {
@@ -95,12 +95,12 @@
 
 .modal-backdrop-appear {
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-backdrop-appear-active {
     opacity: 0.5;
-    transition: opacity 150ms linear;
+    transition: opacity 150ms ease;
 }
 
 .modal-content {
