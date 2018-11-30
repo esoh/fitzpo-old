@@ -12,6 +12,46 @@
     justify-content: center;
 }
 
+.fade-enter {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 150ms linear;
+}
+
+.fade-enter-done {
+    opacity: 1;
+    transition: none;
+}
+
+.fade-exit {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.fade-exit-done {
+    opacity: 0;
+    transition: none;
+}
+
+.fade-appear {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.fade-appear-active {
+    opacity: 1;
+    transition: opacity 150ms linear;
+}
+
 /* backdrop with transitions*/
 .modal-backdrop {
     position: fixed;

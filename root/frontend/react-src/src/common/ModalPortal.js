@@ -9,7 +9,18 @@ import './Modal.css'
 // We want to render to a div that is a child of body (root).
 
 const appRoot = document.getElementById('root');
-const duration = 150;
+const fadeDuration = 150;
+const modalDuration = 300;
+const fadeClasses = {
+    enter: 'fade-enter',
+    enterActive: 'fade-enter-active',
+    enterDone: 'fade-enter-done',
+    exit: 'fade-exit',
+    exitActive: 'fade-exit-active',
+    exitDone: 'fade-exit-done',
+    appear: 'fade-appear',
+    appearActive: 'fade-appear-active',
+};
 
 class ModalPortal extends React.Component {
     constructor(){
@@ -38,23 +49,32 @@ class ModalPortal extends React.Component {
             return ReactDOM.createPortal(
                 (
                     <div>
-                        <div className="modal" role="dialog">
-                            <div className="modal-dialog" role="document">
-                                {!!ModalContent ? (
-                                    <ModalContent/>
-                                ) : (
-                                    null
-                                )}
+                        {/* modal window */}
+                        <CSSTransition
+                            in={this.props.in}
+                            timeout={modalDuration}
+                            onExited={this.onClosed}
+                            classNames={fadeClasses}
+                            appear
+                        >
+                            <div className="modal" role="dialog">
+                                <div className="modal-dialog" role="document">
+                                    {/* TODO: make modalcontent persist */}
+                                    {!!ModalContent ? (
+                                        <ModalContent/>
+                                    ) : (
+                                        null
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        </CSSTransition>
 
                         {/* backdrop */}
                         <CSSTransition
                             in={this.props.in}
-                            timeout={duration}
+                            timeout={fadeDuration}
                             classNames="modal-backdrop"
                             appear
-                            onExited={this.onClosed}
                         >
                             {(state) => (
                                 <div className="modal-backdrop"/>
