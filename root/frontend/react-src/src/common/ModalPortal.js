@@ -59,12 +59,7 @@ class ModalPortal extends React.Component {
                         >
                             <div className="modal" role="dialog">
                                 <div className="modal-dialog" role="document">
-                                    {/* TODO: make modalcontent persist */}
-                                    {!!ModalContent ? (
-                                        <ModalContent/>
-                                    ) : (
-                                        null
-                                    )}
+                                    <ModalContent/>
                                 </div>
                             </div>
                         </CSSTransition>
