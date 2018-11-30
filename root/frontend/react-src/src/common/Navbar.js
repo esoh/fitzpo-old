@@ -31,21 +31,9 @@ class Navbar extends React.Component {
         });
     };
 
-
-    getExpandClass(expand){
-        if(!expand){
-            return '';
-        }
-        if(expand === true){
-            return ' navbar-expand';
-        } else {
-            return ' navbar-expand-' + expand;
-        }
-    }
-
     render() {
         return (
-            <nav className={"navbar navbar-light bg-light fixed-top" + this.getExpandClass(this.props.expand)}>
+            <nav className="navbar navbar-expand-md">
                 <div className="container">
 
                     {/* Brand */}
@@ -57,11 +45,11 @@ class Navbar extends React.Component {
                     </button>
 
                     {/* Collapsible navbar items */}
-                    <NavbarCollapse in={!this.state.collapsed} expand={this.props.expand}>
+                    <NavbarCollapse in={!this.state.collapsed}>
                         <ModalContext.Consumer>
                             { /* grab showModal from ModalContext value */ }
                             { ({showModal}) =>
-                                <ul className="navbar-nav ml-auto">
+                                <ul className="navbar-nav">
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <NavLink className="nav-link" exact to="/">Home</NavLink>
@@ -81,7 +69,7 @@ class Navbar extends React.Component {
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
-                                        className="btn btn-link nav-link text-left"
+                                        className="btn btn-link nav-link"
                                         onClick={() => showModal(SignupContent)}>
                                             Sign up
                                         </button>
@@ -89,7 +77,7 @@ class Navbar extends React.Component {
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
-                                        className="btn btn-link nav-link text-left"
+                                        className="btn btn-link nav-link"
                                         onClick={() => showModal(LoginContent)}>
                                             Log in
                                         </button>
