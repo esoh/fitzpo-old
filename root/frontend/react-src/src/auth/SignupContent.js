@@ -4,7 +4,7 @@ import { ModalContext } from '../common/ModalContext';
 class SignupContent extends React.Component {
     render(){
         return(
-            <div>
+            <div className="modal-content">
                 <h1>signup modal</h1>
                 <ModalContext.Consumer>
                     {({ hideModal }) => <button onClick={hideModal}>Close It</button>}

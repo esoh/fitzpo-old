@@ -36,8 +36,8 @@ class ModalPortal extends React.Component {
             return ReactDOM.createPortal(
                 (
                     <div>
-                        <div className="modal">
-                            <div className="modal-content">
+                        <div className="modal" role="dialog">
+                            <div className="modal-dialog" role="document">
                                 {!!ModalContent ? (
                                     <ModalContent/>
                                 ) : (
