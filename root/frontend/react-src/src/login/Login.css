@@ -1,0 +1,168 @@
+html {
+  box-sizing: border-box;
+}
+
+body {
+}
+
+.wrapper {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 1fr 2fr 1fr;
+  height: 100%;
+  background-image: url("https://www.nicknotas.com/wp-content/uploads/2018/08/Workout_buddy_gym.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+/****** LOGIN CONTAINER *******/
+
+.login-container {
+  display: grid;
+  border-radius: 20px;
+  grid-column: 2/3;
+  box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+  max-width: 400px;
+  min-width: 300px;
+  max-height: 600px;
+  background-color: white;
+  margin: auto;
+  padding: 20px 20px 10px;
+}
+
+/******* LOGIN HEADER ******/
+
+.login-container h3 {
+  padding: 10px 0 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.hrb {
+  background-color: deepskyblue;
+  width: 90%;
+  opacity: 0.2;
+  margin: 10px 0 30px;
+  justify-self: center;
+}
+
+/****** LOGIN FORM *******/
+
+.login-container form {
+  display: grid;
+  padding: 0 15px 0;
+  height: auto;
+}
+
+.input-container {
+  display: grid;
+  position: relative;
+  background-color: white;
+  max-width: 100%;
+  height: auto;
+  margin: 0 0 1rem;
+  align-content: center;
+  /*border: thin solid green;*/
+  /*justify-self: center;*/
+}
+
+.text-input {
+  background-color: transparent;
+  position: absolute;
+  padding-left: 50px;
+  border: solid thin grey;
+  border-radius: 30px;
+  justify-self: center;
+  width: 100%;
+  height: 100%;
+}
+
+.login-container input:focus {
+  border: solid thin deepskyblue;
+  border-radius: 30px;
+  outline: 0;
+}
+
+.fa-user {
+  margin: 15px 15px 15px 20px;
+  color: grey;
+}
+
+.fa-key {
+  margin: 15px 15px 15px 20px;
+  color: grey;
+}
+
+.fa-eye {
+  margin: 15px 20px 15px 15px;
+  color: grey;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.login-footer {
+  margin: 0.5rem 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.8rem;
+}
+
+.checkbox {
+  display: flex;
+  justify-self: left;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+
+.remember-label {
+  margin: 0 0 0 0.2rem;
+}
+
+.forgot-password {
+  justify-self: right;
+  margin-right: 0.5rem;
+}
+
+.login-container button {
+  /*background-image: linear-gradient(to bottom right, #92fe9d, #00c9ff);*/
+  background-color: #3A9AF3;
+  box-shadow: 0 1px 1px rgba(104, 104, 104, 0.8);
+  margin: 0 0 20px;
+  padding: 10px;
+  border-radius: 20px;
+  justify-self: center;
+  width: 100%;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  /*background-color: #00ace6;*/
+  /*background-image: linear-gradient(to bottom right, #81fe8d, #00b4e6);*/
+  background-color: #2690f2;
+}
+
+button:focus {
+  /*background-image: linear-gradient(to bottom right, #81fe8d, #00b4e6);*/
+  background-color: #2690f2;
+  outline: none;
+}
+.login-container span {
+  justify-self: center;
+  font-size: 0.9rem;
+}
+
+.sign-up {
+  margin-left: 0.4rem;
+}
+.login-container img {
+    width: 100%;
+}
+
+.no-margin {
+  margin: 0;
+}
+
