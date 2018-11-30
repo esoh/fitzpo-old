@@ -19,12 +19,13 @@ const defaultStyle = {
     transition: `opacity ${duration}ms linear`,
     opacity: 0,
 }
+// TODO: fix entering transition
 const fadeStyles = {
     [EXITED]: {
         opacity: 0,
     },
     [EXITING]: {
-        opacity: 0.5,
+        opacity: 0,
     },
     [ENTERING]: {
         opacity: 0,
@@ -35,16 +36,36 @@ const fadeStyles = {
 }
 
 class ModalPortal extends React.Component {
-    render(){
-        if(this.props.in){
-            const ModalContent = this.props.content;
+    constructor(){
+        super();
+        this.state = {
+            in: false,
+        };
+    }
 
+    componentDidUpdate(prevProps, prevState){
+        if(!prevProps.in && this.props.in){
+            this.setState({in: this.props.in});
+        }
+    }
+
+    onClosed = () => {
+        this.setState({ in: false })
+    }
+
+    render(){
+        const ModalContent = this.props.content;
+        if(this.state.in){
             return ReactDOM.createPortal(
                 (
                     <div>
                         <div className="modal">
                             <div className="modal-content">
-                                <ModalContent />
+                                {!!ModalContent ? (
+                                    <ModalContent/>
+                                ) : (
+                                    null
+                                )}
                             </div>
                         </div>
 
@@ -53,6 +74,7 @@ class ModalPortal extends React.Component {
                             in={this.props.in}
                             timeout={duration}
                             appear
+                            onExited={this.onClosed}
                         >
                             {(state) => (
                                 <div
