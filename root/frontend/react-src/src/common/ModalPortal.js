@@ -46,7 +46,6 @@ class ModalPortal extends React.Component {
         }
     }
 
-    //TODO: attach onClosed to modal, not modal-backdrop
     onClosed = () => {
         this.setState({ in: false })
     }
