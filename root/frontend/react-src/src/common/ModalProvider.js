@@ -31,13 +31,7 @@ class ModalProvider extends React.Component {
         return(
             <ModalContext.Provider value={this.state}>
                 {this.props.children}
-                {ModalContent ? (
-                    <ModalPortal>
-                        <ModalContent />
-                    </ModalPortal>
-                ) : (
-                    null
-                )}
+                <ModalPortal in={!!ModalContent} content={ModalContent} />
             </ModalContext.Provider>
         );
     }
