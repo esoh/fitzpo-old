@@ -11,15 +11,25 @@ import './Modal.css'
 const appRoot = document.getElementById('root');
 const fadeDuration = 150;
 const modalDuration = 300;
-const fadeClasses = {
-    enter: 'fade-enter',
-    enterActive: 'fade-enter-active',
-    enterDone: 'fade-enter-done',
-    exit: 'fade-exit',
-    exitActive: 'fade-exit-active',
-    exitDone: 'fade-exit-done',
-    appear: 'fade-appear',
-    appearActive: 'fade-appear-active',
+const modalFadeClasses = {
+    enter: 'fade-hide',
+    enterActive: 'fade-show',
+    enterDone: 'fade-show',
+    exit: 'fade-hide',
+    exitActive: 'fade-hide',
+    exitDone: 'fade-hide',
+    appear: 'fade-hide',
+    appearActive: 'fade-show'
+};
+const backdropFadeClasses = {
+    enter: 'modal-backdrop-hide',
+    enterActive: 'modal-backdrop-show',
+    enterDone: 'modal-backdrop-show',
+    exit: 'modal-backdrop-hide',
+    exitActive: 'modal-backdrop-hide',
+    exitDone: 'modal-backdrop-hide',
+    appear: 'modal-backdrop-hide',
+    appearActive: 'modal-backdrop-show'
 };
 
 class ModalPortal extends React.Component {
@@ -54,7 +64,7 @@ class ModalPortal extends React.Component {
                             in={this.props.in}
                             timeout={modalDuration}
                             onExited={this.onClosed}
-                            classNames={fadeClasses}
+                            classNames={modalFadeClasses}
                             appear
                         >
                             <div className="modal" role="dialog">
@@ -68,7 +78,7 @@ class ModalPortal extends React.Component {
                         <CSSTransition
                             in={this.props.in}
                             timeout={fadeDuration}
-                            classNames="modal-backdrop"
+                            classNames={backdropFadeClasses}
                             appear
                         >
                             <div className="modal-backdrop"/>

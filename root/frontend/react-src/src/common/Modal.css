@@ -10,96 +10,7 @@
     display: block;
     align-items: center;
     justify-content: center;
-}
-
-.fade-enter {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.fade-enter-active {
     opacity: 1;
-    transition: opacity 150ms ease;
-}
-
-.fade-enter-done {
-    opacity: 1;
-    transition: none;
-}
-
-.fade-exit {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.fade-exit-active {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.fade-exit-done {
-    opacity: 0;
-    transition: none;
-}
-
-.fade-appear {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.fade-appear-active {
-    opacity: 1;
-    transition: opacity 150ms ease;
-}
-
-/* backdrop with transitions*/
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    background-color: #000;
-}
-
-.modal-backdrop-enter {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.modal-backdrop-enter-active {
-    opacity: 0.5;
-    transition: opacity 150ms ease;
-}
-
-.modal-backdrop-enter-done {
-    opacity: 0.5;
-    transition: none;
-}
-
-.modal-backdrop-exit {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.modal-backdrop-exit-active {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.modal-backdrop-exit-done {
-    opacity: 0;
-    transition: none;
-}
-
-.modal-backdrop-appear {
-    opacity: 0;
-    transition: opacity 150ms ease;
-}
-
-.modal-backdrop-appear-active {
-    opacity: 0.5;
     transition: opacity 150ms ease;
 }
 
@@ -115,4 +26,32 @@
     border-radius: .3rem;
     box-sizing: border-box;
     align-items: center;
+}
+
+.fade-show {
+    opacity: 1;
+}
+
+.fade-hide {
+    opacity: 0;
+}
+
+/* backdrop with transitions*/
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+    transition: opacity 150ms ease;
+}
+
+.modal-backdrop-show {
+    opacity: 0.5;
+}
+
+.modal-backdrop-hide {
+    opacity: 0;
 }
