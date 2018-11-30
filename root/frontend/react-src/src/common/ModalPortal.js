@@ -35,23 +35,33 @@ class ModalPortal extends React.Component {
         super();
         this.state = {
             in: false,
+            content: null,
+            modalProps: {},
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if(nextProps.in && !prevState.in){
-            return {in: nextProps.in};
+            return {
+                in: nextProps.in,
+                content: nextProps.content,
+                modalProps: nextProps.modalProps,
+            };
         } else {
             return null;
         }
     }
 
     onClosed = () => {
-        this.setState({ in: false })
+        this.setState({
+            in: false,
+            content: null,
+            modalProps: {},
+        })
     }
 
     render(){
-        const ModalContent = this.props.content;
+        const ModalContent = this.state.content;
         if(this.state.in){
             return ReactDOM.createPortal(
                 (
@@ -66,7 +76,7 @@ class ModalPortal extends React.Component {
                         >
                             <div className="modal" role="dialog">
                                 <div className="modal-dialog" role="document">
-                                    <ModalContent/>
+                                    <ModalContent {...this.state.modalProps}/>
                                 </div>
                             </div>
                         </CSSTransition>
