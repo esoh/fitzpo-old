@@ -1,6 +1,5 @@
 import React from 'react';
 import './Signup.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PwField, EntryField} from "../common/EntryComponents";
 import { Link } from 'react-router-dom';
 

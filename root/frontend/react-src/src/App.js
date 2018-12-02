@@ -11,9 +11,8 @@ import Profile from './profile/Profile';
 import Login from './login/Login';
 import Signup from './signup/Signup';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope);
 
@@ -21,7 +20,7 @@ class App extends Component {
     render() {
         return (
             <Router className="App">
-                <div className="bitch">
+                <div className="app-container">
                     <Navbar/>
                     <Switch>
                         <Route exact path="/" component={Home}/>
