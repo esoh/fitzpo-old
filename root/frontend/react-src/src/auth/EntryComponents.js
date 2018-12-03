@@ -23,6 +23,7 @@ export class PwField extends React.Component {
                            type={this.state.pwShow ? "text" : "password"}
                            minLength={8}
                            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                           onChange={this.props.inputChange}
                            required/>
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                        {/*<FontAwesomeIcon icon={this.state.pwShow ? "eye-slash" : "eye"}/>*/}
@@ -36,12 +37,23 @@ export class PwField extends React.Component {
 }
 
 export class EntryField extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            userValue: ""
+        };
+    }
+
+    handleChangeUser = event => {
+        this.setState({userValue: event.target.value});
+    };
+
     render() {
         return (
             <div className="container-margin">
                 <div className="input-container">
                     <FontAwesomeIcon icon={this.props.faIcon}/>
-                    <input className="text-input" placeholder={this.props.placeHolder} type={this.props.inputType} pattern={this.props.inputPattern} id={this.props.inputId} required/>
+                    <input className="text-input" placeholder={this.props.placeHolder} type={this.props.inputType} pattern={this.props.inputPattern} id={this.props.inputId} onChange={this.props.inputChange} required/>
                 </div>
                 <div className={this.props.inputValid ? "field-valid" : "field-invalid"}>{this.props.errorMsg}</div>
             </div>

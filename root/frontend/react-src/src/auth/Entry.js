@@ -9,9 +9,7 @@ class Entry extends React.Component {
                 <div className="signup-container">
                     <h1>{this.props.title}</h1>
                     <hr className="hrb"/>
-                    <form>
-                        {this.props.children}
-                    </form>
+                    {this.props.children}
                 </div>
             </div>
         );

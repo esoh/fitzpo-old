@@ -11,92 +11,73 @@ class Signup extends React.Component {
             isValidated: false,
             userValid: true,
             emailValid: true,
-            pwValid: true
+            pwValid: true,
+            userValue: "",
+            emailValue: "",
+            pwValue: ""
         };
     }
+
+    handleChangeUser = event => {
+        this.setState({userValue: event.target.value});
+    };
+
+    handleChangeEmail = event => {
+        this.setState({emailValue: event.target.value});
+    };
+
+    handleChangePw = event => {
+        this.setState({pwValue: event.target.value});
+    };
+
     validate = () => {
-        const form = document.getElementById("entry-form");
-        const formLength = form.length;
-        if (form.checkValidity() === false) {
-            for (let i = 0; i < formLength; i++) {
-                const elem = form[i];
-                // const errorLabel = elem.parentNode.querySelector(".invalid-feedback");
-                if (/*errorLabel && */elem.nodeName.toLowerCase() !== "button") {
-                    if (!elem.validity.valid) {
-                        console.log(elem.id);
-                        if (elem.id === "user-field") {
-                            this.setState({
-                                userValid: false
-                            });
-                        } else if (elem.id === "pw-field") {
-                            this.setState( {
-                                pwValid:  false
-                            });
-                        } else if (elem.id === "email-field") {
-                            this.setState( {
-                                emailValid: false
-                            })
-                        }
-                    } else {
-                        if (elem.id === "user-field") {
-                            this.setState({
-                                userValid: true
-                            });
-                        } else if (elem.id === "pw-field") {
-                            this.setState( {
-                                pwValid: true
-                            });
-                        } else if (elem.id === "email-field") {
-                            this.setState( {
-                                emailValid: true
-                            })
-                        }
-                        // errorLabel.textContent = "";
-                    }
-                }
-            }
-
-            return false;
+        let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$");
+        let emailRegEx = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+        let pwRegEx = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+        if (userRegEx.test(this.state.userValue)) {
+            this.setState( {userValid: true});
         } else {
-            for (let i = 0; i < formLength; i++) {
-                const elem = form[i];
-                const errorLabel = elem.parentNode.querySelector(".invalid-feedback");
-                if (errorLabel && elem.nodeName.toLowerCase() !== "button") {
-                    errorLabel.textContent = "";
-                }
-            }
-
-            return true;
+            this.setState( {userValid: false});
+        }
+        if (emailRegEx.test(this.state.userValue)) {
+            this.setState( {emailValid: true});
+        } else {
+            this.setState( {emailValid: false});
+        }
+        if (pwRegEx.test(this.state.userValue)) {
+            this.setState( {pwValid: true});
+        } else {
+            this.setState( {pwValid: false});
         }
     };
 
-    submitHandler = event => {
+    handleSubmit = event => {
+        this.validate();
+        alert("A name was submitted : " + this.state.userValue + "\nAn email was submitted : " + this.state.emailValue + "\nA password was submitted : " + this.state.pwValue);
         event.preventDefault();
-
-        if (this.validate()) {
-            this.props.submit();
-        }
-
-        //this.setState({ isValidated: true });
     };
 
     render() {
         return (
             <Entry title="Sign Up">
-                <EntryField inputId="user-field"
-                    faIcon="user"
-                    placeHolder="Username"
-                    inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
-                    inputValid={this.state.userValid}
-                    errorMsg="Usernames must contain at least one letter, numbers, hyphens, underscores & periods"/>
-                <EntryField inputId="email-field"
-                    faIcon="envelope"
-                    placeHolder="Email"
-                    inputType="email"
-                    inputValid={this.state.emailValid}
-                    errorMsg="Not a valid email address"/>
-                <PwField id="pw-field" inputValid={this.state.pwValid}/>
-                <button className="submit-btn" type="submit" onClick={this.submitHandler}>Sign up</button>
+                <form onSubmit={this.handleSubmit}>
+                    <EntryField inputId="user-field"
+                        faIcon="user"
+                        placeHolder="Username"
+                        inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
+                        inputValid={this.state.userValid}
+                        errorMsg="Usernames must contain at least one letter, numbers, hyphens, underscores & periods"
+                        inputChange={this.handleChangeUser}/>
+                    <EntryField inputId="email-field"
+                        faIcon="envelope"
+                        placeHolder="Email"
+                        inputType="email"
+                        inputValid={this.state.emailValid}
+                        errorMsg="Not a valid email address"
+                        inputChange={this.handleChangeEmail}/>
+                    <PwField id="pw-field" inputValid={this.state.pwValid} inputChange={this.handleChangePw}/>
+                    <button className="submit-btn" type="submit" onClick={this.handleSubmit}>Sign up</button>
+                </form>
                 <span>
                     Already have an account?
                     <Link className="sign-up" to="/login">Log in</Link>
