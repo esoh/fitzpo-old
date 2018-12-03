@@ -38,6 +38,10 @@ class ModalPortal extends React.Component {
             content: null,
             modalProps: {},
         };
+        this._modalDialog = null;
+        this.setModalDialogRef = e => {
+            this._modalDialog = e;
+        };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -60,6 +64,12 @@ class ModalPortal extends React.Component {
         })
     }
 
+    handleBackdropClick = e => {
+        if(this._modalDialog && !this._modalDialog.contains(e.target)){
+            this.props.hideModal(e);
+        }
+    }
+
     render(){
         const ModalContent = this.state.content;
         if(this.state.in){
@@ -72,10 +82,16 @@ class ModalPortal extends React.Component {
                             timeout={modalDuration}
                             onExited={this.onClosed}
                             classNames={modalFadeClasses}
+                            className="modal"
+                            role="dialog"
+                            onClick={this.handleBackdropClick}
                             appear
                         >
-                            <div className="modal" role="dialog">
-                                <div className="modal-dialog" role="document">
+                            <div className="modal">
+                                <div className="modal-dialog"
+                                    role="document"
+                                    ref={this.setModalDialogRef}
+                                >
                                     <ModalContent {...this.state.modalProps}/>
                                 </div>
                             </div>
