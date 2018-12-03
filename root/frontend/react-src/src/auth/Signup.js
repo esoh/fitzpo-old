@@ -1,7 +1,8 @@
 import React from 'react';
-import './Entry.css';
-import {PwField, EntryField} from "./EntryComponents";
 import { Link } from 'react-router-dom';
+
+import Entry from './Entry';
+import {PwField, EntryField} from "./EntryComponents";
 
 class Signup extends React.Component {
     constructor() {
@@ -12,22 +13,16 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div className="wrapper">
-                <div className="signup-container">
-                    <h1>Sign up</h1>
-                    <hr className="hrb"/>
-                    <form>
-                        <EntryField faIcon="user" placeHolder="Username"/>
-                        <EntryField faIcon="envelope" placeHolder="Email"/>
-                        <PwField/>
-                        <button type="submit">Sign up</button>
-                        <span>
-                            Already have an account?
-                            <Link className="sign-up" to="/login">Log in</Link>
-                        </span>
-                    </form>
-                </div>
-            </div>
+            <Entry title="Sign Up">
+                <EntryField faIcon="user" placeHolder="Username"/>
+                <EntryField faIcon="envelope" placeHolder="Email"/>
+                <PwField/>
+                <button type="submit">Sign up</button>
+                <span>
+                    Already have an account?
+                    <Link className="sign-up" to="/login">Log in</Link>
+                </span>
+            </Entry>
         );
     }
 }
