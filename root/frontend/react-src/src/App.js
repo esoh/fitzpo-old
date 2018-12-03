@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch, Redirect } from "react-router-dom";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 import './App.css';
 import Navbar from './common/Navbar';
@@ -11,9 +13,6 @@ import Profile from './profile/Profile';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
 import ModalProvider from './common/ModalProvider';
-
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope);
 

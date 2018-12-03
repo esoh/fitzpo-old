@@ -33,7 +33,7 @@ class Navbar extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-md">
+            <nav className="navbar">
                 <div className="container">
 
                     {/* Brand */}
