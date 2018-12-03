@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './Entry.css';
-import {EntryField, PwField} from '../common/EntryComponents';
+import {EntryField, PwField} from './EntryComponents';
 
 class Login extends React.Component {
     render() {

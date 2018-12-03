@@ -1,6 +1,6 @@
 import React from 'react';
 import './Entry.css';
-import {PwField, EntryField} from "../common/EntryComponents";
+import {PwField, EntryField} from "./EntryComponents";
 import { Link } from 'react-router-dom';
 
 class Signup extends React.Component {
