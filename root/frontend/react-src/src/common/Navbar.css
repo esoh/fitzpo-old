@@ -39,18 +39,18 @@
 }
 
 @media (min-width: 768px) {
-    .navbar-expand-md .navbar-collapse {
+    .navbar .navbar-collapse {
         display: -ms-flexbox!important;
         display: flex!important;
         -ms-flex-preferred-size: auto;
         flex-basis: auto;
     }
 
-    .navbar-expand-md .navbar-toggler {
+    .navbar .navbar-toggler {
         display: none;
     }
 
-    .navbar-expand-md .navbar-nav {
+    .navbar .navbar-nav {
         -ms-flex-direction: row;
         flex-direction: row;
     }
