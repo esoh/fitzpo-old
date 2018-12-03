@@ -20,18 +20,20 @@ class App extends Component {
     render() {
         return (
             <Router className="App">
-                <ModalProvider className="app-container">
-                    <Navbar expand="md"/>
-                    <Switch>
-                        <Route exact path="/" component={Home}/>
-                        <Route path="/programs" component={Programs}/>
-                        <Route path="/exercises" component={Exercises}/>
-                        <Route path="/profile" component={Profile}/>
-                        <Route path="/login" component={Login}/>
-                        <Route path="/signup" component={Signup}/>
-                        <Route path="*" render={() => <Redirect to="/"/>}/>
-                    </Switch>
-                </ModalProvider>
+                <Switch>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/signup" component={Signup}/>
+                    <ModalProvider className="app-container">
+                        <Navbar/>
+                        <div>
+                            <Route exact path="/" component={Home}/>
+                            <Route path="/programs" component={Programs}/>
+                            <Route path="/exercises" component={Exercises}/>
+                            <Route path="/profile" component={Profile}/>
+                            <Route path="*" render={() => <Redirect to="/"/>}/>
+                        </div>
+                    </ModalProvider>
+                </Switch>
             </Router>
         );
     }
