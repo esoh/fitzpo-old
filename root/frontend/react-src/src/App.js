@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch, Redirect } from "react-router-dom";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 import './App.css';
 import Navbar from './common/Navbar';
@@ -14,7 +15,7 @@ import Login from './auth/Login';
 import Signup from './auth/Signup';
 import ModalProvider from './common/ModalProvider';
 
-library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope);
+library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope, faTimesCircle);
 
 class App extends Component {
     render() {
