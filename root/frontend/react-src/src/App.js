@@ -25,13 +25,13 @@ class App extends Component {
                     <Route path="/signup" component={Signup}/>
                     <ModalProvider className="app-container">
                         <Navbar/>
-                        <div>
+                        <Switch>
                             <Route exact path="/" component={Home}/>
                             <Route path="/programs" component={Programs}/>
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/profile" component={Profile}/>
                             <Route path="*" render={() => <Redirect to="/"/>}/>
-                        </div>
+                        </Switch>
                     </ModalProvider>
                 </Switch>
             </Router>
