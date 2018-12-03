@@ -1,25 +1,17 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { ModalContext } from '../common/ModalContext';
-
 class SignupContent extends React.Component {
     render(){
         return(
             <div className="modal-content">
-                <ModalContext.Consumer>
-                    {({ hideModal }) =>
-                        <FontAwesomeIcon
-                            icon={['far', 'times-circle']}
-                            className="close-icon"
-                            onClick={hideModal}
-                        />
-                    }
-                </ModalContext.Consumer>
+                <FontAwesomeIcon
+                    icon={['far', 'times-circle']}
+                    className="close-icon"
+                    onClick={this.props.hideModal}
+                />
                 <h1>signup modal</h1>
-                <ModalContext.Consumer>
-                    {({ hideModal }) => <button onClick={hideModal}>Close It</button>}
-                </ModalContext.Consumer>
+                <button onClick={this.props.hideModal}>Close It</button>
             </div>
         )
     }

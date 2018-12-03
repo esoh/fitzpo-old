@@ -92,7 +92,10 @@ class ModalPortal extends React.Component {
                                     role="document"
                                     ref={this.setModalDialogRef}
                                 >
-                                    <ModalContent {...this.state.modalProps}/>
+                                    <ModalContent
+                                        {...this.state.modalProps}
+                                        hideModal={this.props.hideModal}
+                                    />
                                 </div>
                             </div>
                         </CSSTransition>
