@@ -1,7 +1,8 @@
 import React from 'react';
-import './Entry.css';
-import {PwField, EntryField} from "../common/EntryComponents";
 import { Link } from 'react-router-dom';
+
+import Entry from './Entry';
+import {PwField, EntryField} from "./EntryComponents";
 
 class Signup extends React.Component {
     constructor() {
@@ -81,32 +82,26 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div className="wrapper">
-                <div className="signup-container">
-                    <h1>Sign up</h1>
-                    <hr className="hrb"/>
-                    <form id="entry-form">
-                        <EntryField inputId="user-field"
-                                    faIcon="user"
-                                    placeHolder="Username"
-                                    inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
-                                    inputValid={this.state.userValid}
-                                    errorMsg="Usernames must contain at least one letter, numbers, hyphens, underscores & periods"/>
-                        <EntryField inputId="email-field"
-                                    faIcon="envelope"
-                                    placeHolder="Email"
-                                    inputType="email"
-                                    inputValid={this.state.emailValid}
-                                    errorMsg="Not a valid email address"/>
-                        <PwField id="pw-field" inputValid={this.state.pwValid}/>
-                        <button className="submit-btn" type="submit" onClick={this.submitHandler}>Sign up</button>
-                        <span>
-                            Already have an account?
-                            <Link className="sign-up" to="/login">Log in</Link>
-                        </span>
-                    </form>
-                </div>
-            </div>
+            <Entry title="Sign Up">
+                <EntryField inputId="user-field"
+                    faIcon="user"
+                    placeHolder="Username"
+                    inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
+                    inputValid={this.state.userValid}
+                    errorMsg="Usernames must contain at least one letter, numbers, hyphens, underscores & periods"/>
+                <EntryField inputId="email-field"
+                    faIcon="envelope"
+                    placeHolder="Email"
+                    inputType="email"
+                    inputValid={this.state.emailValid}
+                    errorMsg="Not a valid email address"/>
+                <PwField id="pw-field" inputValid={this.state.pwValid}/>
+                <button className="submit-btn" type="submit" onClick={this.submitHandler}>Sign up</button>
+                <span>
+                    Already have an account?
+                    <Link className="sign-up" to="/login">Log in</Link>
+                </span>
+            </Entry>
         );
     }
 }

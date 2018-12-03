@@ -1,6 +1,7 @@
 body, html {
   height: 100%;
   width: 100%;
+  padding-top: 8px; /* TODO: adjust this based on navbar height */
 }
 
 *, ::after, ::before {
@@ -26,6 +27,10 @@ a {
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+}
+
+p {
+    margin: 0;
 }
 
 .container {

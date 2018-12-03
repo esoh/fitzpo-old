@@ -35,6 +35,7 @@ class ModalProvider extends React.Component {
                     in={!!ModalContent}
                     content={ModalContent}
                     modalProps={this.state.props}
+                    hideModal={this.hideModal}
                 />
             </ModalContext.Provider>
         );
