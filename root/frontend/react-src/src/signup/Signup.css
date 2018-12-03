@@ -32,7 +32,10 @@ body {
 
 /******* LOGIN HEADER ******/
 
-.signup-container h3 {
+.signup-container h1 {
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.2;
     padding: 10px 0 0;
     margin-bottom: 0;
     text-align: center;

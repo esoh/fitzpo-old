@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Login.css';
+import '../signup/Signup.css';
 import {EntryField, PwField} from '../common/EntryComponents';
 
 class Login extends React.Component {
     render() {
         return (
             <div className="wrapper">
-                <div className="login-container">
-                    <h3>Log in</h3>
+                <div className="signup-container">
+                    <h1>Log in</h1>
                     <hr className="hrb"/>
                     <form>
                         <EntryField faIcon="user" placeHolder="Username or email"/>
                         <PwField/>
-                        <div className="login-footer">
+                        <div className="signup-footer">
                             <div className="checkbox">
                                 <input type="checkbox"/>
                                 <label className="remember-label">Remember me</label>
@@ -27,7 +27,6 @@ class Login extends React.Component {
                             <Link className="sign-up" to="/signup">Sign up</Link>
                         </span>
                     </form>
-                    <img src="https://i.pinimg.com/originals/85/ea/31/85ea31224d827b44e2fd1be7d4d00f9f.png"/>
                 </div>
             </div>
         );

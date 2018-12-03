@@ -1,11 +1,5 @@
-html {
-  box-sizing: border-box;
-}
-
-body {
-}
-
 .wrapper {
+  box-sizing: border-box;
   display: grid;
   grid-gap: 0;
   grid-template-columns: 1fr 2fr 1fr;
@@ -32,7 +26,10 @@ body {
 
 /******* LOGIN HEADER ******/
 
-.login-container h3 {
+.login-container h1 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
   padding: 10px 0 0;
   margin-bottom: 0;
   text-align: center;
@@ -62,6 +59,7 @@ body {
   height: auto;
   margin: 0 0 1rem;
   align-content: center;
+  box-sizing: border-box;
   /*border: thin solid green;*/
   /*justify-self: center;*/
 }
@@ -69,7 +67,6 @@ body {
 .text-input {
   background-color: transparent;
   position: absolute;
-  padding-left: 50px;
   border: solid thin grey;
   border-radius: 30px;
   justify-self: center;
@@ -78,7 +75,7 @@ body {
 }
 
 .login-container input:focus {
-  border: solid thin deepskyblue;
+  border: solid thin #3A9AF3;
   border-radius: 30px;
   outline: 0;
 }
