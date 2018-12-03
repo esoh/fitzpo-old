@@ -1,5 +1,5 @@
 import React from 'react';
-import './Signup.css';
+import './Entry.css';
 import {PwField, EntryField} from "../common/EntryComponents";
 import { Link } from 'react-router-dom';
 
