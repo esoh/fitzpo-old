@@ -63,11 +63,11 @@ body {
     background-color: white;
     max-width: 100%;
     height: auto;
-    margin: 0 0 1rem;
     align-content: center;
+}
 
-    /*border: thin solid green;*/
-    /*justify-self: center;*/
+.container-margin {
+    margin: 0 0 1rem;
 }
 
 .text-input {
@@ -86,12 +86,43 @@ body {
 }
 
 .text-input:focus {
-    /*border: solid thin #4582ec;*/
-    outline: 0;  color: #495057;
+    outline: 0;
+    color: #495057;
     border-color: #b9d0f8;
-    /*outline: 0;*/
     -webkit-box-shadow: 0 0 0 0.2rem rgba(69, 130, 236, 0.25);
     box-shadow: 0 0 0 0.2rem rgba(69, 130, 236, 0.25);
+}
+
+.text-input:invalid {
+    border-color: #ff0000;
+}
+
+.text-input:invalid:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+.field-valid {
+    display: none;
+    /*display: none;*/
+
+}
+
+.field-invalid {
+    color: #ff0000;
+    font-size: 0.625rem;
+    margin-left: 10px;
+    margin-top: 5px;
+    /*display: none;*/
+}
+
+.valid-err {
+    display: none;
+}
+
+.valid-err:invalid {
+    color: #ff0000;
+    display: inline;
 }
 
 .pw-input {
@@ -168,13 +199,13 @@ body {
     background-color: #226be8;
     outline: none;
 }
-.signup-container span {
-    justify-self: center;
-    font-weight: bold;
-    font-size: 0.625rem;
-    padding: 15px 20px 15px 15px;
-    color: grey;
-}
+/*.signup-container span {*/
+    /*justify-self: center;*/
+    /*font-weight: bold;*/
+    /*font-size: 0.625rem;*/
+    /*padding: 15px 20px 15px 15px;*/
+    /*color: grey;*/
+/*}*/
 
 .sign-up {
     margin-left: 0.4rem;
