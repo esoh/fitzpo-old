@@ -81,7 +81,7 @@ body {
 }
 
 .pw-input {
-    padding-right: 2.5rem;
+    padding-right: 4rem;
 }
 
 .signup-container input:focus {
@@ -138,7 +138,7 @@ body {
     margin-right: 0.5rem;
 }
 
-.signup-container button {
+.submit-btn {
     /*background-image: linear-gradient(to bottom right, #92fe9d, #00c9ff);*/
     background-color: #3A9AF3;
     box-shadow: 0 1px 1px rgba(104, 104, 104, 0.8);
@@ -152,20 +152,23 @@ body {
     border: none;
 }
 
-button:hover {
+.submit-btn:hover {
     /*background-color: #00ace6;*/
     /*background-image: linear-gradient(to bottom right, #81fe8d, #00b4e6);*/
     background-color: #2690f2;
 }
 
-button:focus {
+.submit-btn:focus {
     /*background-image: linear-gradient(to bottom right, #81fe8d, #00b4e6);*/
     background-color: #2690f2;
     outline: none;
 }
 .signup-container span {
     justify-self: center;
-    font-size: 0.9rem;
+    font-weight: bold;
+    font-size: 0.625rem;
+    padding: 15px 20px 15px 15px;
+    color: grey;
 }
 
 .sign-up {
@@ -176,10 +179,30 @@ button:focus {
 }
 
 #show-btn {
+    color: grey;
+    font-weight: bold;
+    font-size: 0.625rem;
     position: absolute;
+    background: none;
     right: 0;
     cursor: pointer;
+    height: 100%;
+    border-radius: 0 30px 30px 0;
+    border: none;
+    min-width: 4rem;
+    transition: color 0.15s ease-in-out;
 }
+
+#show-btn:hover {
+    color: #3A9AF3;
+    outline: none;
+}
+
+#show-btn:focus {
+    color: #3A9AF3;
+    outline: none;
+}
+
 .no-margin {
     margin: 0;
 }

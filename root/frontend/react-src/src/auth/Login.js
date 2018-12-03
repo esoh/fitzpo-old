@@ -21,7 +21,7 @@ class Login extends React.Component {
                             </div>
                             <a href="#" className="forgot-password">Forgot password?</a>
                         </div>
-                        <button type="submit">Log in</button>
+                        <button className="submit-btn" type="submit">Log in</button>
                         <span>
                             Don't have an account?
                             <Link className="sign-up" to="/signup">Sign up</Link>

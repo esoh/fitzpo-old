@@ -20,7 +20,7 @@ class Signup extends React.Component {
                         <EntryField faIcon="user" placeHolder="Username"/>
                         <EntryField faIcon="envelope" placeHolder="Email"/>
                         <PwField/>
-                        <button type="submit">Sign up</button>
+                        <button className="submit-btn" type="submit">Sign up</button>
                         <span>
                             Already have an account?
                             <Link className="sign-up" to="/login">Log in</Link>

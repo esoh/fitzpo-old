@@ -18,9 +18,10 @@ export class PwField extends React.Component {
             <div className="input-container">
                 <FontAwesomeIcon icon="key"/>
                 <input id="pwd-input" className="text-input pw-input" placeholder="Password" type={this.state.pwShow ? "text" : "password"} required/>
-                <span onClick={this.togglePwShow} id="show-btn">
-               <FontAwesomeIcon icon={this.state.pwShow ? "eye-slash" : "eye"}/>
-           </span>
+                <button type="button" onClick={this.togglePwShow} id="show-btn">
+                   {/*<FontAwesomeIcon icon={this.state.pwShow ? "eye-slash" : "eye"}/>*/}
+                    {this.state.pwShow ? "HIDE": "SHOW"}
+               </button>
             </div>
         )
     }
