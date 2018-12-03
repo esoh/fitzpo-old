@@ -25,21 +25,7 @@ const collapseStyles = {
         display: 'block',
     },
 }
-
-function getExpandWidthValue(expandWidthType){
-    switch(expandWidthType){
-        case 'sm':
-            return 576;
-        case 'md':
-            return 768;
-        case 'lg':
-            return 992;
-        case 'xl':
-            return 1200;
-        default:
-            return undefined;
-    }
-}
+const expandWidth = 768;
 
 class NavbarCollapse extends React.Component {
 
@@ -64,7 +50,7 @@ class NavbarCollapse extends React.Component {
 
     onExiting = elem => {
         // prevent closing animation from closing to 0 when navbar is expanded
-        if(!this.props.expand || window.innerWidth < getExpandWidthValue(this.props.expand)){
+        if(!this.props.expand || window.innerWidth < expandWidth){
             elem.style['height'] = '0';
         }
     };
