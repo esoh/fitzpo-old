@@ -1,3 +1,7 @@
+.modal-open {
+    overflow: hidden;
+}
+
 .modal {
     position: fixed;
     top: 0;
@@ -52,6 +56,21 @@
     border-radius: .3rem;
     box-sizing: border-box;
     align-items: center;
+}
+
+.modal-content .close-icon {
+    position: absolute;
+    right: 0;
+    padding: .25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 150ms;
+}
+
+.modal-content .close-icon:hover {
+    color: #000;
 }
 
 /* backdrop with transitions*/

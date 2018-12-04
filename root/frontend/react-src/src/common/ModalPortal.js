@@ -56,16 +56,32 @@ class ModalPortal extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.in && !prevState.in && this._modalDialog) {
+            if(this._modalDialog){
+                this._modalDialog.parentNode.focus();
+            }
+            document.body.classList.add("modal-open");
+        }
+    }
+
     onClosed = () => {
         this.setState({
             in: false,
             content: null,
             modalProps: {},
         })
+        document.body.classList.remove("modal-open");
     }
 
     handleBackdropClick = e => {
         if(this._modalDialog && !this._modalDialog.contains(e.target)){
+            this.props.hideModal(e);
+        }
+    }
+
+    handleEscape = e => {
+        if(this.props.in && e.keyCode === 27){
             this.props.hideModal(e);
         }
     }
@@ -85,6 +101,8 @@ class ModalPortal extends React.Component {
                             className="modal"
                             role="dialog"
                             onClick={this.handleBackdropClick}
+                            onKeyDown={this.handleEscape}
+                            tabIndex="-1"
                             appear
                         >
                             <div className="modal">
@@ -92,7 +110,10 @@ class ModalPortal extends React.Component {
                                     role="document"
                                     ref={this.setModalDialogRef}
                                 >
-                                    <ModalContent {...this.state.modalProps}/>
+                                    <ModalContent
+                                        {...this.state.modalProps}
+                                        hideModal={this.props.hideModal}
+                                    />
                                 </div>
                             </div>
                         </CSSTransition>

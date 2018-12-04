@@ -15,7 +15,7 @@ function Login() {
                         <input type="checkbox"/>
                         <label className="remember-label">Remember me</label>
                     </div>
-                    <a href="#" className="forgot-password">Forgot password?</a>
+                    <Link className="forgot-password" to="/password">Forgot password?</Link>
                 </div>
                 <button className="submit-btn" type="submit">Log in</button>
             </form>

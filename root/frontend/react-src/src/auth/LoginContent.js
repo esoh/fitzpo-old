@@ -1,17 +1,13 @@
 import React from 'react';
-import { ModalContext } from '../common/ModalContext';
 
-class LoginContent extends React.Component {
-    render(){
-        return(
-            <div className="modal-content">
-                <h1>login modal</h1>
-                <ModalContext.Consumer>
-                    {({ hideModal }) => <button onClick={hideModal}>Close It</button>}
-                </ModalContext.Consumer>
-            </div>
-        )
-    }
+import EntryContent from './EntryContent';
+
+function LoginContent(props) {
+    return(
+        <EntryContent title="Log In" onClose={props.hideModal}>
+            <button onClick={props.hideModal}>Close It</button>
+        </EntryContent>
+    )
 }
 
 export default LoginContent;
