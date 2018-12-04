@@ -24,7 +24,7 @@ export class PwField extends React.Component {
                            type={this.state.pwShow ? "text" : "password"}
                            minLength={8}
                            onChange={this.props.inputChange}
-                           onBlur={this.props.validateFunc}
+                           onBlur={this.props.inputValue!=="" ? this.props.validateFunc : false}
                     />
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                         {this.state.pwShow ? "HIDE": "SHOW"}
@@ -47,7 +47,7 @@ export function EntryField(props) {
                        type={props.inputType}
                        id={props.inputId}
                         onChange={props.inputChange}
-                       onBlur={props.validateFunc}
+                       onBlur={props.inputValue!=="" ? props.validateFunc: false}
                        required/>
             </div>
             <div className={props.inputValid ? "field-valid" : "field-invalid"}>{props.errorMsg}</div>

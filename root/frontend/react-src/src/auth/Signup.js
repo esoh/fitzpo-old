@@ -22,7 +22,7 @@ class Signup extends React.Component {
         this.setState({
             userValue: event.target.value
         }, () => {
-            this.validateUser();
+            if (!this.state.userValid) this.validateUser();
         });
     };
 
@@ -30,8 +30,7 @@ class Signup extends React.Component {
         this.setState({
             emailValue: event.target.value
         }, () => {
-            if (!this.state.emailValid)
-                this.validateEmail();
+            if (!this.state.emailValid) this.validateEmail();
         });
     };
 
@@ -39,7 +38,7 @@ class Signup extends React.Component {
         this.setState({
             pwValue: event.target.value
         }, () => {
-            this.validatePw();
+            if (!this.state.pwValid) this.validatePw();
         });
     };
 
