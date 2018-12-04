@@ -30,21 +30,27 @@ class Signup extends React.Component {
         this.setState({pwValue: event.target.value});
     };
 
-    validate = () => {
+    validateUser = () => {
         let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$");
-        let emailRegEx = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
-        let pwRegEx = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
         if (userRegEx.test(this.state.userValue)) {
             this.setState( {userValid: true});
         } else {
             this.setState( {userValid: false});
         }
-        if (emailRegEx.test(this.state.userValue)) {
+    };
+
+    validateEmail = () => {
+        let emailRegEx = new RegExp("^([a-zA-Z0-9_\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+        if (emailRegEx.test(this.state.emailValue)) {
             this.setState( {emailValid: true});
         } else {
             this.setState( {emailValid: false});
         }
-        if (pwRegEx.test(this.state.userValue)) {
+    };
+
+    validatePw = () => {
+        let pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\?])(?=.{8,})");
+        if (pwRegEx.test(this.state.pwValue)) {
             this.setState( {pwValid: true});
         } else {
             this.setState( {pwValid: false});
@@ -52,7 +58,9 @@ class Signup extends React.Component {
     };
 
     handleSubmit = event => {
-        this.validate();
+        this.validateUser();
+        this.validateEmail();
+        this.validatePw();
         alert("A name was submitted : " + this.state.userValue + "\nAn email was submitted : " + this.state.emailValue + "\nA password was submitted : " + this.state.pwValue);
         event.preventDefault();
     };
@@ -64,18 +72,29 @@ class Signup extends React.Component {
                     <EntryField inputId="user-field"
                         faIcon="user"
                         placeHolder="Username"
+                        inputValue={this.state.userValue}
                         inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
                         inputValid={this.state.userValid}
-                        errorMsg="Usernames must contain at least one letter, numbers, hyphens, underscores & periods"
-                        inputChange={this.handleChangeUser}/>
+                        errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
+                        inputChange={this.handleChangeUser}
+                        validateFunc={this.validateUser}
+                    />
                     <EntryField inputId="email-field"
                         faIcon="envelope"
                         placeHolder="Email"
+                        inputValue={this.state.emailValue}
                         inputType="email"
                         inputValid={this.state.emailValid}
                         errorMsg="Not a valid email address"
-                        inputChange={this.handleChangeEmail}/>
-                    <PwField id="pw-field" inputValid={this.state.pwValid} inputChange={this.handleChangePw}/>
+                        inputChange={this.handleChangeEmail}
+                        validateFunc={this.validateEmail}
+                    />
+                    <PwField id="pw-field"
+                         inputValue={this.state.pwValue}
+                         inputValid={this.state.pwValid}
+                         inputChange={this.handleChangePw}
+                         validateFunc={this.validatePw}
+                    />
                     <button className="submit-btn" type="submit" onClick={this.handleSubmit}>Sign up</button>
                 </form>
                 <span>
