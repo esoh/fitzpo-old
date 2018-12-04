@@ -46,7 +46,7 @@ export function EntryField(props) {
                        placeholder={props.placeHolder}
                        type={props.inputType}
                        id={props.inputId}
-                       onChange={props.inputChange}
+                        onChange={props.inputChange}
                        onBlur={props.validateFunc}
                        required/>
             </div>

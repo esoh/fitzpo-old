@@ -19,19 +19,31 @@ class Signup extends React.Component {
     }
 
     handleChangeUser = event => {
-        this.setState({userValue: event.target.value});
+        this.setState({
+            userValue: event.target.value
+        }, () => {
+            this.validateUser();
+        });
     };
 
     handleChangeEmail = event => {
-        this.setState({emailValue: event.target.value});
+        this.setState({
+            emailValue: event.target.value
+        }, () => {
+            this.validateEmail();
+        });
     };
 
     handleChangePw = event => {
-        this.setState({pwValue: event.target.value});
+        this.setState({
+            pwValue: event.target.value
+        }, () => {
+            this.validatePw();
+        });
     };
 
     validateUser = () => {
-        let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-zd._-]{1,}$");
+        let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$");
         if (userRegEx.test(this.state.userValue)) {
             this.setState( {userValid: true});
         } else {
