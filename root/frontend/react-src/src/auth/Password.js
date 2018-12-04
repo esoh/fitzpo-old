@@ -1,10 +1,8 @@
 import React from 'react';
 
-class Password extends React.Component {
-    render() {
-        return (
-            <p>Forgot Password</p>
-        )
-    }
+function Password() {
+    return (
+        <p>Forgot Password</p>
+    )
 }
 export default Password;
