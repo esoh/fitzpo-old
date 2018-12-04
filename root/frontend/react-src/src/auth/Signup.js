@@ -30,7 +30,8 @@ class Signup extends React.Component {
         this.setState({
             emailValue: event.target.value
         }, () => {
-            this.validateEmail();
+            if (!this.state.emailValid)
+                this.validateEmail();
         });
     };
 
