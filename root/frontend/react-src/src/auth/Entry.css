@@ -116,9 +116,9 @@ body {
 }
 
 .field-valid {
-    display: none;
-    /*display: none;*/
-
+    visibility: hidden;
+    min-height: 1rem;
+    max-height: 1rem;
 }
 
 .field-invalid {
@@ -126,7 +126,9 @@ body {
     font-size: 0.625rem;
     margin-left: 10px;
     margin-top: 5px;
-    /*display: none;*/
+    visibility: visible;
+    min-height: 1rem;
+    max-height: 1rem;
 }
 
 .valid-err {
