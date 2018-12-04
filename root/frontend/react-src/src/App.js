@@ -13,6 +13,7 @@ import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
+import Password from './auth/Password';
 import ModalProvider from './common/ModalProvider';
 
 library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope, faTimesCircle);
@@ -32,6 +33,7 @@ class App extends Component {
                                 <Route path="/programs" component={Programs}/>
                                 <Route path="/exercises" component={Exercises}/>
                                 <Route path="/profile" component={Profile}/>
+                                <Route path="/password" component={Password}/>
                                 <Route path="*" render={() => <Redirect to="/"/>}/>
                             </Switch>
                         </div>
