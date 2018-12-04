@@ -31,7 +31,7 @@ class Signup extends React.Component {
     };
 
     validateUser = () => {
-        let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$");
+        let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-zd._-]{1,}$");
         if (userRegEx.test(this.state.userValue)) {
             this.setState( {userValid: true});
         } else {
@@ -40,7 +40,7 @@ class Signup extends React.Component {
     };
 
     validateEmail = () => {
-        let emailRegEx = new RegExp("^([a-zA-Z0-9_\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+        let emailRegEx = new RegExp("^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$");
         if (emailRegEx.test(this.state.emailValue)) {
             this.setState( {emailValid: true});
         } else {
@@ -49,7 +49,7 @@ class Signup extends React.Component {
     };
 
     validatePw = () => {
-        let pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\?])(?=.{8,})");
+        let pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
         if (pwRegEx.test(this.state.pwValue)) {
             this.setState( {pwValid: true});
         } else {
@@ -73,7 +73,6 @@ class Signup extends React.Component {
                         faIcon="user"
                         placeHolder="Username"
                         inputValue={this.state.userValue}
-                        inputPattern="^(?=.*[A-Za-z])[A-Za-z\d\._\-]{1,}$"
                         inputValid={this.state.userValid}
                         errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
                         inputChange={this.handleChangeUser}
