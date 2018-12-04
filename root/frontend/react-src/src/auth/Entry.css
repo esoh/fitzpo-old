@@ -66,8 +66,9 @@ body {
     align-content: center;
 }
 
-.container-margin {
+.form-group {
     margin: 0 0 1rem;
+    min-height: 4.25rem;
 }
 
 .text-input {
