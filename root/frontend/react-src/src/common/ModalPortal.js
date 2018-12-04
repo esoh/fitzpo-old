@@ -58,7 +58,10 @@ class ModalPortal extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.in && !prevState.in && this._modalDialog) {
-            this._modalDialog.parentNode.focus();
+            if(this._modalDialog){
+                this._modalDialog.parentNode.focus();
+            }
+            document.body.classList.add("modal-open");
         }
     }
 
@@ -68,6 +71,7 @@ class ModalPortal extends React.Component {
             content: null,
             modalProps: {},
         })
+        document.body.classList.remove("modal-open");
     }
 
     handleBackdropClick = e => {
