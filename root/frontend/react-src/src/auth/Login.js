@@ -8,8 +8,8 @@ function Login() {
     return (
         <Entry title="Log In">
             <form>
-                <EntryField faIcon="user" placeHolder="Username or email"/>
-                <PwField/>
+                <EntryField faIcon="user" placeHolder="Username or email" autoComplete="email"/>
+                <PwField autoComplete="password"/>
                 <div className="signup-footer">
                     <div className="checkbox">
                         <input type="checkbox"/>

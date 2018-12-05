@@ -25,6 +25,7 @@ export class PwField extends React.Component {
                            minLength={8}
                            onChange={this.props.inputChange}
                            onBlur={this.props.inputValue!=="" ? this.props.validateFunc : undefined}
+                           autoComplete={this.props.autoComplete}
                     />
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                         {this.state.pwShow ? "HIDE": "SHOW"}
@@ -46,9 +47,11 @@ export function EntryField(props) {
                        placeholder={props.placeHolder}
                        type={props.inputType}
                        id={props.inputId}
-                        onChange={props.inputChange}
+                       onChange={props.inputChange}
                        onBlur={props.inputValue !== "" ? props.validateFunc: undefined}
-                       required/>
+                       autoComplete={props.autoComplete}
+                       required
+                />
             </div>
             <div className={props.inputValid ? "field-valid" : "field-invalid"}>{props.errorMsg}</div>
         </div>
