@@ -231,16 +231,16 @@ body {
     border-radius: 0 30px 30px 0;
     border: none;
     min-width: 4rem;
-    transition: color 0.15s ease-in-out;
+    transition: color 0.3s ease-in-out;
 }
 
-#show-btn:hover {
+#show-btn:hover, #show-btn:focus {
     color: #4582ec;
     outline: none;
 }
 
-#show-btn:focus {
-    color: #4582ec;
+#show-btn:active {
+    color: grey;
     outline: none;
 }
 
