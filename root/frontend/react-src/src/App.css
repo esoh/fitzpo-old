@@ -1,6 +1,7 @@
 body, html {
   height: 100%;
   width: 100%;
+  color: #343a40;
 }
 
 *, ::after, ::before {
@@ -43,6 +44,10 @@ a:hover {
 
 p {
     margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    color: inherit;
 }
 
 .container {
