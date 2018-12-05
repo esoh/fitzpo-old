@@ -68,8 +68,9 @@ body {
 .input-icon {
     position: absolute;
     color: grey;
-    left: 15px;
-    top: 15px;
+    top: calc(50% - 0.5rem);
+    left: 1rem;
+    height: 1rem;
 }
 
 .form-group {
