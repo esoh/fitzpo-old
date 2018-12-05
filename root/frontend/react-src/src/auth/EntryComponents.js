@@ -24,7 +24,7 @@ export class PwField extends React.Component {
                            type={this.state.pwShow ? "text" : "password"}
                            minLength={8}
                            onChange={this.props.inputChange}
-                           onBlur={this.props.inputValue!=="" ? this.props.validateFunc : false}
+                           onBlur={this.props.inputValue!=="" ? this.props.validateFunc : undefined}
                     />
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                         {this.state.pwShow ? "HIDE": "SHOW"}
