@@ -17,7 +17,7 @@ export class PwField extends React.Component {
         return (
             <div className="form-group">
                 <div className="input-container">
-                    <FontAwesomeIcon icon="key"/>
+                    <FontAwesomeIcon icon="key" className="input-icon"/>
                     <input className={this.props.inputValid ? "text-input pw-input" : "text-input invalid pw-input"} placeholder="Password"
                            value={this.props.inputValue}
                            id="pw-field"
@@ -41,7 +41,7 @@ export function EntryField(props) {
     return (
         <div className="form-group">
             <div className="input-container">
-                <FontAwesomeIcon icon={props.faIcon}/>
+                <FontAwesomeIcon icon={props.faIcon} className="input-icon"/>
                 <input className={props.inputValid ? "text-input" : "text-input invalid"}
                        value={props.inputValue}
                        placeholder={props.placeHolder}
