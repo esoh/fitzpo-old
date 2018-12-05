@@ -47,7 +47,7 @@ export function EntryField(props) {
                        type={props.inputType}
                        id={props.inputId}
                         onChange={props.inputChange}
-                       onBlur={props.inputValue!=="" ? props.validateFunc: false}
+                       onBlur={props.inputValue !== "" ? props.validateFunc: undefined}
                        required/>
             </div>
             <div className={props.inputValid ? "field-valid" : "field-invalid"}>{props.errorMsg}</div>
