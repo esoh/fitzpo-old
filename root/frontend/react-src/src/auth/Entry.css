@@ -1,7 +1,6 @@
 .wrapper {
-    display: grid;
-    grid-gap: 0;
-    grid-template-columns: 1fr 2fr 1fr;
+    display: flex;
+    justify-content: center;
     height: 100%;
     background-image: url("https://www.nicknotas.com/wp-content/uploads/2018/08/Workout_buddy_gym.jpg");
     background-position: center;
@@ -11,16 +10,14 @@
 /****** LOGIN CONTAINER *******/
 
 .signup-container {
-    display: grid;
     border-radius: 20px;
-    grid-column: 2/3;
     box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
     max-width: 400px;
     min-width: 300px;
     max-height: 600px;
     background-color: white;
-    margin: auto;
-    padding: 20px 20px 10px;
+    margin: auto 1rem;
+    padding: 1.875rem 1.875rem;
 }
 
 /******* LOGIN HEADER ******/
@@ -29,14 +26,14 @@
     font-size: 2.125rem;
     font-weight: normal;
     line-height: 1.2;
-    padding: 10px 0 0;
-    margin-bottom: 0;
+    padding: 1rem;
+    margin: 0;
     text-align: center;
 }
 
 .hrb {
     background-color: deepskyblue;
-    width: 90%;
+    width: 100%;
     opacity: 0.2;
     margin: 10px 0 30px;
     justify-self: center;
@@ -60,10 +57,10 @@
 
 .input-icon {
     position: absolute;
-    color: grey;
-    top: calc(50% - 0.5rem);
+    color: #A9A9A9;
+    top: calc(50% - 0.4125rem);
     left: 1.125rem;
-    height: 1rem;
+    height: .825rem;
 }
 
 .form-group {
@@ -77,13 +74,13 @@
     width: 100%;
     display: block;
     padding-left: 2.75rem;
-    border: solid thin grey;
+    border: solid thin #ddd;
     border-radius: 30px;
     justify-self: center;
-    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    -webkit-transition: border-color 300ms ease-in-out, -webkit-box-shadow 300ms ease-in-out;
+    transition: border-color 300ms ease-in-out, -webkit-box-shadow 300ms ease-in-out;
+    transition: border-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
+    transition: border-color 300ms ease-in-out, box-shadow 300ms ease-in-out, -webkit-box-shadow 300ms ease-in-out;
 }
 
 .text-input:focus {
@@ -95,12 +92,12 @@
 }
 
 .text-input.invalid {
-    border: solid thin #ff0000;
+    border-color: #ef5b57;
 }
 
 .text-input.invalid:focus {
     outline: 0;
-    border-color: #ff0000;
+    border-color: #ef5b57;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
     box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
 }
@@ -112,7 +109,7 @@
 }
 
 .field-invalid {
-    color: #ff0000;
+    color: #ef5b57;
     font-size: 0.625rem;
     margin-left: 10px;
     margin-top: 5px;
@@ -126,7 +123,7 @@
 }
 
 .valid-err:invalid {
-    color: #ff0000;
+    color: #ef5b57;
     display: inline;
 }
 
@@ -191,7 +188,7 @@
 }
 
 #show-btn {
-    color: grey;
+    color: #A0A0A0;
     font-weight: bold;
     font-size: 0.625rem;
     position: absolute;
@@ -208,7 +205,7 @@
 }
 
 #show-btn:focus, #show-btn:active {
-    color: grey;
+    color: #A0A0A0;
 }
 
 #show-btn:hover {
