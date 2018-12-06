@@ -79,43 +79,47 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <Entry title="Sign Up">
-                <form onSubmit={this.handleSubmit}>
-                    <EntryField inputId="user-field"
-                        faIcon="user"
-                        placeHolder="Username"
-                        inputValue={this.state.userValue}
-                        inputValid={this.state.userValid}
-                        errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
-                        inputChange={this.handleChangeUser}
-                        validateFunc={this.validateUser}
-                        autoComplete="username"
-                    />
-                    <EntryField inputId="email-field"
-                        faIcon="envelope"
-                        placeHolder="Email"
-                        inputValue={this.state.emailValue}
-                        inputType="email"
-                        inputValid={this.state.emailValid}
-                        errorMsg="Not a valid email address"
-                        inputChange={this.handleChangeEmail}
-                        validateFunc={this.validateEmail}
-                        autoComplete="email"
-                    />
-                    <PwField id="pw-field"
-                         inputValue={this.state.pwValue}
-                         inputValid={this.state.pwValid}
-                         inputChange={this.handleChangePw}
-                         validateFunc={this.validatePw}
-                         autoComplete="new-password"
-                    />
-                    <button className="submit-btn" type="submit" onClick={this.handleSubmit}>Sign up</button>
-                </form>
-                <span>
-                    Already have an account?
-                    <Link className="sign-up" to="/login">Log in</Link>
-                </span>
-            </Entry>
+            <Entry title="Sign Up"
+                body={(
+                    <form onSubmit={this.handleSubmit}>
+                        <EntryField inputId="user-field"
+                            faIcon="user"
+                            placeHolder="Username"
+                            inputValue={this.state.userValue}
+                            inputValid={this.state.userValid}
+                            errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
+                            inputChange={this.handleChangeUser}
+                            validateFunc={this.validateUser}
+                            autoComplete="username"
+                        />
+                        <EntryField inputId="email-field"
+                            faIcon="envelope"
+                            placeHolder="Email"
+                            inputValue={this.state.emailValue}
+                            inputType="email"
+                            inputValid={this.state.emailValid}
+                            errorMsg="Not a valid email address"
+                            inputChange={this.handleChangeEmail}
+                            validateFunc={this.validateEmail}
+                            autoComplete="email"
+                        />
+                        <PwField id="pw-field"
+                            inputValue={this.state.pwValue}
+                            inputValid={this.state.pwValid}
+                            inputChange={this.handleChangePw}
+                            validateFunc={this.validatePw}
+                            autoComplete="new-password"
+                        />
+                        <button className="submit-btn" type="submit" onClick={this.handleSubmit}>Sign up</button>
+                    </form>
+                )}
+                footer={(
+                    <span>
+                        Already have an account?
+                        <Link className="sign-up" to="/login">Log in</Link>
+                    </span>
+                )}
+            />
         );
     }
 }

@@ -6,9 +6,16 @@ function Entry(props) {
     return (
         <div className="wrapper">
             <div className="signup-container">
-                <h1>{props.title}</h1>
-                <hr className="hrb"/>
-                {props.children}
+                <div className="entry-header">
+                    <h1>{props.title}</h1>
+                    <hr className="hrb"/>
+                </div>
+                <div className="entry-body">
+                    {props.body}
+                </div>
+                <div className="entry-footer">
+                    {props.footer}
+                </div>
             </div>
         </div>
     );
