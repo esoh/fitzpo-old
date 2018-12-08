@@ -68,16 +68,18 @@ class Navbar extends React.Component {
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
-                                        className="btn btn-link nav-link"
-                                        onClick={() => showModal(EntryModal, {isSignup: true})}>
+                                            className="link-btn nav-link"
+                                            onClick={() => showModal(EntryModal, {isSignup: true})}
+                                        >
                                             Sign up
                                         </button>
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
-                                        className="btn btn-link nav-link"
-                                        onClick={() => showModal(EntryModal, {isSignup: false})}>
+                                            className="link-btn nav-link"
+                                            onClick={() => showModal(EntryModal, {isSignup: false})}
+                                        >
                                             Log in
                                         </button>
                                     </li>

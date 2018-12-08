@@ -183,6 +183,21 @@
     margin-left: 0.4rem;
     font-weight: bold;
     font-size: 0.75rem;
+    color: #4582ec;
+}
+
+.alt-entry:focus {
+    color: #4582ec;
+}
+
+.alt-entry:hover {
+    color: #226be8;
+    text-decoration: underline;
+}
+
+.alt-entry:active {
+    color: #1863e6;
+    text-decoration: underline;
 }
 
 .alt-entry-text {

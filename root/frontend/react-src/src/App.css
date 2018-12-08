@@ -52,24 +52,16 @@ h1, h2, h3, h4, h5, h6, p {
 .link-btn {
     border: none;
     padding: 0;
-    color: #4582ec;
     transition: color 0.3s ease-in-out;
-}
-
-.link-btn:focus {
-    color: #4582ec;
+    font-size: inherit;
 }
 
 .link-btn:hover {
-    color: #226be8;
     cursor: pointer;
-    text-decoration: underline;
 }
 
 .link-btn:active {
-    color: #1863e6;
     cursor: pointer;
-    text-decoration: underline;
 }
 
 
