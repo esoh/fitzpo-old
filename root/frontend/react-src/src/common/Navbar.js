@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 import { ModalContext } from './ModalContext';
-import { LoginModal, SignupModal } from '../auth/EntryContent';
+import EntryModal from '../auth/EntryContent';
 import NavbarCollapse from './NavbarCollapse';
 import './Navbar.css';
 
@@ -69,7 +69,7 @@ class Navbar extends React.Component {
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
                                         className="btn btn-link nav-link"
-                                        onClick={() => showModal(SignupModal)}>
+                                        onClick={() => showModal(EntryModal, {isSignup: true})}>
                                             Sign up
                                         </button>
                                     </li>
@@ -77,7 +77,7 @@ class Navbar extends React.Component {
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <button type="button"
                                         className="btn btn-link nav-link"
-                                        onClick={() => showModal(LoginModal)}>
+                                        onClick={() => showModal(EntryModal, {isSignup: false})}>
                                             Log in
                                         </button>
                                     </li>

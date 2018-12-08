@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
 
-function LoginContent() {
+function LoginContent(props) {
     return (
         <Entry title="Log In"
             body={(
@@ -25,7 +25,11 @@ function LoginContent() {
                     <button className="submit-btn" type="submit" form="entryform">Log in</button>
                     <span className="alt-entry-text">
                         Don't have an account?
-                        <Link className="sign-up" to="/signup">Sign up</Link>
+                        {props.altEntry ? (
+                            <a className="sign-up" onClick={props.altEntry}>Sign up</a>
+                        ) : (
+                            <Link className="sign-up" to="/signup">Sign up</Link>
+                        )}
                     </span>
                 </>
             )}
