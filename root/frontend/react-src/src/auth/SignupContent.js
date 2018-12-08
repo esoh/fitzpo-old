@@ -125,9 +125,15 @@ class SignupContent extends React.Component {
                         <span className="alt-entry-text">
                             Already have an account?
                             {this.props.altEntry ? (
-                                <a className="sign-up" onClick={this.props.altEntry}>Log in</a>
+                                <button
+                                    className="link-btn alt-entry"
+                                    type="button"
+                                    onClick={this.props.altEntry}
+                                >
+                                    Log in
+                                </button>
                             ) : (
-                                <Link className="sign-up" to="/login">Log in</Link>
+                                <Link className="alt-entry" to="/login">Log in</Link>
                             )}
                         </span>
                     </>

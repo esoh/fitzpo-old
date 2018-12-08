@@ -23,14 +23,20 @@ function LoginContent(props) {
             footer={(
                 <>
                     <button className="submit-btn" type="submit" form="entryform">Log in</button>
-                    <span className="alt-entry-text">
+                    <p className="alt-entry-text">
                         Don't have an account?
                         {props.altEntry ? (
-                            <a className="sign-up" onClick={props.altEntry}>Sign up</a>
+                            <button
+                                className="link-btn alt-entry"
+                                type="button"
+                                onClick={props.altEntry}
+                            >
+                                Sign up
+                            </button>
                         ) : (
-                            <Link className="sign-up" to="/signup">Sign up</Link>
+                            <Link className="alt-entry" to="/signup">Sign up</Link>
                         )}
-                    </span>
+                    </p>
                 </>
             )}
         />

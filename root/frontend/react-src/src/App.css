@@ -34,12 +34,6 @@ a {
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
-    transition: color 0.3s ease-in-out;
-}
-
-a:hover {
-    color: #226be8;
-    text-decoration: underline;
 }
 
 p {
@@ -54,6 +48,30 @@ h1, h2, h3, h4, h5, h6, p {
     margin-right: auto;
     margin-left: auto;
 }
+
+.link-btn {
+    border: none;
+    padding: 0;
+    color: #4582ec;
+    transition: color 0.3s ease-in-out;
+}
+
+.link-btn:focus {
+    color: #4582ec;
+}
+
+.link-btn:hover {
+    color: #226be8;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.link-btn:active {
+    color: #1863e6;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 
 @media (min-width: 576px) {
   .container {

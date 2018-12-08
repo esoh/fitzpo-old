@@ -179,19 +179,17 @@
     background-color: #226be8;
 }
 
-.entry-content span {
-    justify-self: center;
-    font-size: 0.75rem;
-    color: grey;
-}
-
-.sign-up {
+.alt-entry {
     margin-left: 0.4rem;
     font-weight: bold;
+    font-size: 0.75rem;
 }
 
 .alt-entry-text {
+    color: grey;
     margin: auto;
+    justify-self: center;
+    font-size: 0.75rem;
 }
 
 .entry-content img {
@@ -215,12 +213,16 @@
     outline: none;
 }
 
-#show-btn:focus, #show-btn:active {
+#show-btn:focus {
     color: #A0A0A0;
 }
 
 #show-btn:hover {
     color: #4582ec;
+}
+
+#show-btn:active {
+    color: #226be8;
 }
 
 .entry-footer {
