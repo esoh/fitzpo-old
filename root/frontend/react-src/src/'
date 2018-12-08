@@ -11,6 +11,10 @@ function Login() {
                 <form>
                     <EntryField faIcon="user" placeHolder="Username or email" autoComplete="email" id="entryform"/>
                     <PwField autoComplete="password"/>
+                </form>
+            )}
+            footer={(
+                <>
                     <div className="signup-footer">
                         <div className="checkbox">
                             <input type="checkbox"/>
@@ -18,10 +22,6 @@ function Login() {
                         </div>
                         <Link className="forgot-password" to="/password">Forgot password?</Link>
                     </div>
-                </form>
-            )}
-            footer={(
-                <>
                     <button className="submit-btn" type="submit" form="entryform">Log in</button>
                     <span className="alt-entry-text">
                         Don't have an account?
