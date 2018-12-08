@@ -54,6 +54,9 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 0;
     transition: color 0.3s ease-in-out;
     font-size: inherit;
+    background: none;
+    width: 100%;
+    text-align: left;
 }
 
 .link-btn:hover {
