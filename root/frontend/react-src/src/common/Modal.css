@@ -48,12 +48,13 @@
     position: relative;
     display: -ms-flexbox;
     display: flex;
+    padding: 1rem 1.875rem;
     -ms-flex-direction: column;
     flex-direction: column;
     background-clip: padding-box;
     background-color: #fff;
     border: 1px solid rgba(0,0,0,.2);
-    border-radius: .3rem;
+    border-radius: .75rem;
     box-sizing: border-box;
     align-items: center;
 }
@@ -61,9 +62,11 @@
 .modal-content .close-icon {
     position: absolute;
     right: 0;
+    top: 0;
     padding: .25rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    margin: .25rem;
+    width: 1.625rem;
+    height: 1.625rem;
     color: #aaa;
     cursor: pointer;
     transition: color 150ms;

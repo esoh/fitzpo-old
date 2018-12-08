@@ -9,8 +9,8 @@
 
 /****** LOGIN CONTAINER *******/
 
-.signup-container {
-    border-radius: 20px;
+.entry-container {
+    border-radius: .75rem;
     box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
     max-width: 370px;
     min-width: 300px;
@@ -43,7 +43,7 @@
     padding: 0.5rem 1rem;
 }
 
-.signup-container form {
+.entry-content form {
     display: grid;
     height: auto;
 }
@@ -179,7 +179,7 @@
     background-color: #226be8;
 }
 
-.signup-container span {
+.entry-content span {
     justify-self: center;
     font-size: 0.75rem;
     color: grey;
@@ -194,7 +194,7 @@
     margin: auto;
 }
 
-.signup-container img {
+.entry-content img {
     width: 100%;
 }
 

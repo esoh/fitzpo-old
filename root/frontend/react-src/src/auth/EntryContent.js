@@ -1,7 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-function EntryContent(props) {
+import SignupContent from './SignupContent';
+import LoginContent from './LoginContent';
+import '../common/Modal.css';
+
+function EntryModal(props) {
     return(
         <div className="modal-content">
             <FontAwesomeIcon
@@ -9,10 +13,23 @@ function EntryContent(props) {
                 className="close-icon"
                 onClick={props.onClose}
             />
-            <h1>{props.title}</h1>
             {props.children}
         </div>
     );
 }
 
-export default EntryContent;
+export function SignupModal(props) {
+    return (
+        <EntryModal onClose={props.hideModal}>
+            <SignupContent/>
+        </EntryModal>
+    )
+}
+
+export function LoginModal(props) {
+    return (
+        <EntryModal onClose={props.hideModal}>
+            <LoginContent/>
+        </EntryModal>
+    )
+}

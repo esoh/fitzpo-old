@@ -11,8 +11,7 @@ import Home from './home/Home';
 import Programs from './programs/Programs';
 import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
-import Login from './auth/Login';
-import Signup from './auth/Signup';
+import { Login, Signup } from './auth/Entry';
 import Password from './auth/Password';
 import ModalProvider from './common/ModalProvider';
 
