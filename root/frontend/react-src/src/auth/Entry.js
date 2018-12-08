@@ -8,7 +8,6 @@ function Entry(props) {
             <div className="signup-container">
                 <div className="entry-header">
                     <h1>{props.title}</h1>
-                    <hr className="hrb"/>
                 </div>
                 <div className="entry-body">
                     {props.body}

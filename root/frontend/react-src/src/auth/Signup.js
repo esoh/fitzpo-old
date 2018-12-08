@@ -81,7 +81,7 @@ class Signup extends React.Component {
         return (
             <Entry title="Sign Up"
                 body={(
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} id="entryform">
                         <EntryField inputId="user-field"
                             faIcon="user"
                             placeHolder="Username"
@@ -110,14 +110,23 @@ class Signup extends React.Component {
                             validateFunc={this.validatePw}
                             autoComplete="new-password"
                         />
-                        <button className="submit-btn" type="submit" onClick={this.handleSubmit}>Sign up</button>
                     </form>
                 )}
                 footer={(
-                    <span>
-                        Already have an account?
-                        <Link className="sign-up" to="/login">Log in</Link>
-                    </span>
+                    <>
+                        <button
+                            className="submit-btn"
+                            type="submit"
+                            form="entryform"
+                            onClick={this.handleSubmit}
+                        >
+                            Sign up
+                        </button>
+                        <span className="alt-entry-text">
+                            Already have an account?
+                            <Link className="sign-up" to="/login">Log in</Link>
+                        </span>
+                    </>
                 )}
             />
         );

@@ -22,7 +22,7 @@ function Login() {
                 </form>
             )}
             footer={(
-                <span>
+                <span className="alt-entry-text">
                     Don't have an account?
                     <Link className="sign-up" to="/signup">Sign up</Link>
                 </span>
