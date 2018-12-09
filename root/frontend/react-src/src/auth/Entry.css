@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.entry-content {
+    width: 100%;
+}
+
 /******* LOGIN HEADER ******/
 
 .entry-header h1 {
