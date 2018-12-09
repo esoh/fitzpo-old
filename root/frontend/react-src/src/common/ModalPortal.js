@@ -9,7 +9,7 @@ import './Modal.css'
 // We want to render to a div that is a child of body (root).
 
 const appRoot = document.getElementById('root');
-const fadeDuration = 150;
+const fadeDuration = 300;
 const modalDuration = 300;
 const modalFadeClasses = {
     enter: 'fade-show',
