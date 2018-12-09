@@ -89,7 +89,7 @@ class SignupContent extends React.Component {
                             inputValid={this.state.userValid}
                             errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
                             inputChange={this.handleChangeUser}
-                            validateFunc={this.validateUser}
+                            onBlur={this.state.userValue !== "" ? this.validateUser : undefined}
                             autoComplete="username"
                         />
                         <EntryField inputId="email-field"
@@ -100,14 +100,14 @@ class SignupContent extends React.Component {
                             inputValid={this.state.emailValid}
                             errorMsg="Not a valid email address"
                             inputChange={this.handleChangeEmail}
-                            validateFunc={this.validateEmail}
+                            onBlur={this.state.emailValue !== "" ? this.validateEmail : undefined}
                             autoComplete="email"
                         />
                         <PwField id="pw-field"
                             inputValue={this.state.pwValue}
                             inputValid={this.state.pwValid}
                             inputChange={this.handleChangePw}
-                            validateFunc={this.validatePw}
+                            onBlur={this.state.pwValue !== "" ? this.validatePw : undefined}
                             autoComplete="new-password"
                         />
                     </form>

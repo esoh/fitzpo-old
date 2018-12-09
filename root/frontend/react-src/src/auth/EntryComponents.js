@@ -24,18 +24,22 @@ export class PwField extends React.Component {
                            type={this.state.pwShow ? "text" : "password"}
                            minLength={8}
                            onChange={this.props.inputChange}
-                           onBlur={this.props.inputValue!=="" ? this.props.validateFunc : undefined}
+                           onBlur={this.props.onBlur}
                            autoComplete={this.props.autoComplete}
                     />
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                         {this.state.pwShow ? "HIDE": "SHOW"}
                    </button>
                 </div>
-                <div className={this.props.inputValid ? "field-valid" : "field-invalid"}>Use 8 or more characters with a mix of letter, numbers & symbols</div>
+                <div className={this.props.inputValid ? "field-valid" : "field-invalid"}>{this.props.errorMsg}</div>
             </div>
         )
     }
 }
+
+PwField.defaultProps = {
+    errorMsg: 'Use 8 or more characters with a mix of letter, numbers & symbols'
+};
 
 export function EntryField(props) {
     return (
@@ -48,7 +52,7 @@ export function EntryField(props) {
                        type={props.inputType}
                        id={props.inputId}
                        onChange={props.inputChange}
-                       onBlur={props.inputValue !== "" ? props.validateFunc: undefined}
+                       onBlur={props.onBlur}
                        autoComplete={props.autoComplete}
                        required
                 />
