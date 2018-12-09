@@ -8,8 +8,8 @@ function LoginContent(props) {
     return (
         <Entry title="Log In"
             body={(
-                <form>
-                    <EntryField faIcon="user" placeHolder="Username or email" autoComplete="email" id="entryform"/>
+                <form id="entryform">
+                    <EntryField faIcon="user" placeHolder="Username or email" autoComplete="email"/>
                     <PwField autoComplete="password"/>
                     <div className="signup-footer">
                         <div className="checkbox">
