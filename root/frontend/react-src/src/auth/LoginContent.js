@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
 
-// TODO: implement login button validation
 class LoginContent extends React.Component {
     state = {
         userOrEmailValue: "",
@@ -37,7 +36,7 @@ class LoginContent extends React.Component {
         }
     }
 
-    validatePassword = () => {
+    validatePw = () => {
         if (this.state.pwValue) {
             this.setState( {pwValid: true});
         } else {
@@ -45,11 +44,18 @@ class LoginContent extends React.Component {
         }
     }
 
+    handleSubmit = event => {
+        this.validateUserOrEmail();
+        this.validatePw();
+        alert("A username/email was submitted : " + this.state.userOrEmailValue + "\nA password was submitted : " + this.state.pwValue);
+        event.preventDefault();
+    };
+
     render() {
         return (
             <Entry title="Log In"
                 body={(
-                    <form id="entryform">
+                    <form>
                         <EntryField
                             faIcon="user"
                             placeHolder="Username or email"
@@ -74,7 +80,13 @@ class LoginContent extends React.Component {
                 )}
                 footer={(
                     <>
-                        <button className="submit-btn" type="submit" form="entryform">Log in</button>
+                        <button
+                            className="submit-btn"
+                            type="submit"
+                            onClick={this.handleSubmit}
+                        >
+                            Log in
+                        </button>
                         <p className="alt-entry-text">
                             Don't have an account?
                             {this.props.altEntry ? (

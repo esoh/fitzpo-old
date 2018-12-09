@@ -81,7 +81,7 @@ class SignupContent extends React.Component {
         return (
             <Entry title="Sign Up"
                 body={(
-                    <form onSubmit={this.handleSubmit} id="entryform">
+                    <form>
                         <EntryField inputId="user-field"
                             faIcon="user"
                             placeHolder="Username"
@@ -117,7 +117,6 @@ class SignupContent extends React.Component {
                         <button
                             className="submit-btn"
                             type="submit"
-                            form="entryform"
                             onClick={this.handleSubmit}
                         >
                             Sign up
