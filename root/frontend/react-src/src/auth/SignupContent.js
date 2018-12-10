@@ -15,7 +15,8 @@ class SignupContent extends React.Component {
             userValue: "",
             emailValue: "",
             pwValue: "",
-            data: null
+            userTaken: null,
+            emailTaken: null
         };
     }
 
@@ -56,8 +57,22 @@ class SignupContent extends React.Component {
     validateUser = () => {
         let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$");
         if (userRegEx.test(this.state.userValue)) {
-            this.setState( {userValid: true});
-            return true;
+            fetch('/users/' + this.state.userValue)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.username) {
+                        this.setState( {userTaken: true})
+                        this.setState( {userValid: false})
+                    } else {
+                        this.setState( {userTaken: false})
+                        this.setState( {userValid: true})
+                    }
+                });
+            if (!this.state.userTaken) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             this.setState( {userValid: false});
             return false;
@@ -87,9 +102,6 @@ class SignupContent extends React.Component {
     };
 
     handleSubmit = event => {
-        this.validateUser();
-        this.validateEmail();
-        this.validatePw();
         if (this.validateUser() && this.validateEmail() && this.validatePw()) {
             this.postSignupInfo();
         }
@@ -106,9 +118,9 @@ class SignupContent extends React.Component {
                             placeHolder="Username"
                             inputValue={this.state.userValue}
                             inputValid={this.state.userValid}
-                            errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
+                            errorMsg={this.state.userTaken ? "Username is taken" : "Usernames may contain letters, numbers, hyphens, underscores & periods"}
                             inputChange={this.handleChangeUser}
-                            onBlur={this.state.userValue !== "" ? this.validateUser : undefined}
+                            onBlur={this.state.userValue !== "" ? this.validateUser : this.validateUser}
                             autoComplete="username"
                         />
                         <EntryField inputId="email-field"
