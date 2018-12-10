@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path'); // core module
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
@@ -28,7 +28,7 @@ const port = 8080;// use whatever port to test
 // routes if the correct token is not provided.
 // Note: this is the same as app.user('/', cors());
 // Documentation: app.use(path='/', middleware)
-app.use(cors()); // set whole app to use cors
+// app.use(cors()); // set whole app to use cors
 
 // Set Static Folder
 // this is the entire frontend, inside ./public/
@@ -52,6 +52,10 @@ app.use('/users', users);
 // This function is called when a GET http request to "/" is made.
 app.get('/', (req, res) => {
    res.send('Invalid Endpoint');
+});
+
+app.get('/express_backend', (req, res) => {
+    res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });
 
 // Start Server
