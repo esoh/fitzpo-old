@@ -24,7 +24,7 @@ class LoginContent extends React.Component {
         this.setState({
             pwValue: event.target.value
         }, () => {
-            this.validatePassword()
+            this.validatePw()
         });
     }
 
