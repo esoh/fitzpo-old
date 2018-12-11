@@ -40,7 +40,8 @@ This repo contains the web app powering GymMate.
 Request | Details | Implemented?
 -- | -- | --
 POST /users | Adds a new user for registration | yes
-GET /users/:username | Gets user info. If no auth, send back username. If auth, send back more information. | yes
+GET /users/:username | Gets username if exists, else returns empty JSON object | yes
+GET /users/emails/:emails | Gets email if exists, else returns empty JSON object | yes
 
 ### Sessions
 
