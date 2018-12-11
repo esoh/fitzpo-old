@@ -41,7 +41,7 @@ Request | Details | Implemented?
 -- | -- | --
 POST /users | Adds a new user for registration | yes
 GET /users/:username | Gets username if exists, else returns empty JSON object | yes
-GET /users/emails/:emails | Gets email if exists, else returns empty JSON object | yes
+GET /users/emails/:email | Gets email if exists, else returns empty JSON object | yes
 
 ### Sessions
 
