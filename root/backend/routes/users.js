@@ -105,17 +105,17 @@ router.get('/:username', (req, res, next) => {
 });
 
 // Check if email exists
-/*router.head('/emails/:email', (req, res, next) => {
+router.get('/emails/:email', (req, res, next) => {
    User.emailExists(req.params.email, (err, foundUser) => {
       if(err) { return next(err); }
 
       if(!foundUser){
-         return res.sendStatus(404);
+         return res.json({}) 
       }
 
-      return res.sendStatus(200);
+      return res.json({ email: foundUser.email })
    });
-});*/
+});
 
 // module.exports is what is returned by this file when require is called on it.
 module.exports = router;

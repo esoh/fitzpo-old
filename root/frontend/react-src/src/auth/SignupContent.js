@@ -82,8 +82,22 @@ class SignupContent extends React.Component {
     validateEmail = () => {
         let emailRegEx = new RegExp("^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$");
         if (emailRegEx.test(this.state.emailValue)) {
-            this.setState( {emailValid: true});
-            return true;
+            fetch('/users/emails/' + this.state.emailValue)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.email) {
+                        this.setState ({ emailTaken: true })
+                        this.setState ({ emailValid: false })
+                    } else {
+                        this.setState({ emailTaken: false })
+                        this.setState({ emailValid: true })
+                    }
+                });
+            if (!this.state.emailTaken) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             this.setState( {emailValid: false});
             return false;
@@ -129,9 +143,9 @@ class SignupContent extends React.Component {
                             inputValue={this.state.emailValue}
                             inputType="email"
                             inputValid={this.state.emailValid}
-                            errorMsg="Not a valid email address"
+                            errorMsg={this.state.emailTaken ? "This email is already in use" : "Not a valid email address"}
                             inputChange={this.handleChangeEmail}
-                            onBlur={this.state.emailValue !== "" ? this.validateEmail : undefined}
+                            onBlur={this.state.emailValue !== "" ? this.validateEmail : this.validateEmail}
                             autoComplete="email"
                         />
                         <PwField id="pw-field"
