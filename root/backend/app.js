@@ -6,6 +6,11 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
+const app = express(); // create an express application
+const users = require('./routes/users'); // require ./routes/users.js
+const port = 8080;// use whatever port to test
+
+
 // Connect to Database
 mongoose.connect(config.database);
 
@@ -19,10 +24,6 @@ mongoose.connection.on('error', (err) => {
    console.log('Database Error' + err);
 });
 
-const app = express(); // create an express application
-const users = require('./routes/users'); // require ./routes/users.js
-const port = 8080;// use whatever port to test
-
 // CORS Middleware
 // we want to make this public so any domain can access it but also restrict
 // routes if the correct token is not provided.
@@ -31,7 +32,7 @@ const port = 8080;// use whatever port to test
 // app.use(cors()); // set whole app to use cors
 
 // Set Static Folder
-// this is the entire frontend, inside ./public/
+// this is for static assets, inside ./public/
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Body Parser Middleware

@@ -26,9 +26,10 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
+/*
 module.exports.getUserById = function(id, callback){
    User.findById(id, callback);
-}
+}*/
 
 module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    // check if it's an email by checking if it contains the "@"
@@ -37,7 +38,8 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    User.findOne(searchCriteria, callback);
 }
 
-module.exports.addUser = function(newUser, callback){
+// encrypts password before adding user to database.
+module.exports.registerUser = function(newUser, callback){
    bcrypt.genSalt(saltRounds, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
          if(err) throw err;
@@ -47,6 +49,7 @@ module.exports.addUser = function(newUser, callback){
    });
 }
 
+// compares candidate pw hash to db pw hash. true if match.
 module.exports.comparePassword = function(candidateHash, hash, callback){
    bcrypt.compare(candidateHash, hash, (err, isMatch) => {
       if(err) throw err;
@@ -54,6 +57,7 @@ module.exports.comparePassword = function(candidateHash, hash, callback){
    });
 }
 
+// calls query to find user object with matching email.
 module.exports.emailExists = function(email, callback){
    User.findOne({ email: email }, callback);
 }
