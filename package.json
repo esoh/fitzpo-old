@@ -1,0 +1,24 @@
+{
+  "name": "gymmate",
+  "version": "1.0.0",
+  "description": "This repo contains the web app powering GymMate.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently --kill-others \"npm start --prefix root/frontend/react-src\" \"nodemon root/backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esoh/gymmate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esoh/gymmate/issues"
+  },
+  "homepage": "https://github.com/esoh/gymmate#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
