@@ -8,9 +8,13 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
 
 // Register
 router.post('/', (req, res, next) => {
+   if (!pwRegEx.test(req.body.password)) {
+       return res.json({ success: false, msg: 'Invalid Password' })
+   }
    let newUser = new User({
       email: req.body.email,
       username: req.body.username,
@@ -110,7 +114,7 @@ router.get('/emails/:email', (req, res, next) => {
       if(err) { return next(err); }
 
       if(!foundUser){
-         return res.json({}) 
+         return res.json({})
       }
 
       return res.json({ email: foundUser.email })

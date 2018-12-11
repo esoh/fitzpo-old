@@ -8,15 +8,19 @@ const saltRounds = 10;
 const UserSchema = mongoose.Schema({
    email: {
       type: String,
-      required: true
+      unique: true,
+      required: true,
+      match: /^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$/
    },
    username: {
       type: String,
-      required: true
-   },
+      unique: true,
+      required: true,
+      match: /^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$/
+  },
    password: {
       type: String,
-      required: true
+      required: true,
    }
 });
 
