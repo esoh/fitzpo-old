@@ -14,8 +14,20 @@ class SignupContent extends React.Component {
             pwValid: true,
             userValue: "",
             emailValue: "",
-            pwValue: ""
+            pwValue: "",
+            userTaken: null,
+            emailTaken: null
         };
+    }
+
+    postSignupInfo = () => {
+        fetch('/users/register', {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
+        }).then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err))
     }
 
     handleChangeUser = event => {
@@ -45,9 +57,25 @@ class SignupContent extends React.Component {
     validateUser = () => {
         let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$");
         if (userRegEx.test(this.state.userValue)) {
-            this.setState( {userValid: true});
+            fetch('/users/' + this.state.userValue)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.username) {
+                        this.setState( {userTaken: true})
+                        this.setState( {userValid: false})
+                    } else {
+                        this.setState( {userTaken: false})
+                        this.setState( {userValid: true})
+                    }
+                });
+            if (!this.state.userTaken) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             this.setState( {userValid: false});
+            return false;
         }
     };
 
@@ -55,8 +83,10 @@ class SignupContent extends React.Component {
         let emailRegEx = new RegExp("^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$");
         if (emailRegEx.test(this.state.emailValue)) {
             this.setState( {emailValid: true});
+            return true;
         } else {
             this.setState( {emailValid: false});
+            return false;
         }
     };
 
@@ -64,16 +94,17 @@ class SignupContent extends React.Component {
         let pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
         if (pwRegEx.test(this.state.pwValue)) {
             this.setState( {pwValid: true});
+            return true;
         } else {
             this.setState( {pwValid: false});
+            return false;
         }
     };
 
     handleSubmit = event => {
-        this.validateUser();
-        this.validateEmail();
-        this.validatePw();
-        alert("A name was submitted : " + this.state.userValue + "\nAn email was submitted : " + this.state.emailValue + "\nA password was submitted : " + this.state.pwValue);
+        if (this.validateUser() && this.validateEmail() && this.validatePw()) {
+            this.postSignupInfo();
+        }
         event.preventDefault();
     };
 
@@ -87,9 +118,9 @@ class SignupContent extends React.Component {
                             placeHolder="Username"
                             inputValue={this.state.userValue}
                             inputValid={this.state.userValid}
-                            errorMsg="Usernames may contain letters, numbers, hyphens, underscores & periods"
+                            errorMsg={this.state.userTaken ? "Username is taken" : "Usernames may contain letters, numbers, hyphens, underscores & periods"}
                             inputChange={this.handleChangeUser}
-                            onBlur={this.state.userValue !== "" ? this.validateUser : undefined}
+                            onBlur={this.state.userValue !== "" ? this.validateUser : this.validateUser}
                             autoComplete="username"
                         />
                         <EntryField inputId="email-field"
