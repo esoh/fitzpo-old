@@ -10,7 +10,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 
 // Register
-router.post('/register', (req, res, next) => {
+router.post('/', (req, res, next) => {
    let newUser = new User({
       email: req.body.email,
       username: req.body.username,

@@ -21,7 +21,7 @@ class SignupContent extends React.Component {
     }
 
     postSignupInfo = () => {
-        fetch('/users/register', {
+        fetch('/users', {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
