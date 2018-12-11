@@ -27,6 +27,7 @@ router.post('/', (req, res, next) => {
 });
 
 // Authenticate
+/*
 router.post('/authenticate', (req, res, next) => {
    const usernameOrEmail = req.body.usernameOrEmail;
    const password = req.body.password;
@@ -61,13 +62,13 @@ router.post('/authenticate', (req, res, next) => {
          }
       });
    });
-});
+}); */
 
 // Profile
 // protect route with authentication token
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+/* router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
    res.json({user: req.user});
-});
+}); */
 
 // Get another user
 router.get('/:username', (req, res, next) => {
@@ -104,7 +105,7 @@ router.get('/:username', (req, res, next) => {
 });
 
 // Check if email exists
-router.head('/emails/:email', (req, res, next) => {
+/*router.head('/emails/:email', (req, res, next) => {
    User.emailExists(req.params.email, (err, foundUser) => {
       if(err) { return next(err); }
 
@@ -114,7 +115,7 @@ router.head('/emails/:email', (req, res, next) => {
 
       return res.sendStatus(200);
    });
-});
+});*/
 
 // module.exports is what is returned by this file when require is called on it.
 module.exports = router;

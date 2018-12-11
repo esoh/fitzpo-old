@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Login
-router.post('/', (req, res, next) => {
+/* router.post('/', (req, res, next) => {
 
 
    if(!req.body.usernameOrEmail){
@@ -46,5 +46,4 @@ router.post('/', (req, res, next) => {
          }
       });
    });
-});
-
+}); */
