@@ -13,17 +13,22 @@ const UserSchema = mongoose.Schema({
       required: true,
       match: /^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$/
    },
-   username: {
-      type: String,
-      unique: true,
-      required: true,
-      match: /^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$/
-  },
+    username: {
+        type: String,
+        required: true,
+        match: /^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$/
+    },
    password: {
       type: String,
       required: true,
    }
 });
+
+// set username as case-insensitive unique index
+UserSchema.index({username: 1}, {
+    collation: {locale: "en", strength: 2},
+    unique: true,
+}, { background: false });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
@@ -36,7 +41,7 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    // check if it's an email by checking if it contains the "@"
    const searchCriteria = (usernameOrEmail.indexOf('@') === -1) ?
       { username: usernameOrEmail } : { email: usernameOrEmail };
-   User.findOne(searchCriteria, callback);
+   User.findOne(searchCriteria, callback).collation({ locale: "en", strength: 2 });
 }
 
 // encrypts password before adding user to database.
