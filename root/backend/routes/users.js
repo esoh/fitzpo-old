@@ -1,7 +1,7 @@
 // We could define router within ./app.js and pass it into
 // app.use(/users, router) if we wanted, but instead we are returning the router
 // from this file using module.exports
-
+// https://dev.to/medaymentn/securing-your-node-js-api-with-json-web-token-5o5
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
 });
 
 // Authenticate
-/*
+
 router.post('/authenticate', (req, res, next) => {
    const usernameOrEmail = req.body.usernameOrEmail;
    const password = req.body.password;
@@ -62,11 +62,11 @@ router.post('/authenticate', (req, res, next) => {
                }
             });
          } else {
-            return res.json({success: false, msg: 'Wrong password'});
+            res.json({success: false, msg: 'Wrong password'});
          }
       });
    });
-}); */
+});
 
 // Profile
 // protect route with authentication token

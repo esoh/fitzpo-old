@@ -20,7 +20,7 @@ class SignupContent extends React.Component {
         };
     }
 
-    postSignupInfo = () => {
+    postSignup = () => {
         fetch('/users', {
             method: "POST",
             headers: { "Content-Type": "application/json"},
@@ -117,7 +117,7 @@ class SignupContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUser() && this.validateEmail() && this.validatePw()) {
-            this.postSignupInfo();
+            this.postSignup();
         }
         event.preventDefault();
     };

@@ -12,6 +12,16 @@ class LoginContent extends React.Component {
         pwValid: true
     }
 
+    postLogin = () => {
+        fetch('/users/authenticate', {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({ usernameOrEmail:this.state.userOrEmailValue, password:this.state.pwValue })
+        }).then((res) => res.json())
+        .then((data) => localStorage.setItem('accessToken', data.token))
+        .catch((err) => console.log(err))
+    }
+
     handleChangeUserOrEmail = event => {
         this.setState({
             userOrEmailValue: event.target.value
@@ -31,23 +41,28 @@ class LoginContent extends React.Component {
     validateUserOrEmail = () => {
         if (this.state.userOrEmailValue) {
             this.setState( {userOrEmailValid: true});
+            return true;
         } else {
             this.setState( {userOrEmailValid: false});
+            return false;
         }
     }
 
     validatePw = () => {
         if (this.state.pwValue) {
             this.setState( {pwValid: true});
+            return true;
         } else {
             this.setState( {pwValid: false});
+            return false;
         }
     }
 
     handleSubmit = event => {
-        this.validateUserOrEmail();
-        this.validatePw();
-        alert("A username/email was submitted : " + this.state.userOrEmailValue + "\nA password was submitted : " + this.state.pwValue);
+        if (this.validateUserOrEmail() && this.validatePw()) {
+            alert("A username/email was submitted : " + this.state.userOrEmailValue + "\nA password was submitted : " + this.state.pwValue);
+            this.postLogin();
+        }
         event.preventDefault();
     };
 
