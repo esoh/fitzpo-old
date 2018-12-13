@@ -131,7 +131,7 @@ class SignupContent extends React.Component {
         if (this.state.signupSuccess && !this.props.hideModal) {
             return <Redirect to='/profile' />
         }
-        
+
         return (
             <Entry title="Sign Up"
                 body={(

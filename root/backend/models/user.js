@@ -38,7 +38,7 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    User.findOne(searchCriteria, callback);
 }
 
-module.exports.addUser = function(newUser, callback){
+module.exports.registerUser= function(newUser, callback){
    bcrypt.genSalt(saltRounds, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
          if(err) throw err;

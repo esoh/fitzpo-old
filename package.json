@@ -20,5 +20,8 @@
   "homepage": "https://github.com/esoh/gymmate#readme",
   "devDependencies": {
     "concurrently": "^4.1.0"
+  },
+  "dependencies": {
+    "jwt-decode": "^2.2.0"
   }
 }

@@ -3,8 +3,14 @@ import { Link, Redirect} from 'react-router-dom';
 
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
+import AuthService from './AuthService';
 
 class LoginContent extends React.Component {
+    constructor() {
+        super();
+        this.Auth = new AuthService(); // creates instance of AuthService so we can use it's methods
+    }
+
     state = {
         userOrEmailValue: "",
         userOrEmailValid: true,
@@ -13,15 +19,15 @@ class LoginContent extends React.Component {
         loginSuccess: null
     }
 
-    postLogin = () => {
-        fetch('/users/authenticate', {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({ usernameOrEmail:this.state.userOrEmailValue, password:this.state.pwValue })
-        }).then((res) => res.json())
-        .then((data) => localStorage.setItem('accessToken', data.token))
-        .catch((err) => console.log(err))
-    }
+    // postLogin = () => {
+    //     fetch('/users/authenticate', {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json"},
+    //         body: JSON.stringify({ usernameOrEmail:this.state.userOrEmailValue, password:this.state.pwValue })
+    //     }).then((res) => res.json())
+    //     .then((data) => localStorage.setItem('accessToken', data.token))
+    //     .catch((err) => console.log(err))
+    // }
 
     handleChangeUserOrEmail = event => {
         this.setState({
@@ -61,8 +67,14 @@ class LoginContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUserOrEmail() && this.validatePw()) {
-            this.postLogin();
-            this.setState({ loginSuccess: true });
+            //this.postLogin();
+            this.Auth.login(this.state.userOrEmailValue, this.state.pwValue)
+                .then(res => {
+                    this.setState({ loginSuccess: true })
+                })
+                .catch(err => {
+                    alert(err);
+                })
             if (this.props.hideModal) {
                 this.props.hideModal();
             }
@@ -71,7 +83,7 @@ class LoginContent extends React.Component {
     };
 
     render() {
-        if (this.state.loginSuccess && !this.props.hideModal) {
+        if (/*this.state.loginSuccess*/this.Auth.loggedIn() && !this.props.hideModal) {
             return <Redirect to='/home' />
         }
 
