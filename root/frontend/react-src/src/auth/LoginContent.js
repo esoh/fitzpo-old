@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
@@ -9,7 +9,8 @@ class LoginContent extends React.Component {
         userOrEmailValue: "",
         userOrEmailValid: true,
         pwValue: "",
-        pwValid: true
+        pwValid: true,
+        loginSuccess: null
     }
 
     postLogin = () => {
@@ -60,13 +61,20 @@ class LoginContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUserOrEmail() && this.validatePw()) {
-            alert("A username/email was submitted : " + this.state.userOrEmailValue + "\nA password was submitted : " + this.state.pwValue);
             this.postLogin();
+            this.setState({ loginSuccess: true });
+            if (this.props.hideModal) {
+                this.props.hideModal();
+            }
         }
         event.preventDefault();
     };
 
     render() {
+        if (this.state.loginSuccess && !this.props.hideModal) {
+            return <Redirect to='/home' />
+        }
+
         return (
             <Entry title="Log In"
                 body={(

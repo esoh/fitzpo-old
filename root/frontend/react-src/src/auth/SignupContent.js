@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { Entry } from './Entry';
 import {PwField, EntryField} from "./EntryComponents";
@@ -16,7 +16,8 @@ class SignupContent extends React.Component {
             emailValue: "",
             pwValue: "",
             userTaken: null,
-            emailTaken: null
+            emailTaken: null,
+            signupSuccess: null
         };
     }
 
@@ -118,11 +119,19 @@ class SignupContent extends React.Component {
     handleSubmit = event => {
         if (this.validateUser() && this.validateEmail() && this.validatePw()) {
             this.postSignup();
+            this.setState({ signupSuccess: true })
+            if (this.props.hideModal) {
+                this.props.hideModal();
+            }
         }
         event.preventDefault();
     };
 
     render() {
+        if (this.state.signupSuccess && !this.props.hideModal) {
+            return <Redirect to='/profile' />
+        }
+        
         return (
             <Entry title="Sign Up"
                 body={(
