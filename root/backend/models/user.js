@@ -46,13 +46,14 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
 
 // encrypts password before adding user to database.
 module.exports.registerUser = function(newUser, callback){
-   bcrypt.genSalt(saltRounds, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-         if(err) throw err;
-         newUser.password = hash;
-         newUser.save(callback);
-      });
-   });
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        if(err) return callback(err, null)
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err) return callback(err, null)
+            newUser.password = hash;
+            newUser.save(callback);
+        });
+    });
 }
 
 // compares candidate pw hash to db pw hash. true if match.

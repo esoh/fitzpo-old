@@ -48,6 +48,19 @@ require('./config/passport')(passport);
 // site/users* will be handled by routes/users.js.
 app.use('/users', users);
 
+// Error handling middleware
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    // It's not a good idea to expose some errors outside of the backend
+    res.status(500).send({
+        error: {
+            message: "Unknown error. Check backend.",
+            errorType: "UnknownError",
+            error: ""
+        }
+    })
+})
+
 // Index Route
 // route http: / to the callback function defined below.
 // This function is called when a GET http request to "/" is made.
