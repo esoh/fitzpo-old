@@ -4,7 +4,7 @@
   "description": "gymmate app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node app"
   },
   "dependencies": {
@@ -18,5 +18,8 @@
     "passport-jwt": "*"
   },
   "author": "Sean Oh",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
 }
