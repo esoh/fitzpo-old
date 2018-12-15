@@ -2,7 +2,7 @@
 import decode from 'jwt-decode';
 export default class AuthService {
     // initialize important variables
-    login = (userOrEmail, pw, callback = null) => {
+    login = (userOrEmail, pw) => {
         // Get a token from the api server using fetch application
         return this.fetch('/users/authenticate', {
             method: "POST",
@@ -11,21 +11,19 @@ export default class AuthService {
                 password: pw
             })
         }).then(res => {
-            if (!!res.token) {
-                this.setToken(res.token) // Setting the token in localStorage
-            } else {
-                callback(res.msg);
-            }
-            console.log(!!res.token);
-            console.log(res.msg);
+            this.setToken(res.token) // Setting the token in localStorage
+            console.log(res);
             return Promise.resolve(res);
         })
     }
 
     // Checks to see if there is a valid saved token
     loggedIn() {
-        const token = this.getToken(); // retrieve token from localStorage
-        return !!token && !this.isTokenExpired(token); // returns true if user should be logged in
+        let token = this.getToken(); // retrieve token from localStorage
+        console.log("wee" + token);
+        token === null ? token = false : token = true;
+        console.log("token \n" + !!token + "\n" + token);
+        return token && !this.isTokenExpired(token); // returns true if user should be logged in
     }
 
     isTokenExpired(token) {

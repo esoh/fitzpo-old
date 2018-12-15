@@ -16,7 +16,8 @@ class LoginContent extends React.Component {
         userOrEmailValid: true,
         pwValue: "",
         pwValid: true,
-        loginSuccess: null
+        loginSuccess: null,
+        errMsg: null
     }
 
     // postLogin = () => {
@@ -67,8 +68,28 @@ class LoginContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUserOrEmail() && this.validatePw()) {
-            //this.postLogin();
-            this.Auth.login(this.state.userOrEmailValue, this.state.pwValue)
+            this.Auth.login(this.state.userOrEmailValue, this.state.pwValue, (msg) => {
+                if (msg) {
+                    if (msg === 'User not found') {
+                        this.setState({
+                            errMsg: msg,
+                            userOrEmailValid: false
+                        })
+                    } else {
+                        this.setState({
+                            errMsg: "" + msg,
+                            pwValid: false
+                        });
+                    }
+                } else {
+                    this.setState({
+                        errMsg: null,
+                        pwValid: true,
+                        userOrEmailValid: true
+                    });
+                }
+
+            })
                 .then(res => {
                     this.setState({ loginSuccess: true })
                 })
@@ -79,6 +100,7 @@ class LoginContent extends React.Component {
                 this.props.hideModal();
             }
         }
+        console.log("state: " + this.state.msg);
         event.preventDefault();
     };
 
@@ -97,12 +119,12 @@ class LoginContent extends React.Component {
                             inputValid={this.state.userOrEmailValid}
                             autoComplete="email"
                             onBlur={this.handleChangeUserOrEmail}
-                            errorMsg="Username or email required"
+                            errorMsg={this.state.errMsg === "User not found" ? "Username of email doesn't exist" : "Username or email required"}
                         />
                         <PwField autoComplete="password"
                             inputValid={this.state.pwValid}
                             onBlur={this.handleChangePassword}
-                            errorMsg="Password required"
+                            errorMsg={this.state.errMsg === "Wrong password" ? "Wrong password" :"Password required"}
                         />
                         <div className="signup-footer">
                             <div className="checkbox">

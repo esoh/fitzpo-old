@@ -2,11 +2,13 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { Entry } from './Entry';
-import {PwField, EntryField} from "./EntryComponents";
+import {PwField, EntryField} from './EntryComponents';
+import AuthService from './AuthService';
 
 class SignupContent extends React.Component {
     constructor() {
         super();
+        this.Auth = new AuthService();
         this.state = {
             isValidated: false,
             userValid: true,
@@ -21,7 +23,7 @@ class SignupContent extends React.Component {
         };
     }
 
-    postSignup = () => {
+    signup = () => {
         fetch('/users', {
             method: "POST",
             headers: { "Content-Type": "application/json"},
@@ -118,7 +120,7 @@ class SignupContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUser() && this.validateEmail() && this.validatePw()) {
-            this.postSignup();
+            this.signup();
             this.setState({ signupSuccess: true })
             if (this.props.hideModal) {
                 this.props.hideModal();
