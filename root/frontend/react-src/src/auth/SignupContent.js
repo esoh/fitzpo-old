@@ -29,7 +29,7 @@ class SignupContent extends React.Component {
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
         }).then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => this.Auth.login(this.state.userValue, this.state.pwValue))
         .catch((err) => console.log(err))
     }
 
@@ -130,7 +130,7 @@ class SignupContent extends React.Component {
     };
 
     render() {
-        if (this.state.signupSuccess && !this.props.hideModal) {
+        if (this.state.signupSuccess && !this.props.hideModal && this.Auth.loggedIn) {
             return <Redirect to='/profile' />
         }
 
