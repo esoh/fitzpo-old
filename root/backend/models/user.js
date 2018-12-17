@@ -35,17 +35,19 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    // check if it's an email by checking if it contains the "@"
    const searchCriteria = (usernameOrEmail.indexOf('@') === -1) ?
       { username: usernameOrEmail } : { email: usernameOrEmail };
-   User.findOne(searchCriteria, callback);
+   User.findOne(searchCriteria, callback).collation({ locale: "en", strength: 2 });
 }
 
-module.exports.registerUser= function(newUser, callback){
-   bcrypt.genSalt(saltRounds, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-         if(err) throw err;
-         newUser.password = hash;
-         newUser.save(callback);
-      });
-   });
+// encrypts password before adding user to database.
+module.exports.registerUser = function(newUser, callback){
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        if(err) return callback(err, null)
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err) return callback(err, null)
+            newUser.password = hash;
+            newUser.save(callback);
+        });
+    });
 }
 
 module.exports.comparePassword = function(candidateHash, hash, callback){

@@ -42,26 +42,54 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+
 const pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
 
-// Register
+// Register a user
 router.post('/', (req, res, next) => {
-   if (!pwRegEx.test(req.body.password)) {
-       return res.json({ success: false, msg: 'Invalid Password' })
-   }
-   let newUser = new User({
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-   });
 
-   User.registerUser(newUser, (err, user) => {
-      if(err){
-         res.json({success: false, msg: 'Failed to register user'});
-      } else {
-         res.json({success: true, msg: 'User registered'});
-      }
-   });
+    // test if password follows requirements
+    if (!pwRegEx.test(req.body.password)) {
+        return res.status(422).send({
+            error: {
+                message: "Password does not meet requirements",
+                errorType: "ValidationError",
+                error: ""
+            }
+        })
+    }
+
+    let newUser = new User({
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    // call registerUser which will hash password and attempt to store to db
+    User.registerUser(newUser, (err, user) => {
+        //Error handler
+        if(err){
+            // handle validation error
+            if (err.name === 'ValidationError') {
+                return res.status(422).send({
+                    error: {
+                        message: "Input not valid",
+                        errorType: "ValidationError",
+                        error: err
+                    }
+                })
+            }
+
+            // pass all other errors to error handling middleware
+            return next(err)
+
+        // successful post
+        } else {
+            return res.status(201).send({
+                username: user.username,
+            })
+        }
+    })
 });
 
 // Authenticate
