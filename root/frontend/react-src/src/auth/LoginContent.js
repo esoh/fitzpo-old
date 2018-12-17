@@ -17,18 +17,9 @@ class LoginContent extends React.Component {
         pwValue: "",
         pwValid: true,
         loginSuccess: null,
-        errMsg: null
+        errMsg: null,
+        rememberMe: true
     }
-
-    // postLogin = () => {
-    //     fetch('/users/authenticate', {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json"},
-    //         body: JSON.stringify({ usernameOrEmail:this.state.userOrEmailValue, password:this.state.pwValue })
-    //     }).then((res) => res.json())
-    //     .then((data) => localStorage.setItem('accessToken', data.token))
-    //     .catch((err) => console.log(err))
-    // }
 
     handleChangeUserOrEmail = event => {
         this.setState({
@@ -43,6 +34,12 @@ class LoginContent extends React.Component {
             pwValue: event.target.value
         }, () => {
             this.validatePw()
+        });
+    }
+
+    handleChangeCheckbox = event => {
+        this.setState({
+            rememberMe: event.target.checked
         });
     }
 
@@ -68,7 +65,7 @@ class LoginContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUserOrEmail() && this.validatePw()) {
-            this.Auth.login(this.state.userOrEmailValue, this.state.pwValue, (msg) => {
+            this.Auth.login(this.state.userOrEmailValue, this.state.pwValue, this.state.rememberMe, (msg) => {
                 if (msg) {
                     if (msg === 'User not found') {
                         this.setState({
@@ -100,7 +97,6 @@ class LoginContent extends React.Component {
                 this.props.hideModal();
             }
         }
-        console.log("state: " + this.state.msg);
         event.preventDefault();
     };
 
@@ -128,7 +124,10 @@ class LoginContent extends React.Component {
                         />
                         <div className="signup-footer">
                             <div className="checkbox">
-                                <input type="checkbox"/>
+                                <input
+                                    type="checkbox"
+                                    checked={this.state.rememberMe}
+                                    onChange={this.handleChangeCheckbox} />
                                 <label className="remember-label">Remember me</label>
                             </div>
                             <Link className="forgot-password" to="/password">Forgot password?</Link>

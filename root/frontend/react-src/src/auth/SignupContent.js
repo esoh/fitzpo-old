@@ -29,7 +29,7 @@ class SignupContent extends React.Component {
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
         }).then((res) => res.json())
-        .then((data) => this.Auth.login(this.state.userValue, this.state.pwValue))
+        .then((data) => this.Auth.login(this.state.userValue, this.state.pwValue, false))
         .catch((err) => console.log(err))
     }
 

@@ -2,7 +2,7 @@
 import decode from 'jwt-decode';
 export default class AuthService {
     // initialize important variables
-    login = (userOrEmail, pw, callback = null) => {
+    login = (userOrEmail, pw, rememberMe, callback = null) => {
         // Get a token from the api server using fetch application
         return this.fetch('/users/authenticate', {
             method: "POST",
@@ -12,7 +12,7 @@ export default class AuthService {
             })
         }).then(res => {
             if (!!res.token) {
-                this.setToken(res.token) // Setting the token in localStorage
+                this.setToken(res.token, rememberMe) // Setting the token in localStorage
             } else {
                 callback(res.msg);
             }
@@ -41,18 +41,30 @@ export default class AuthService {
         }
     }
 
-    setToken(token) {
+    setToken(token, rememberMe) {
         // Saves user token to localStorage
-        localStorage.setItem('accessToken', token);
+        if (rememberMe) {
+            localStorage.setItem('accessToken', token);
+        } else {
+            sessionStorage.setItem('accessToken', token);
+        }
     }
 
     getToken() {
-        return localStorage.getItem('accessToken');
+        if (localStorage.getItem('accessToken')) {
+            return localStorage.getItem('accessToken');
+        } else {
+            return sessionStorage.getItem('accessToken');
+        }
     }
 
     logout() {
         // Clear user token and profile data from localStorage
-        localStorage.removeItem('accessToken');
+        if (localStorage.getItem('accessToken')) {
+            localStorage.removeItem('accessToken');
+        } else {
+            sessionStorage.removeItem('accessToken');
+        }
     }
 
     getProfile = () => {
