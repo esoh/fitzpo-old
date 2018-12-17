@@ -58,7 +58,8 @@ They can also be defined prepending the express app command to be applied to a s
 
 Things that can be set include: NODE_DEV=("test", "dev", or "prod"), APP_PORT, DB_HOST, DB_PORT, DB_NAME, and AUTH_SECRET. 
 
-    Note: Besides NODE_DEV, the environmental vars can be prepended with their environment type to define the variables only for that specific environment type. E.g. TEST_DB_NAME can be used to define the database only when NODE_ENV="test". Be aware that if DB_NAME is defined, it will be used instead of TEST_DB_NAME, like the other environmental variables.
+    Note: Besides NODE_DEV, the environmental vars can be prepended with their environment type to define the variables only for that specific environment type. 
+    E.g. TEST_DB_NAME can be used to define the database only when NODE_ENV="test". Be aware that if DB_NAME is defined, it will be used instead of TEST_DB_NAME, like the other environmental variables.
 
 ## API Documentation
 
