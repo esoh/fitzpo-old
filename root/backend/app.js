@@ -4,19 +4,21 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const config = require('./config/database');
+const config = require('./config/config');
+
+// extract db from database
+const { db: { host, port, name } } = config;
+const dbURL = `mongodb://${host}:${port}/${name}`;
 
 const app = express(); // create an express application
 const users = require('./routes/users'); // require ./routes/users.js
-const port = 8080;// use whatever port to test
-
 
 // Connect to Database
-mongoose.connect(config.database);
+mongoose.connect(dbURL);
 
 // On Connection
 mongoose.connection.on('connected', () => {
-   console.log('Connected to database ' + config.database);
+   console.log('Connected to database ' + dbURL);
 });
 
 // On Error
@@ -75,6 +77,6 @@ app.get('/express_backend', (req, res) => {
 // Start Server
 // () => {//code here} is a callback function that is called inside listen.
 // You can also replace it with function(){//code here}
-app.listen(port, () => {
+app.listen(config.app.port, () => {
    console.log('Server started on port ' + port);
 });
