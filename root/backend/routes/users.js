@@ -1,6 +1,40 @@
 // We could define router within ./app.js and pass it into
 // app.use(/users, router) if we wanted, but instead we are returning the router
 // from this file using module.exports
+// https://dev.to/medaymentn/securing-your-node-js-api-with-json-web-token-5o5
+/*
+Client        RESTful API      JWT Issuer
+    |              |                |
+    |----- 1. ---->|                |
+    |              |------ 2. ----->|-----
+    |              |                | 3. |
+    |              |<----- 4. ------|<----
+-----|<---- 5. -----|                |
+| 6. |              |                |
+---->|----- 7. ---->|                |
+    |              |------ 8. ----->|-----
+    |              |                | 9. |
+    |              |<----- 10. -----|<----
+    |              |                |
+    |              |------          |
+    |              | 11. |          |
+    |<---- 12. ----|<-----          |
+    |              |                |
+    .              .                .
+
+1. Ask RESTful API for a JWT using login endpoint.
+2. Ask Issuer to create a new JWT.
+3. Create JWT.
+4. Return JWT to the RESTful API.
+5. Return JWT to Client.
+6. Store JWT to append it to all future API requests.
+7. Ask for data from API providing JWT as authorization.
+8. Send JWT to Issuer for verification.
+9. Issuer verifies JWT.
+10. Issuer returns 200 OK, verification successful.
+11. Retrieve and format data for Client.
+12. Return data to Client.
+*/
 
 const express = require('express');
 const router = express.Router();
@@ -59,7 +93,7 @@ router.post('/', (req, res, next) => {
 });
 
 // Authenticate
-/*
+
 router.post('/authenticate', (req, res, next) => {
    const usernameOrEmail = req.body.usernameOrEmail;
    const password = req.body.password;
@@ -90,11 +124,11 @@ router.post('/authenticate', (req, res, next) => {
                }
             });
          } else {
-            return res.json({success: false, msg: 'Wrong password'});
+            res.json({success: false, msg: 'Wrong password'});
          }
       });
    });
-}); */
+});
 
 // Profile
 // protect route with authentication token

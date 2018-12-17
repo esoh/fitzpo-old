@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { Entry } from './Entry';
-import {PwField, EntryField} from "./EntryComponents";
+import {PwField, EntryField} from './EntryComponents';
+import AuthService from './AuthService';
 
 class SignupContent extends React.Component {
     constructor() {
         super();
+        this.Auth = new AuthService();
         this.state = {
             isValidated: false,
             userValid: true,
@@ -16,17 +18,18 @@ class SignupContent extends React.Component {
             emailValue: "",
             pwValue: "",
             userTaken: null,
-            emailTaken: null
+            emailTaken: null,
+            signupSuccess: null
         };
     }
 
-    postSignupInfo = () => {
+    signup = () => {
         fetch('/users', {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
         }).then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => this.Auth.login(this.state.userValue, this.state.pwValue))
         .catch((err) => console.log(err))
     }
 
@@ -117,12 +120,20 @@ class SignupContent extends React.Component {
 
     handleSubmit = event => {
         if (this.validateUser() && this.validateEmail() && this.validatePw()) {
-            this.postSignupInfo();
+            this.signup();
+            this.setState({ signupSuccess: true })
+            if (this.props.hideModal) {
+                this.props.hideModal();
+            }
         }
         event.preventDefault();
     };
 
     render() {
+        if (this.state.signupSuccess && !this.props.hideModal && this.Auth.loggedIn) {
+            return <Redirect to='/profile' />
+        }
+
         return (
             <Entry title="Sign Up"
                 body={(

@@ -25,9 +25,9 @@ class EntryModal extends React.Component {
                     onClick={this.props.hideModal}
                 />
                 {this.state.isSignup ? (
-                    <SignupContent altEntry={this.alternate}/>
+                    <SignupContent altEntry={this.alternate} hideModal={this.props.hideModal}/>
                 ) : (
-                    <LoginContent altEntry={this.alternate}/>
+                    <LoginContent altEntry={this.alternate} hideModal={this.props.hideModal}/>
                 )}
             </div>
         );

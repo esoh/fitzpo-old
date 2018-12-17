@@ -5,6 +5,7 @@ import { ModalContext } from './ModalContext';
 import EntryModal from '../auth/EntryContent';
 import NavbarCollapse from './NavbarCollapse';
 import './Navbar.css';
+import AuthService from '../auth/AuthService'
 
 const defaultProps = {
     expand: true
@@ -13,8 +14,10 @@ const defaultProps = {
 class Navbar extends React.Component {
     constructor(){
         super();
+        this.Auth = new AuthService();
         this.state = {
-            collapsed: true
+            collapsed: true,
+            isLoggedIn: this.Auth.loggedIn()
         };
     }
 
@@ -29,6 +32,14 @@ class Navbar extends React.Component {
             collapsed: true
         });
     };
+
+    logout = (callback) => {
+        this.Auth.logout()
+        this.setState({
+            isLoggedIn: this.Auth.loggedIn()
+        });
+        console.log(this.Auth.loggedIn());
+    }
 
     render() {
         return (
@@ -65,24 +76,36 @@ class Navbar extends React.Component {
                                     <li className="nav-item" onClick={this.collapseNavbar}>
                                         <NavLink className="nav-link" to="/profile">Profile</NavLink>
                                     </li>
+                                    {!this.state.isLoggedIn ? (
+                                    <>
+                                        <li className="nav-item" onClick={this.collapseNavbar}>
+                                            <button type="button"
+                                                className="link-btn nav-link"
+                                                onClick={() => showModal(EntryModal, {isSignup: true})}
+                                            >
+                                                Sign up
+                                            </button>
+                                        </li>
 
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button"
-                                            className="link-btn nav-link"
-                                            onClick={() => showModal(EntryModal, {isSignup: true})}
-                                        >
-                                            Sign up
-                                        </button>
-                                    </li>
-
-                                    <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <button type="button"
-                                            className="link-btn nav-link"
-                                            onClick={() => showModal(EntryModal, {isSignup: false})}
-                                        >
-                                            Log in
-                                        </button>
-                                    </li>
+                                        <li className="nav-item" onClick={this.collapseNavbar}>
+                                            <button type="button"
+                                                className="link-btn nav-link"
+                                                onClick={() => showModal(EntryModal, {isSignup: false})}
+                                            >
+                                                Log in
+                                            </button>
+                                        </li>
+                                    </>
+                                    ) : (
+                                        <li className="nav-item" onClick={this.collapseNavbar}>
+                                            <button type="button"
+                                                className="link-btn nav-link"
+                                                onClick={this.logout}
+                                            >
+                                                Log out
+                                            </button>
+                                        </li>
+                                    )}
                                 </ul>
                             }
                         </ModalContext.Consumer>
