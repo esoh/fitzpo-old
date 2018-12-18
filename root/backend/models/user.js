@@ -14,7 +14,6 @@ const UserSchema = mongoose.Schema({
    },
    username: {
       type: String,
-      unique: true,
       required: true,
       match: /^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$/
   },
@@ -24,6 +23,12 @@ const UserSchema = mongoose.Schema({
       // validation is done before it's hashed on the backend
    }
 });
+
+// set username as case-insensitive unique index
+ UserSchema.index({username: 1}, {
+     collation: {locale: "en", strength: 2},
+     unique: true,
+ }, { background: false });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
