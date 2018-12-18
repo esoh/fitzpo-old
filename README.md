@@ -44,7 +44,7 @@ Make sure you define your own production environmental variables (See [Setting E
 
 #### <a name="env"></a> Setting production, testing, and development environments
 
-By default, the app uses the development environment. You can set your own environment and other options like database and ports using environmental variables. These can be defined in `gymmate/root/backend/config/.env` in the form of `NAME=VALUE`. E.g.
+By default, the app uses the development environment. You can set your own environment and other options like database and ports using environmental variables. These can be defined in `gymmate/root/backend/.env` in the form of `NAME=VALUE`. E.g.
 
     NODE_ENV="test"
     TEST_DB_NAME="testdb"

@@ -5,7 +5,7 @@
 // 3. put NODE_ENV=<put string here> in .env
 
 // import from .env
-require('dotenv').config();
+require('dotenv').config()
 
 // default to 'dev'
 const env = process.env.NODE_ENV || 'dev'
@@ -60,4 +60,11 @@ const config = {
     prod
 }
 
+if(env == 'prod'){
+    console.log("Using production environment")
+} else if(env == 'test'){
+    console.log("Using testing environment")
+} else {
+    console.log("Using development environment")
+}
 module.exports = config[env]
