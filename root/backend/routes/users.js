@@ -80,6 +80,32 @@ router.post('/', (req, res, next) => {
                 })
             }
 
+            // handle duplicate
+            if (err.code && err.code==11000){
+                // extract duplicate key from error message
+                let regex = /index\:\ (?:.*\.)?\$?(?:([_a-z0-9]*)(?:_\d*)|([_a-z0-9]*))\s*dup key/i,
+                match =  err.message.match(regex),
+                duplicateIndex = match[1] || match[2];
+
+                let errorRes = {
+                    error: {
+                        errorType: "DuplicateKeyError",
+                        error: err
+                    }
+                }
+
+                if(duplicateIndex == 'username'){
+                    errorRes.error.message = 'Username is taken'
+                } else if(duplicateIndex == 'email'){
+                    errorRes.error.message = 'Email is in use'
+                } else {
+                    errorRes.error.message = 'Unknown duplicate error'
+                    return res.status(400).send(errorRes)
+                }
+
+                return res.status(409).send(errorRes)
+            }
+
             // pass all other errors to error handling middleware
             return next(err)
 
