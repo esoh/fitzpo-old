@@ -1,9 +1,10 @@
-const assert = require('assert')
 const mongoose = require('mongoose')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const config = require('../config/config')
+const User = require('../models/user')
 const expect = chai.expect
+const assert = chai.assert
 
 const { db: { host, port, name } } = config;
 const dbURL = `mongodb://${host}:${port}/${name}`
@@ -20,11 +21,7 @@ describe('Database tests', function(){
             mongoose.connection.db.dropDatabase(function(err) {
                 if(err) throw err
                 console.log("Dropped existing database")
-                mongoose.connection.close(function(err){
-                    if(err) throw err
-                    console.log("Disconnected from database")
-                    done()
-                })
+                done()
             })
         })
         mongoose.connection.on('error', (err) => {
@@ -45,9 +42,9 @@ describe('Database tests', function(){
     // POST /users/
     describe('Testing POST to /users/', function() {
 
+        // Missing params
         describe('Test with missing params', function() {
 
-            // Missing params
             describe('POST with empty body', function() {
                 it('should fail with code 422', function(done) {
                     chai.request(expressURL)
@@ -116,9 +113,9 @@ describe('Database tests', function(){
             })
         })
 
+        // Incorrect params
         describe('Test with incorrect params', function() {
 
-            // Incorrect params
             describe('POST with invalid username', function() {
                 it('should fail with code 422', function(done) {
                     chai.request(expressURL)
@@ -162,7 +159,7 @@ describe('Database tests', function(){
                         .set('Content-Type', 'application/json')
                         .send({
                             username: "username",
-                            email: "invalidEmail",
+                            email: "validEmail@gmail.com",
                             password: "Password123"
                         })
                         .end(function(err, res){
@@ -172,9 +169,102 @@ describe('Database tests', function(){
                         })
                 })
             })
-
-
         })
 
+        describe('Test with successful adds', function() {
+            let validPassword= "Password!123"
+
+            describe('POST with valid body', function() {
+                it('should return username', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "username",
+                            email: "email@email.com",
+                            password: validPassword
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(201)
+                            var expectedResponse = {
+                                username: "username"
+                            }
+                            expect(res.body).to.eql(expectedResponse)
+                            done()
+
+                        })
+                })
+            })
+
+            describe('Make sure password is hashed', function(){
+                it('should return to false', function(done){
+                    User.findOne({
+                        username: "username"
+                    }, function postQuery(err, user){
+                        if(err) return err
+                        if(!user) return done(new Error("User not found"))
+                        expect(user.username).to.not.eql(validPassword)
+                        done()
+                    })
+                })
+            })
+
+            describe('POST with valid body', function() {
+                it('should return username2', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "username2",
+                            email: "email2@email.com",
+                            password: validPassword
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(201)
+                            var expectedResponse = {
+                                username: "username2"
+                            }
+                            expect(res.body).to.eql(expectedResponse)
+                            done()
+
+                        })
+                })
+            })
+
+            describe('Make sure hashes are not the same', function(){
+                it('password hashes should not be the same', function(done){
+                    User.findOne({
+                        username: "username"
+                    }, function postQuery(err, user){
+                        if(err) return err
+                        if(!user) return done(new Error("User not found"))
+                        User.findOne({
+                            username: "username2"
+                        }, function secondPostQuery(err, user2){
+                            if(err) return err
+                            if(!user2) return done(new Error("User not found"))
+                            expect(user.password).to.not.eql(user2.password)
+                            done()
+                        })
+                    })
+                })
+            })
+        })
+
+    })
+
+    // drop database
+    after(function(done){
+        mongoose.connection.db.dropDatabase(function(err) {
+            if(err) throw err
+            console.log("Dropped existing database")
+            mongoose.connection.close(function(err){
+                if(err) throw err
+                console.log("Disconnected from database")
+                done()
+            })
+        })
     })
 })
