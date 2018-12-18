@@ -140,7 +140,7 @@ describe('Database tests', function(){
                         .post('/users')
                         .set('Content-Type', 'application/json')
                         .send({
-                            username: "username",
+                            username: "username99",
                             email: "invalidEmail",
                             password: "Password!123"
                         })
@@ -158,7 +158,7 @@ describe('Database tests', function(){
                         .post('/users')
                         .set('Content-Type', 'application/json')
                         .send({
-                            username: "username",
+                            username: "username99",
                             email: "validEmail@gmail.com",
                             password: "Password123"
                         })
@@ -197,20 +197,20 @@ describe('Database tests', function(){
                 })
             })
 
-            describe('Make sure password is hashed', function(){
+            describe('Ensure password is hashed', function(){
                 it('should return to false', function(done){
                     User.findOne({
                         username: "username"
                     }, function postQuery(err, user){
                         if(err) return err
                         if(!user) return done(new Error("User not found"))
-                        expect(user.username).to.not.eql(validPassword)
+                        expect(user.password).to.not.eql(validPassword)
                         done()
                     })
                 })
             })
 
-            describe('POST with valid body', function() {
+            describe('POST with valid body with same password', function() {
                 it('should return username2', function(done){
                     chai.request(expressURL)
                         .post('/users')
@@ -233,7 +233,7 @@ describe('Database tests', function(){
                 })
             })
 
-            describe('Make sure hashes are not the same', function(){
+            describe('Ensure hashes are not the same', function(){
                 it('password hashes should not be the same', function(done){
                     User.findOne({
                         username: "username"
@@ -251,8 +251,139 @@ describe('Database tests', function(){
                     })
                 })
             })
+
+            describe('POST with valid body with username "User-Name_."', function() {
+                it('should return "User-Name_."', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "User-Name_.",
+                            email: "vemail@email.com",
+                            password: validPassword
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(201)
+                            var expectedResponse = {
+                                username: "User-Name_."
+                            }
+                            expect(res.body).to.eql(expectedResponse)
+                            done()
+
+                        })
+                })
+            })
+
+            describe('Ensure that case is preserved in database', function(){
+                it('should return correct case', function(done){
+                    User.findOne({
+                        username: "User-Name_."
+                    }, function postQuery(err, user){
+                        if(err) return err
+                        if(!user) return done(new Error("User not found"))
+                        expect(user.username).to.not.eql("user-name_.")
+                        expect(user.username).to.eql("User-Name_.")
+                        done()
+                    })
+                })
+            })
         })
 
+        describe('Test with duplicates', function() {
+
+            describe('POST with duplicate username', function() {
+                it('should fail with status code 409', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "username",
+                            email: "email3@email.com",
+                            password: "password!123"
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(409)
+                            expect(res.body.should.have.property('error'))
+                            expect(res.body.error.should.have.property('errorType'))
+                            expect(res.body.error.errorType.should.equal('duplicateKeyError'))
+                            expect(res.body.error.should.have.property('message'))
+                            expect(res.body.error.message.should.equal('Username is taken'))
+                            done()
+                        })
+                })
+            })
+
+            describe('POST with duplicate email', function() {
+                it('should fail with status code 409', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "username3",
+                            email: "email@email.com",
+                            password: "password!123"
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(409)
+                            expect(res.body.should.have.property('error'))
+                            expect(res.body.error.should.have.property('errorType'))
+                            expect(res.body.error.errorType.should.equal('duplicateKeyError'))
+                            expect(res.body.error.should.have.property('message'))
+                            expect(res.body.error.message.should.equal('Email is in use'))
+                            done()
+                        })
+                })
+            })
+
+            describe('POST with username that is taken but with different case', function() {
+                it('should fail with status code 409', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "usernamE2",
+                            email: "email4@email.com",
+                            password: "password!123"
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(409)
+                            expect(res.body.should.have.property('error'))
+                            expect(res.body.error.should.have.property('errorType'))
+                            expect(res.body.error.errorType.should.equal('duplicateKeyError'))
+                            expect(res.body.error.should.have.property('message'))
+                            expect(res.body.error.message.should.equal('Username is taken'))
+                            done()
+                        })
+                })
+            })
+
+            describe('POST with email that is in use but with different case', function() {
+                it('should fail with status code 409', function(done){
+                    chai.request(expressURL)
+                        .post('/users')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username: "username4",
+                            email: "emAil@email.com",
+                            password: "password!123"
+                        })
+                        .end(function(err, res){
+                            expect(err).to.be.null
+                            expect(res).to.have.status(409)
+                            expect(res.body.should.have.property('error'))
+                            expect(res.body.error.should.have.property('errorType'))
+                            expect(res.body.error.errorType.should.equal('duplicateKeyError'))
+                            expect(res.body.error.should.have.property('message'))
+                            expect(res.body.error.message.should.equal('Email is in use'))
+                            done()
+                        })
+                })
+            })
+        })
     })
 
     // drop database
