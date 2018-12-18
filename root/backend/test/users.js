@@ -387,7 +387,7 @@ describe('Database tests', function(){
     })
 
     // drop database
-    after(function(done){
+    /*after(function(done){
         mongoose.connection.db.dropDatabase(function(err) {
             if(err) throw err
             console.log("Dropped existing database")
@@ -396,6 +396,14 @@ describe('Database tests', function(){
                 console.log("Disconnected from database")
                 done()
             })
+        })
+    })*/
+
+    after(function(done){
+        mongoose.connection.close(function(err){
+            if(err) throw err
+            console.log("Disconnected from database")
+            done()
         })
     })
 })
