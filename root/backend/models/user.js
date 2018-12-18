@@ -35,7 +35,7 @@ module.exports.getUserByUsernameOrEmail = function(usernameOrEmail, callback){
    // check if it's an email by checking if it contains the "@"
    const searchCriteria = (usernameOrEmail.indexOf('@') === -1) ?
       { username: usernameOrEmail } : { email: usernameOrEmail };
-   User.findOne(searchCriteria, callback);
+   User.findOne(searchCriteria, callback).collation({ locale: "en", strength: 2 });
 }
 
 // encrypts password before adding user to database.
