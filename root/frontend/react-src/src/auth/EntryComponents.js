@@ -18,7 +18,7 @@ export class PwField extends React.Component {
             <div className="form-group">
                 <div className="input-container">
                     <FontAwesomeIcon icon="key" className="input-icon"/>
-                    <input className={this.props.inputValid ? "text-input pw-input" : "text-input invalid pw-input"} placeholder="Password"
+                    <input className={!this.props.errorMsg ? "text-input pw-input" : "text-input invalid pw-input"} placeholder="Password"
                            value={this.props.inputValue}
                            id="pw-field"
                            type={this.state.pwShow ? "text" : "password"}
@@ -31,22 +31,18 @@ export class PwField extends React.Component {
                         {this.state.pwShow ? "HIDE": "SHOW"}
                    </button>
                 </div>
-                <div className={this.props.inputValid ? "field-valid" : "field-invalid"}>{this.props.errorMsg}</div>
+                <div className={!this.props.errorMsg ? "field-valid" : "field-invalid"}>{this.props.errorMsg}</div>
             </div>
         )
     }
 }
-
-PwField.defaultProps = {
-    errorMsg: 'Use 8 or more characters with a mix of letter, numbers & symbols'
-};
 
 export function EntryField(props) {
     return (
         <div className="form-group">
             <div className="input-container">
                 <FontAwesomeIcon icon={props.faIcon} className="input-icon"/>
-                <input className={props.inputValid ? "text-input" : "text-input invalid"}
+                <input className={!props.errorMsg ? "text-input" : "text-input invalid"}
                        value={props.inputValue}
                        placeholder={props.placeHolder}
                        type={props.inputType}
@@ -57,8 +53,7 @@ export function EntryField(props) {
                        required
                 />
             </div>
-            <div className={props.inputValid ? "field-valid" : "field-invalid"}>{props.errorMsg}</div>
+            <div className={!props.errorMsg ? "field-valid" : "field-invalid"}>{props.errorMsg}</div>
         </div>
     )
 }
-

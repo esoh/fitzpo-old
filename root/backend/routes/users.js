@@ -42,11 +42,24 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Filter = require('bad-words');
 
 const pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
 
+filter = new Filter();
 // Register a user
 router.post('/', (req, res, next) => {
+
+    // test if username is profane
+    if (filter.isProfane(req.body.username)) {
+        return res.status(422).send({
+            error: {
+                message: "Inappropriate Username",
+                errorType: "UserValidationError",
+                error: ""
+            }
+        })
+    }
 
     // test if password follows requirements
     if (!pwRegEx.test(req.body.password)) {
@@ -58,6 +71,7 @@ router.post('/', (req, res, next) => {
             }
         })
     }
+
 
     let newUser = new User({
         email: req.body.email,
