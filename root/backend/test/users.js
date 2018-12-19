@@ -18,11 +18,7 @@ describe('Database tests', function(){
     before(function(done){
         mongoose.connect(dbURL, function(err){
             if(err) throw err
-            mongoose.connection.db.dropDatabase(function(err) {
-                if(err) throw err
-                console.log("Dropped existing database")
-                done()
-            })
+            User.remove({}, done)
         })
         mongoose.connection.on('error', (err) => {
             console.log('Database Error' + err)
