@@ -8,6 +8,7 @@
     "start": "node app"
   },
   "dependencies": {
+    "bad-words": "^3.0.0",
     "bcrypt": "*",
     "body-parser": "*",
     "cors": "*",

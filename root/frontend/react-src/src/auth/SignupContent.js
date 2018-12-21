@@ -4,22 +4,22 @@ import { Link, Redirect } from 'react-router-dom';
 import { Entry } from './Entry';
 import {PwField, EntryField} from './EntryComponents';
 import AuthService from './AuthService';
+import Filter from 'bad-words';
+
 
 class SignupContent extends React.Component {
     constructor() {
         super();
         this.Auth = new AuthService();
+        this.filter = new Filter();
         this.state = {
-            isValidated: false,
-            userValid: true,
-            emailValid: true,
-            pwValid: true,
             userValue: "",
             emailValue: "",
             pwValue: "",
-            userTaken: null,
-            emailTaken: null,
-            signupSuccess: null
+            userErrMsg: null,
+            emailErrMsg: null,
+            pwErrMsg: null,
+            success: false
         };
     }
 
@@ -28,16 +28,19 @@ class SignupContent extends React.Component {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email:this.state.emailValue, username:this.state.userValue, password:this.state.pwValue})
-        }).then((res) => res.json())
-        .then((data) => this.Auth.login(this.state.userValue, this.state.pwValue, false))
-        .catch((err) => console.log(err))
+        })
+            .then(res => res.json())
+            .then(data => {
+                    this.Auth.login(this.state.userValue, this.state.pwValue, false);
+            })
+            .catch((err) => console.log(err))
     }
 
     handleChangeUser = event => {
         this.setState({
             userValue: event.target.value
         }, () => {
-            if (!this.state.userValid) this.validateUser();
+            if (this.state.userErrMsg) this.validateUser();
         });
     };
 
@@ -45,7 +48,7 @@ class SignupContent extends React.Component {
         this.setState({
             emailValue: event.target.value
         }, () => {
-            if (!this.state.emailValid) this.validateEmail();
+            if (this.state.emailErrMsg) this.validateEmail();
         });
     };
 
@@ -53,84 +56,119 @@ class SignupContent extends React.Component {
         this.setState({
             pwValue: event.target.value
         }, () => {
-            if (!this.state.pwValid) this.validatePw();
+            if (this.state.pwErrMsg) this.validatePw();
         });
     };
 
     validateUser = () => {
         let userRegEx = new RegExp("^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$");
-        if (userRegEx.test(this.state.userValue)) {
+        if (!userRegEx.test(this.state.userValue)) {
+            if (this.state.userValue === "") {
+                this.setState({
+                    userErrMsg: "*Required"
+                });
+            } else {
+                this.setState({
+                    userErrMsg: "Usernames may contain letters, numbers, hyphens, underscores, & periods"
+                });
+            }
+            return false;
+        } else if (this.filter.isProfane(this.state.userValue)) {
+            this.setState({
+                userErrMsg: "Inappropiate username"
+            });
+            return false;
+        } else {
             fetch('/users/' + this.state.userValue)
                 .then(res => res.json())
                 .then(data => {
                     if (data.username) {
-                        this.setState( {userTaken: true})
-                        this.setState( {userValid: false})
+                        this.setState({
+                            userErrMsg: "Username is taken"
+                        });
                     } else {
-                        this.setState( {userTaken: false})
-                        this.setState( {userValid: true})
+                        this.setState({
+                            userErrMsg: null
+                        });
                     }
                 });
-            if (!this.state.userTaken) {
+            if (!this.state.userErrMsg) {
                 return true;
             } else {
                 return false;
             }
-        } else {
-            this.setState( {userValid: false});
-            return false;
         }
     };
 
     validateEmail = () => {
         let emailRegEx = new RegExp("^([a-zA-Z0-9_.-]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$");
-        if (emailRegEx.test(this.state.emailValue)) {
+        if (!emailRegEx.test(this.state.emailValue)) {
+            if (this.state.emailValue === "") {
+                this.setState({
+                    emailErrMsg: "*Required"
+                });
+            } else {
+                this.setState({
+                    emailErrMsg: "Not a valid email address"
+                });
+            }
+            return false;
+        } else {
             fetch('/users/emails/' + this.state.emailValue)
                 .then(res => res.json())
                 .then(data => {
                     if (data.email) {
-                        this.setState ({ emailTaken: true })
-                        this.setState ({ emailValid: false })
+                        this.setState ({
+                            emailErrMsg: "This email is already in use"
+                        });
                     } else {
-                        this.setState({ emailTaken: false })
-                        this.setState({ emailValid: true })
+                        this.setState({
+                            emailErrMsg: null
+                        });
                     }
                 });
-            if (!this.state.emailTaken) {
+            if (!this.state.emailErrMsg) {
                 return true;
             } else {
                 return false;
             }
-        } else {
-            this.setState( {emailValid: false});
-            return false;
         }
     };
 
     validatePw = () => {
         let pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
-        if (pwRegEx.test(this.state.pwValue)) {
-            this.setState( {pwValid: true});
-            return true;
-        } else {
-            this.setState( {pwValid: false});
+        if (!pwRegEx.test(this.state.pwValue)) {
+            if (this.state.pwValue === "") {
+                this.setState({
+                    pwErrMsg: "*Required"
+                });
+            } else {
+                this.setState({
+                    pwErrMsg: "Use 8 or more characters with a mix of letters, numbers, & symbols"
+                });
+            }
             return false;
+        } else {
+            this.setState({
+                pwErrMsg: null
+            });
+            return true;
         }
     };
 
     handleSubmit = event => {
-        if (this.validateUser() && this.validateEmail() && this.validatePw()) {
+        if (this.validateUser() & this.validateEmail() & this.validatePw()) {
             this.signup();
-            this.setState({ signupSuccess: true })
             if (this.props.hideModal) {
                 this.props.hideModal();
             }
+            this.setState({ success: true })
         }
         event.preventDefault();
     };
 
     render() {
-        if (this.state.signupSuccess && !this.props.hideModal && this.Auth.loggedIn) {
+        if (this.state.success && !this.props.hideModal && this.Auth.loggedIn) {
             return <Redirect to='/profile' />
         }
 
@@ -142,10 +180,9 @@ class SignupContent extends React.Component {
                             faIcon="user"
                             placeHolder="Username"
                             inputValue={this.state.userValue}
-                            inputValid={this.state.userValid}
-                            errorMsg={this.state.userTaken ? "Username is taken" : "Usernames may contain letters, numbers, hyphens, underscores & periods"}
+                            errorMsg={this.state.userErrMsg}
                             inputChange={this.handleChangeUser}
-                            onBlur={this.state.userValue !== "" ? this.validateUser : this.validateUser}
+                            onBlur={this.validateUser}
                             autoComplete="username"
                         />
                         <EntryField inputId="email-field"
@@ -153,17 +190,16 @@ class SignupContent extends React.Component {
                             placeHolder="Email"
                             inputValue={this.state.emailValue}
                             inputType="email"
-                            inputValid={this.state.emailValid}
-                            errorMsg={this.state.emailTaken ? "This email is already in use" : "Not a valid email address"}
+                            errorMsg={this.state.emailErrMsg}
                             inputChange={this.handleChangeEmail}
-                            onBlur={this.state.emailValue !== "" ? this.validateEmail : this.validateEmail}
+                            onBlur={this.validateEmail}
                             autoComplete="email"
                         />
                         <PwField id="pw-field"
                             inputValue={this.state.pwValue}
-                            inputValid={this.state.pwValid}
+                            errorMsg={this.state.pwErrMsg}
                             inputChange={this.handleChangePw}
-                            onBlur={this.state.pwValue !== "" ? this.validatePw : undefined}
+                            onBlur={this.validatePw}
                             autoComplete="new-password"
                         />
                     </form>
