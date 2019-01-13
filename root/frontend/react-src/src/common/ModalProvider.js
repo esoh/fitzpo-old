@@ -5,25 +5,28 @@ import { ModalContext } from './ModalContext';
 
 
 class ModalProvider extends React.Component {
+
     showModal = (content, props = {}) => {
         this.setState({
             content,
             props,
+            isOpen: true,
         });
     };
 
     hideModal = () => {
         this.setState({
-            content: null,
-            props: {}
+            isOpen: false,
         });
     };
 
+    // initial state
     state = {
         content: null,
         props: {},
         showModal: this.showModal,
-        hideModal: this.hideModal
+        hideModal: this.hideModal,
+        isOpen: false,
     };
 
     render(){
@@ -32,11 +35,16 @@ class ModalProvider extends React.Component {
             <ModalContext.Provider value={this.state}>
                 {this.props.children}
                 <Modal
-                    in={!!ModalContent}
-                    content={ModalContent}
-                    modalProps={this.state.props}
+                    isOpen={this.state.isOpen}
                     hideModal={this.hideModal}
-                />
+                >
+                    {!!ModalContent ? (
+                        <ModalContent
+                            hideModal={this.hideModal}
+                            {...this.state.props}
+                        />
+                    ) : null}
+                </Modal>
             </ModalContext.Provider>
         );
     }
