@@ -187,9 +187,29 @@ router.post('/authenticate', (req, res, next) => {
    });
 });
 
+router.get('/profiles/:username', (req, res, next) => {
+    Profile.findOne({username: req.params.username}, (err, profile) => {
+        if (!profile) {
+            return res.json({success: false, msge: 'User not found'})
+        } else {
+            let data = {
+                img: profile.img,
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                bio: profile.bio,
+                age: profile.age,
+                height: profile.height,
+                weight: profile.weight
+            }
+
+            return res.json(data)
+        }
+    })
+})
+
 // update profile info
-router.put('/profile-info', (req, res, next) => {
-    Profile.findOne({username: req.username}, (err, profile) => {
+router.put('/profiles', (req, res, next) => {
+    Profile.findOne({username: req.body.username}, (err, profile) => {
         if (!profile) {
             return res.json({success: false, msg: 'User not found'})
         } else {
@@ -211,12 +231,12 @@ router.put('/profile-info', (req, res, next) => {
 })
 
 // upadate profile picture
-router.put('/profile-picture', (req, res) => {
+router.put('/profile-pictures', (req, res) => {
     singleUpload(req, res, function(err) {
         if (err) {
             return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
         }
-        Profile.findOne({username: req.username}, (err, profile) => {
+        Profile.findOne({username: req.body.username}, (err, profile) => {
             if (!profile) {
                 return res.json({success: false, msg: 'User not found'})
             } else {

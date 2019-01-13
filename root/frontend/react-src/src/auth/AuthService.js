@@ -53,9 +53,9 @@ export default class AuthService {
 
     getToken() {
         if (localStorage.getItem('accessToken')) {
-            return localStorage.getItem('accessToken');
+            return JSON.parse(localStorage.getItem('accessToken'));
         } else {
-            return sessionStorage.getItem('accessToken');
+            return JSON.parse(sessionStorage.getItem('accessToken'));
         }
     }
 
