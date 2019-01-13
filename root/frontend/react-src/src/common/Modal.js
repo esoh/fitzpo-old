@@ -1,14 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import './Modal.css'
+import Portal from './Portal';
+import './Modal.css';
 
 // since 3rd party apps like to render to body, we don't want to render to body.
 // Everything renders to body and if we render to body, it could break our app.
 // We want to render to a div that is a child of body (root).
 
-const appRoot = document.getElementById('root');
 const fadeDuration = 300;
 const modalDuration = 300;
 const modalFadeClasses = {
@@ -30,7 +29,7 @@ const backdropFadeClasses = {
     appearActive: 'modal-backdrop-show'
 };
 
-class ModalPortal extends React.Component {
+class Modal extends React.Component {
     constructor(){
         super();
         this.state = {
@@ -89,8 +88,8 @@ class ModalPortal extends React.Component {
     render(){
         const ModalContent = this.state.content;
         if(this.state.in){
-            return ReactDOM.createPortal(
-                (
+            return (
+                <Portal>
                     <div>
                         {/* modal window */}
                         <CSSTransition
@@ -128,8 +127,7 @@ class ModalPortal extends React.Component {
                             <div className="modal-backdrop"/>
                         </CSSTransition>
                     </div>
-                ),
-                appRoot
+                </Portal>
             );
         } else {
             return null;
@@ -137,4 +135,4 @@ class ModalPortal extends React.Component {
     }
 }
 
-export default ModalPortal;
+export default Modal;
