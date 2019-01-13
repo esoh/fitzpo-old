@@ -12,7 +12,7 @@ export default class AuthService {
             })
         }).then(res => {
             if (!!res.token) {
-                this.setToken(res.token, rememberMe) // Setting the token in localStorage
+                this.setToken(res, rememberMe) // Setting the token in localStorage
             } else {
                 callback(res.msg);
             }
@@ -43,6 +43,7 @@ export default class AuthService {
 
     setToken(token, rememberMe) {
         // Saves user token to localStorage
+        token = JSON.stringify(token); // Need to serialize token object to store
         if (rememberMe) {
             localStorage.setItem('accessToken', token);
         } else {
