@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ModalPortal from './ModalPortal';
+import Modal from './Modal';
 import { ModalContext } from './ModalContext';
 
 
@@ -31,7 +31,7 @@ class ModalProvider extends React.Component {
         return(
             <ModalContext.Provider value={this.state}>
                 {this.props.children}
-                <ModalPortal
+                <Modal
                     in={!!ModalContent}
                     content={ModalContent}
                     modalProps={this.state.props}
