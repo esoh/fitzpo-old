@@ -11,6 +11,7 @@ class EntryModal extends React.Component {
     };
 
     alternate = () => {
+        console.log(document.activeElement)
         this.setState({
             isSignup: !this.state.isSignup
         });
