@@ -1,9 +1,195 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
+import './Profile.css';
+import AuthService from '../auth/AuthService';
 
-function Profile() {
-    return (
-        <p>Profile</p>
-    );
+class Profile extends React.Component {
+    constructor() {
+        super();
+        this.Auth = new AuthService();
+        this.state = {
+            profilePic: "",
+            firstName: "",
+            lastName: "",
+            age: "",
+            bio: "",
+            height: "",
+            weight: "",
+            goals: "",
+            edit: false,
+            selectedFile: null
+        };
+    }
+
+    getProfile = () => {
+        let token = this.Auth.getToken();
+        fetch('/users/profiles/' + token.user.username)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    profilePic: data.img,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    age: data.age,
+                    bio: data.bio,
+                    height: data.height,
+                    weight: data.weight,
+                    goals: data.goals
+                });
+            })
+    }
+
+    saveProfile = () => {
+        this.handleUpload(() => {
+            let token = this.Auth.getToken();
+            fetch('/users/profiles', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: token.user.username,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    age: this.state.age,
+                    bio: this.state.bio,
+                    height: this.state.height,
+                    weight: this.state.weight,
+                    goals: this.state.goals
+                })
+            })
+                .then(res => {
+                    this.getProfile()
+                    this.setState( {edit: false} )
+                })
+
+        });
+    }
+
+    toggleEdit = () => {
+        this.setState( {edit: !this.state.edit} )
+    }
+
+    handleChangeFile = event => {
+        this.setState({
+            selectedFile: event.target.files[0]
+        });
+    }
+
+    handleUpload = (callback) => {
+        const data = new FormData();
+        data.append('image', this.state.selectedFile) /*need 'image' due to singleUpload initialization in users.js*/
+        fetch('/users/profile-pictures/' + this.Auth.getToken().user.username, {
+            method: "POST", /*Must not set Content-Type header*/
+            body: data })
+            .then(res => {
+                callback();
+            })
+    }
+
+    handleChangeFirstName = event => {
+        this.setState({
+            firstName: event.target.value
+        });
+    }
+
+    handleChangeLastName = event => {
+        this.setState({
+            lastName: event.target.value
+        });
+    }
+
+    handleChangeAge = event => {
+        this.setState({
+            age: event.target.value
+        });
+    }
+
+    handleChangeBio = event => {
+        this.setState({
+            bio: event.target.value
+        });
+    }
+
+    handleChangeHeight = event => {
+        this.setState({
+            height: event.target.value
+        });
+    }
+
+    handleChangeWeight = event => {
+        this.setState({
+            weight: event.target.value
+        });
+    }
+
+    handleChangeGoals = event => {
+        this.setState({
+            goals: event.target.value
+        });
+    }
+
+    componentDidMount() {
+        this.getProfile();
+    }
+
+    render() {
+        if (!this.Auth.loggedIn()) {
+            return <Redirect to='/login' />
+        }
+    
+        return (
+            <>
+                <img className='user' src={this.state.profilePic === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/dumbell.jpg" : this.state.profilePic} alt=""/>
+                {!this.state.edit ? (
+                <>
+                <span className='name'>{this.Auth.getToken().user.username}</span>
+                <p>{this.state.firstName + " " + this.state.lastName}</p>
+                <p>{"age: " + this.state.age}</p>
+                <p>{"bio: " + this.state.bio}</p>
+                <p>{"height: " + this.state.height}</p>
+                <p>{"weight: " + this.state.weight}</p>
+                <p>{"goals: " + this.state.goals}</p>
+                <button onClick={this.toggleEdit}>edit</button>
+                </>
+                ) : (
+                <>
+                {/*<form method="post" encType="multipart/form-data" action={"/users/profile-pictures/" + this.Auth.getToken().user.username}>
+                    <input type="file" name="image" />
+                    <input type="submit"/>
+                </form>*/}
+                <div>
+                    <input type="file" name="image" onChange={this.handleChangeFile}/>
+                </div>
+                <p>first name
+                    <input value={this.state.firstName} onChange={this.handleChangeFirstName}/>
+                </p>
+                <p>last name
+                    <input value={this.state.lastName} onChange={this.handleChangeLastName}/>
+                </p>
+                <p>age
+                    <input value={this.state.age} onChange={this.handleChangeAge}/>
+                </p>
+                <p>bio
+                    <input value={this.state.bio} onChange={this.handleChangeBio}/>
+                </p>
+                <p>height
+                    <input value={this.state.height} onChange={this.handleChangeHeight}/>
+                </p>
+                <p>weight
+                    <input value={this.state.weight} onChange={this.handleChangeWeight}/>
+                </p>
+                <p>goals
+                    <input value={this.state.goals} onChange={this.handleChangeGoals}/>
+                </p>
+                <p></p>
+                <button onClick={this.saveProfile}>save</button>
+                <button onClick={this.toggleEdit}>cancel</button>
+
+                </>
+                )}
+
+            </>
+        );
+    }
 }
 
 export default Profile;

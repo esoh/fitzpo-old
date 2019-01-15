@@ -13,11 +13,12 @@ export default class AuthService {
         }).then(res => {
             if (!!res.token) {
                 this.setToken(res, rememberMe) // Setting the token in localStorage
+                if (callback) {
+                    callback(res.msg);
+                }
             } else {
                 callback(res.msg);
             }
-            console.log(!!res.token);
-            console.log(res.msg);
             return Promise.resolve(res);
         })
     }
@@ -25,6 +26,7 @@ export default class AuthService {
     // Checks to see if there is a valid saved token
     loggedIn() {
         const token = this.getToken(); // retrieve token from localStorage
+        //console.log(!!token && !this.isTokenExpired(token));
         return !!token && !this.isTokenExpired(token); // returns true if user should be logged in
     }
 

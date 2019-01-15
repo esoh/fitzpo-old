@@ -38,7 +38,6 @@ class Navbar extends React.Component {
         this.setState({
             isLoggedIn: this.Auth.loggedIn()
         });
-        console.log(this.Auth.loggedIn());
     }
 
     render() {

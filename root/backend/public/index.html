@@ -1,1 +1,24 @@
-frontend index.html
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+Hey! Lets try uploading to s3 directly :)
+
+<form method="post" enctype="multipart/form-data" action="/users/profile-pictures/getbig">
+    <p>
+        <input type="text" name="title" placeholder="optional title"/>
+    </p>
+
+    <p>
+        <input type="file" name="image"/>
+    </p>
+
+    <p>
+        <input type="submit"/>
+    </p>
+</form>
+</body>
+</html>

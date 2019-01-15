@@ -27,9 +27,9 @@ const upload = multer({
         s3: s3,
         bucket: 'gymmate-profile-pictures',
         acl: 'public-read',
-        metadata: function (req, file, cb) {
-            cb(null, {fieldName: file.fieldName})
-        },
+        // metadata: function (req, file, cb) {
+        //     cb(null, {fieldName: file.fieldName})
+        // },
         key: function (req, file, cb) {
             cb(null, Date.now().toString())
         }
