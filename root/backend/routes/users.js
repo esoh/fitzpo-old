@@ -44,9 +44,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Profile = require('../models/profile');
 const Filter = require('bad-words');
-const upload = require('../services/s3-file-upload')
 
-const singleUpload = upload.single('image'); // key is 'image'
 
 const pwRegEx = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%^&*?])(?=.{8,})");
 
@@ -133,6 +131,7 @@ router.post('/', (req, res, next) => {
             let newProfile= new Profile({
                 username: user.username,
                 img: "",
+                coverPhoto: "",
                 firstName: "",
                 lastName: "",
                 bio: "",
@@ -188,79 +187,6 @@ router.post('/authenticate', (req, res, next) => {
    });
 });
 
-router.get('/profiles/:username', (req, res, next) => {
-    Profile.findOne({username: req.params.username}, (err, profile) => {
-        if (!profile) {
-            return res.json({success: false, msge: 'User not found'})
-        } else {
-            let data = {
-                img: profile.img,
-                firstName: profile.firstName,
-                lastName: profile.lastName,
-                bio: profile.bio,
-                age: profile.age,
-                height: profile.height,
-                weight: profile.weight,
-                goals: profile.goals
-            }
-
-            return res.json(data)
-        }
-    })
-})
-
-// update profile info
-router.put('/profiles', (req, res, next) => {
-    Profile.findOne({username: req.body.username}, (err, profile) => {
-        if (!profile) {
-            return res.json({success: false, msg: 'User not found'})
-        } else {
-            profile.firstName = req.body.firstName,
-            profile.lastName = req.body.lastName,
-            profile.bio = req.body.bio,
-            profile.age = req.body.age,
-            profile.height = req.body.height,
-            profile.weight = req.body.weight,
-            profile.goals = req.body.goals
-            profile.save(err => {
-                if (err) {
-                    console.log( res.json({success: false, msg: 'Could not save to db'}))
-                } else {
-                    console.log( res.json({success: true, msg: 'Successfully saved to db'}))
-                }
-            })
-        }
-    })
-})
-
-// upadate profile picture
-router.post('/profile-pictures/:username', (req, res) => {
-    console.log("!!!\n ----------------THIS RUNS----------------\n!!!")
-    singleUpload(req, res, function(err) {
-        if (err) {
-            return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
-        }
-        Profile.findOne({username: req.params.username}, (err, profile) => {
-            if (!profile) {
-                return res.json({success: false, msg: 'User not found'})
-            } else {
-                profile.img = req.file.location
-                profile.save(err => {
-                    if (err) {
-                        console.log( res.json({success: false, msg: 'Could not save to db'}))
-                    } else {
-                        console.log( res.json({success: true, msg: 'Successfully saved to db'}))
-                    }
-                })
-            }
-        })
-        //return res.json({'imageUrl': req.file.location});
-    });
-});
-
-// router.post('/profile-pictures/:username', upload.single('image'), function (req, res, next) {
-//     res.send("Uploaded!");
-// });
 // Profile
 // protect route with authentication token
 /* router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {

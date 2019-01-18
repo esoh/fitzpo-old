@@ -12,6 +12,7 @@ const dbURL = `mongodb://${host}:${port}/${name}`;
 
 const app = express(); // create an express application
 const users = require('./routes/users'); // require ./routes/users.js
+const profiles = require('./routes/profiles') // require ./routs/users.js
 
 // Connect to Database
 mongoose.connect(dbURL);
@@ -49,6 +50,9 @@ require('./config/passport')(passport);
 // We want to put user related code in ./routes/users.js. This says that
 // site/users* will be handled by routes/users.js.
 app.use('/users', users);
+
+// site/profiles* will be hadnled by routes/profiles.js
+app.use('/profiles', profiles);
 
 // Error handling middleware
 app.use(function (err, req, res, next) {
