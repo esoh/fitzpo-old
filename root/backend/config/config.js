@@ -22,6 +22,11 @@ const dev = {
     },
     auth: {
         secret: process.env.AUTH_SECRET || process.env.DEV_AUTH_SECRET || 'dev server secret'
+    },
+    S3: {
+        secretAccessKey: process.env.S3_SECRET_KEY,
+        accessKeyId: process.env.S3_KEY,
+        region: process.env.S3_REGION
     }
 }
 
@@ -37,6 +42,11 @@ const test = {
     },
     auth: {
         secret: process.env.AUTH_SECRET || process.env.TEST_AUTH_SECRET || 'test server secret'
+    },
+    S3: {
+        secretAccessKey: process.env.S3_SECRET_KEY,
+        accessKeyId: process.env.S3_KEY,
+        region: process.env.S3_REGION
     }
 }
 
@@ -51,6 +61,11 @@ const prod = {
     },
     auth: {
         secret: process.env.AUTH_SECRET || process.env.PROD_AUTH_SECRET
+    },
+    S3: {
+        secretAccessKey: process.env.S3_SECRET_KEY,
+        accessKeyId: process.env.S3_KEY,
+        region: process.env.S3_REGION
     }
 }
 

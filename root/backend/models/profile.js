@@ -9,6 +9,9 @@ const ProfileSchema = mongoose.Schema({
     img: {
         type: String
     },
+    coverPhoto: {
+        type: String
+    },
     firstName: {
         type: String,
         trim: true
@@ -20,7 +23,6 @@ const ProfileSchema = mongoose.Schema({
     age: {
         type: String,
         trim: true,
-        match: /^\d+$/
     },
     bio: {
         type: String,

@@ -9,6 +9,7 @@ class Profile extends React.Component {
         this.Auth = new AuthService();
         this.state = {
             profilePic: "",
+            coverPhoto: "",
             firstName: "",
             lastName: "",
             age: "",
@@ -17,17 +18,20 @@ class Profile extends React.Component {
             weight: "",
             goals: "",
             edit: false,
-            selectedFile: null
+            upload: false,
+            selectedFile: null,
+            selectedCoverFile: null
         };
     }
 
     getProfile = () => {
         let token = this.Auth.getToken();
-        fetch('/users/profiles/' + token.user.username)
+        fetch('/profiles/' + token.user.username)
             .then(res => res.json())
             .then(data => {
                 this.setState({
                     profilePic: data.img,
+                    coverPhoto: data.coverPhoto,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     age: data.age,
@@ -40,32 +44,33 @@ class Profile extends React.Component {
     }
 
     saveProfile = () => {
-        this.handleUpload(() => {
-            let token = this.Auth.getToken();
-            fetch('/users/profiles', {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    username: token.user.username,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    age: this.state.age,
-                    bio: this.state.bio,
-                    height: this.state.height,
-                    weight: this.state.weight,
-                    goals: this.state.goals
-                })
+        let token = this.Auth.getToken();
+        fetch('/profiles', {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                username: token.user.username,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                age: this.state.age,
+                bio: this.state.bio,
+                height: this.state.height,
+                weight: this.state.weight,
+                goals: this.state.goals
             })
-                .then(res => {
-                    this.getProfile()
-                    this.setState( {edit: false} )
-                })
-
-        });
+        })
+            .then(res => {
+                this.getProfile();
+                this.setState( {edit: false} );
+            })
     }
 
     toggleEdit = () => {
         this.setState( {edit: !this.state.edit} )
+    }
+
+    toggleUpload = () => {
+        this.setState( {upload: !this.state.upload} )
     }
 
     handleChangeFile = event => {
@@ -74,15 +79,37 @@ class Profile extends React.Component {
         });
     }
 
-    handleUpload = (callback) => {
-        const data = new FormData();
-        data.append('image', this.state.selectedFile) /*need 'image' due to singleUpload initialization in users.js*/
-        fetch('/users/profile-pictures/' + this.Auth.getToken().user.username, {
-            method: "POST", /*Must not set Content-Type header*/
-            body: data })
-            .then(res => {
-                callback();
-            })
+    handleChangeCoverFile = event => {
+        this.setState({
+            selectedCoverFile: event.target.files[0]
+        });
+    }
+
+    handleUpload = () => {
+        this.toggleUpload();
+        if (this.state.selectedFile !== null) {
+            const data = new FormData();
+            data.append('image', this.state.selectedFile) /*need 'image' due to singleUpload initialization in users.js*/
+            fetch('profiles/profile-pictures/' + this.Auth.getToken().user.username, {
+                method: "POST", /*Must not set Content-Type header*/
+                body: data })
+                    .then(res => {
+                        this.getProfile();
+                    })
+        }
+    }
+
+    handleCoverUpload = () => {
+        if (this.state.selectedCoverFile !== null) {
+            const data = new FormData();
+            data.append('cover-image', this.state.selectedCoverFile) /*need 'image' due to singleUpload initialization in users.js*/
+            fetch('profiles/cover-photos/' + this.Auth.getToken().user.username, {
+                method: "POST", /*Must not set Content-Type header*/
+                body: data })
+                    .then(res => {
+                        this.getProfile();
+                    })
+        }
     }
 
     handleChangeFirstName = event => {
@@ -127,21 +154,43 @@ class Profile extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.getProfile();
+    // Look into benefits of didMount vs willMount
+    componentWillMount() {
+        if (!this.Auth.loggedIn()) {
+            return <Redirect to='/login' />
+        } else {
+            this.getProfile();
+        }
     }
 
     render() {
         if (!this.Auth.loggedIn()) {
             return <Redirect to='/login' />
         }
-    
         return (
             <>
-                <img className='user' src={this.state.profilePic === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/dumbell.jpg" : this.state.profilePic} alt=""/>
+            <div className='main-container'>
+                <div className='top-container'>
+                    <img className='cover-photo' src={this.state.coverPhoto === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.coverPhoto} alt="your cover pic">
+                    </img>
+                    <div className='upload'>
+                        <input type="file" name="cover-image" onChange={this.handleChangeCoverFile}/>
+                        <button onClick={this.handleCoverUpload}>Upload</button>
+                    </div>
+                    <div className="pic-container">
+                        <img className='user' src={this.state.profilePic === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.profilePic} alt="you profile pic"/>
+                        <button className="update-btn" onClick={this.toggleUpload}>Update</button>
+                    </div>
+                </div>
+                {this.state.upload && (
+                    <div>
+                        <input type="file" name="image" onChange={this.handleChangeFile}/>
+                        <button onClick={this.handleUpload}>Upload</button>
+                    </div>
+                )}
+                <span className='name'>{this.Auth.getToken().user.username}</span>
                 {!this.state.edit ? (
                 <>
-                <span className='name'>{this.Auth.getToken().user.username}</span>
                 <p>{this.state.firstName + " " + this.state.lastName}</p>
                 <p>{"age: " + this.state.age}</p>
                 <p>{"bio: " + this.state.bio}</p>
@@ -156,9 +205,6 @@ class Profile extends React.Component {
                     <input type="file" name="image" />
                     <input type="submit"/>
                 </form>*/}
-                <div>
-                    <input type="file" name="image" onChange={this.handleChangeFile}/>
-                </div>
                 <p>first name
                     <input value={this.state.firstName} onChange={this.handleChangeFirstName}/>
                 </p>
@@ -186,6 +232,7 @@ class Profile extends React.Component {
 
                 </>
                 )}
+            </div>
 
             </>
         );
