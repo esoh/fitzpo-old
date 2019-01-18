@@ -40,12 +40,12 @@ const defaultProps = {
 }
 
 class Modal extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         // state of modal being open, necessary for persistence after
         //   props.isOpen turns false, but Modal must still fade out
         this.state = {
-            isOpen: false,
+            isOpen: props.isOpen,
         };
 
         // callback ref to store reference to modal-dialog
@@ -65,12 +65,10 @@ class Modal extends React.Component {
 
     // if modal is shown, set focus and update body classname
     componentDidUpdate(prevProps, prevState) {
-        console.log("UPDATE")
         if (this.state.isOpen && !prevState.isOpen && this._modalDialog) {
             this._modalDialog.parentNode.focus();
             document.body.classList.add("modal-open");
         }
-        console.log(document.activeElement);
     }
 
     // called by the animation. When props.isOpen=false, the fade animation

@@ -13,7 +13,7 @@ import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
 import { Login, Signup } from './auth/Entry';
 import Password from './auth/Password';
-import ModalProvider from './common/ModalProvider';
+import ModalContainer from './common/ModalContainer';
 
 library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope, faTimesCircle);
 
@@ -21,10 +21,10 @@ class App extends Component {
     render() {
         return (
             <Router className="App">
-                <Switch>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/signup" component={Signup}/>
-                    <ModalProvider>
+                <div>
+                    <Switch>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/signup" component={Signup}/>
                         <div className="nav-container">
                             <Navbar/>
                             <Switch>
@@ -36,8 +36,9 @@ class App extends Component {
                                 <Route path="*" render={() => <Redirect to="/"/>}/>
                             </Switch>
                         </div>
-                    </ModalProvider>
-                </Switch>
+                    </Switch>
+                    <ModalContainer />
+                </div>
             </Router>
         );
     }
