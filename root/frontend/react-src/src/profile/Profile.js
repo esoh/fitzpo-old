@@ -169,15 +169,18 @@ class Profile extends React.Component {
         }
         return (
             <>
-
-                <img className='cover-photo' src={this.state.coverPhoto === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.coverPhoto} alt="your cover photo"/>
-                <div>
-                    <input type="file" name="cover-image" onChange={this.handleChangeCoverFile}/>
-                    <button onClick={this.handleCoverUpload}>Upload</button>
-                </div>
-                <div className="pic-container">
-                <img className='user' src={this.state.profilePic === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.profilePic} alt="you profile picture"/>
-                <button className="update-btn" onClick={this.toggleUpload}>Update</button>
+            <div className='main-container'>
+                <div className='top-container'>
+                    <img className='cover-photo' src={this.state.coverPhoto === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.coverPhoto} alt="your cover pic">
+                    </img>
+                    <div className='upload'>
+                        <input type="file" name="cover-image" onChange={this.handleChangeCoverFile}/>
+                        <button onClick={this.handleCoverUpload}>Upload</button>
+                    </div>
+                    <div className="pic-container">
+                        <img className='user' src={this.state.profilePic === "" ? "https://s3-us-west-1.amazonaws.com/gymmate-profile-pictures/1547795834565" : this.state.profilePic} alt="you profile pic"/>
+                        <button className="update-btn" onClick={this.toggleUpload}>Update</button>
+                    </div>
                 </div>
                 {this.state.upload && (
                     <div>
@@ -229,6 +232,7 @@ class Profile extends React.Component {
 
                 </>
                 )}
+            </div>
 
             </>
         );
