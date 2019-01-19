@@ -61,6 +61,16 @@ Things that can be set include: NODE_DEV=("test", "dev", or "prod"), APP_PORT, D
     Note: Besides NODE_DEV, the environmental vars can be prepended with their environment type to define the variables only for that specific environment type. 
     E.g. TEST_DB_NAME can be used to define the database only when NODE_ENV="test". Be aware that if DB_NAME is defined, it will be used instead of TEST_DB_NAME, like the other environmental variables.
 
+## Contributing
+You can contribute to our app! If you've found a fix to an issue or a new feature that needs implementing, then follow the instructions below.
+
+1. Create a fork of the repository.
+1. In your own fork, create a branch with a name that loosely describes your change.
+1. Make your changes in this branch. Do your best to follow the [Angular commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) for naming your commits and to follow the coding style.
+1. If your fork's master branch becomes out of date with master, then update your fork using the compare & pull request.
+1. Rebase your commits off the updated master.
+1. Create a pull request in our repository with your fork's branch.
+
 ## API Documentation
 
 ### Users
