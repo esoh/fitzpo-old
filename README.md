@@ -70,19 +70,3 @@ You can contribute to our app! If you've found a fix to an issue or a new featur
 1. If your fork's master branch becomes out of date with master, then update your fork using the compare & pull request.
 1. Rebase your commits off the updated master.
 1. Create a pull request in our repository with your fork's branch.
-
-## API Documentation
-
-### Users
-
-Request | Details | Implemented?
--- | -- | --
-POST /users | Adds a new user for registration | yes
-GET /users/:username | Gets username if exists, else returns empty JSON object | yes
-GET /users/emails/:email | Gets email if exists, else returns empty JSON object | yes
-
-### Sessions
-
-Request | Details | Implemented?
--- | -- | --
-POST /sessions | Creates a new login session | no
