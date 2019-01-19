@@ -1,17 +1,17 @@
-# GymMate
-This repo contains the web app powering GymMate.
+# Fitzpo
+This repo contains the web app powering Fitzpo.
 
 ## Getting started
 
 ### Prerequisities
 1. Git
 1. Node.js
-1. A clone of the repo: `git clone https://github.com/esoh/gymmate`
+1. A clone of the repo: `git clone https://github.com/esoh/fitzpo`
 1. MongoDB
 
 ### React.js website
 #### Installing dependencies
-1. `cd gymmate/root/frontend/react-src` to go to react directory
+1. `cd fitzpo/root/frontend/react-src` to go to react directory
 1. `npm i` to install dependencies
 
 #### Running locally
@@ -20,7 +20,7 @@ This repo contains the web app powering GymMate.
 
 ### Express.js/Node.js server
 #### Installing dependencies
-1. `cd gymmate/root/backend` to go to express directory
+1. `cd fitzpo/root/backend` to go to express directory
 1. `npm i` to install dependencies
 
 #### Running locally
@@ -30,7 +30,7 @@ This repo contains the web app powering GymMate.
     Developer note: running `nodemon` is suggested to prevent having to restart the server every time a write is made to the server code. `npm install -g nodemon` will install nodemon globally.
 
 #### Testing the API
-1. `cd gymmate/root/backend` to go to express directory
+1. `cd fitzpo/root/backend` to go to express directory
 1. Run the express server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
 1. Run `npm test` to run the tests.
 
