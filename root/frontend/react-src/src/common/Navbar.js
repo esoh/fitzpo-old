@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../constants/modalTypes'
 import { showModal } from './modalActions'
@@ -8,8 +9,9 @@ import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
 import AuthService from '../auth/AuthService'
 
-const defaultProps = {
-    expand: true
+const propTypes = {
+    openSignup: PropTypes.func,
+    openLogin: PropTypes.func,
 }
 
 class Navbar extends React.Component {
@@ -122,7 +124,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-Navbar.defaultProps = defaultProps
+Navbar.propTypes = propTypes
 Navbar = connect(null, mapDispatchToProps)(Navbar)
 
 export default Navbar
