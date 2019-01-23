@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import {logIn, logOut } from './authActions'
+import { logIn } from './authActions'
 import { Entry } from './Entry';
 import {PwField, EntryField} from './EntryComponents';
 import AuthService from './AuthService';
@@ -21,7 +21,6 @@ class SignupContent extends React.Component {
             userErrMsg: null,
             emailErrMsg: null,
             pwErrMsg: null,
-            success: false
         };
     }
 
@@ -165,14 +164,13 @@ class SignupContent extends React.Component {
             if (this.props.hideModal) {
                 this.props.hideModal();
             }
-            this.setState({ success: true })
         }
         event.preventDefault();
     };
 
     render() {
-        if (this.state.success && !this.props.hideModal && this.props.loggedIn/*this.Auth.loggedIn*/) {
-            return <Redirect to='/profile' />
+        if (!this.props.hideModal && this.props.loggedIn/*this.Auth.loggedIn*/) { // the hideModal boolean is so that we don't redirect if signed in through the modal
+            return <Redirect to='/home' />
         }
 
         return (
@@ -247,9 +245,6 @@ const mapDispatchToProps = dispatch => {
     return {
         logIn: () => {
             dispatch(logIn())
-        },
-        logOut: () => {
-            dispatch(logOut())
         }
     }
 }
