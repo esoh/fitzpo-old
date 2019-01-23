@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import Transition, {
     EXITED,
     ENTERED,
@@ -25,6 +26,11 @@ const collapseStyles = {
         display: 'block',
     },
 }
+const propTypes = {
+    expand: PropTypes.bool,
+    in: PropTypes.bool,
+}
+
 const expandWidth = 768;
 
 class NavbarCollapse extends React.Component {
@@ -79,5 +85,7 @@ class NavbarCollapse extends React.Component {
         )
     }
 }
+
+NavbarCollapse.propTypes = propTypes
 
 export default NavbarCollapse;
