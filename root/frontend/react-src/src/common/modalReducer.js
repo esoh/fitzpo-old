@@ -6,7 +6,7 @@ const initialState = {
     modalOpen: false,
 }
 
-export default function app(state = initialState, action) {
+export default function modalReducer(state = initialState, action) {
     switch (action.type) {
         case SHOW_MODAL:
             return Object.assign({}, state, {

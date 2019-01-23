@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
+import {logIn, logOut } from '../auth/authActions'
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../constants/modalTypes'
 import { showModal } from './modalActions'
 import NavbarCollapse from './NavbarCollapse'
@@ -19,8 +20,8 @@ class Navbar extends React.Component {
         super();
         this.Auth = new AuthService();
         this.state = {
-            collapsed: true,
-            isLoggedIn: this.Auth.loggedIn()
+            collapsed: true
+            // isLoggedIn: this.Auth.loggedIn()
         };
     }
 
@@ -38,9 +39,10 @@ class Navbar extends React.Component {
 
     logout = (callback) => {
         this.Auth.logout()
-        this.setState({
-            isLoggedIn: this.Auth.loggedIn()
-        });
+        // this.setState({
+        //     isLoggedIn: this.Auth.loggedIn()
+        // });
+        this.props.logOut()
     }
 
     render() {
@@ -75,7 +77,7 @@ class Navbar extends React.Component {
                             <li className="nav-item" onClick={this.collapseNavbar}>
                                 <NavLink className="nav-link" to="/profile">Profile</NavLink>
                             </li>
-                            {!this.state.isLoggedIn ? (
+                            {!this.props.loggedIn/*this.state.isLoggedIn*/ ? (
                             <>
                                 <li className="nav-item" onClick={this.collapseNavbar}>
                                     <button type="button"
@@ -113,6 +115,12 @@ class Navbar extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.auth.loggedIn
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         openSignup: () => {
@@ -120,11 +128,18 @@ const mapDispatchToProps = dispatch => {
         },
         openLogin: () => {
             dispatch(showModal(LOGIN_MODAL))
+        },
+
+        logIn: () => {
+            dispatch(logIn())
+        },
+        logOut: () => {
+            dispatch(logOut())
         }
     }
 }
 
 Navbar.propTypes = propTypes
-Navbar = connect(null, mapDispatchToProps)(Navbar)
+Navbar = connect(mapStateToProps, mapDispatchToProps)(Navbar)
 
 export default Navbar

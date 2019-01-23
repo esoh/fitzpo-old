@@ -12,8 +12,8 @@ const getModalContent = (modalType, modalProps) => {
 const mapStateToProps = state => {
     // pass isOpen and prop
     return {
-        children: getModalContent(state.modalType, state.modalProps),
-        isOpen: state.modalOpen
+        children: getModalContent(state.modal.modalType, state.modal.modalProps),
+        isOpen: state.modal.modalOpen
     }
 }
 

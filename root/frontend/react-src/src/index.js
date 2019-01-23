@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import App from './App';
-import app from './common/modalReducer';
+import modalReducer from './common/modalReducer';
+import authReducer from './auth/authReducer';
 
-const store = createStore(app)
+const rootReducer = combineReducers({modal: modalReducer, auth: authReducer})
+const store = createStore(rootReducer)
 
 ReactDOM.render(
     <Provider store={store}>

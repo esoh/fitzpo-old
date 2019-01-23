@@ -34,11 +34,11 @@ let EntryModalContent = (props) => {
 }
 
 const mapStateToProps = state => {
-    return { modalType: state.modalType, modalProps: state.modalProps }
+    return { modalType: state.modal.modalType, modalProps: state.modal.modalProps }
 }
 
 const mapDispatchToProps = dispatch => {
-    return { 
+    return {
         hideModal: () => dispatch(hideModal()),
         openSignup: () => dispatch(showModal(SIGNUP_MODAL)),
         openLogin: () => dispatch(showModal(LOGIN_MODAL)),
