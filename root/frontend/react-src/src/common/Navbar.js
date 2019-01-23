@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
-import {logIn, logOut } from '../auth/authActions'
+import { logOut } from '../auth/authActions'
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../constants/modalTypes'
 import { showModal } from './modalActions'
 import NavbarCollapse from './NavbarCollapse'
@@ -130,9 +130,6 @@ const mapDispatchToProps = dispatch => {
             dispatch(showModal(LOGIN_MODAL))
         },
 
-        logIn: () => {
-            dispatch(logIn())
-        },
         logOut: () => {
             dispatch(logOut())
         }

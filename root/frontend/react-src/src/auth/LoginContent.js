@@ -2,12 +2,13 @@ import React from 'react';
 import { Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import { logIn, logOut } from './authActions'
+import { logIn } from './authActions'
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
 import AuthService from './AuthService';
 
 class LoginContent extends React.Component {
+    _isMounted = false;
     constructor() {
         super();
         this.Auth = new AuthService(); // creates instance of AuthService so we can use it's methods
@@ -63,7 +64,7 @@ class LoginContent extends React.Component {
                             userErrMsg: null
                         });
                     }
-                } else {
+                } else if (this._isMounted) {
                     this.setState({
                         pwErrMsg: null,
                         userErrMsg: null,
@@ -84,8 +85,16 @@ class LoginContent extends React.Component {
         event.preventDefault();
     };
 
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
-        if (/*this.Auth.loggedIn()*/this.props.loggedIn && !this.props.hideModal) {
+        if (/*this.Auth.loggedIn()*/this.props.loggedIn && !this.props.hideModal) { // the hideModal boolean is so that we don't redirect if signed in through the modal
             return <Redirect to='/home' />
         }
         return (
@@ -159,9 +168,6 @@ const mapDispatchToProps = dispatch => {
     return {
         logIn: () => {
             dispatch(logIn())
-        },
-        logOut: () => {
-            dispatch(logOut())
         }
     }
 }
