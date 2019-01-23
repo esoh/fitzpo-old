@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'
 
+import {logIn, logOut } from './authActions'
 import { Entry } from './Entry';
 import {PwField, EntryField} from './EntryComponents';
 import AuthService from './AuthService';
@@ -32,6 +34,7 @@ class SignupContent extends React.Component {
             .then(res => res.json())
             .then(data => {
                     this.Auth.login(this.state.userValue, this.state.pwValue, false);
+                    this.props.logIn();
             })
             .catch((err) => console.log(err))
     }
@@ -168,7 +171,7 @@ class SignupContent extends React.Component {
     };
 
     render() {
-        if (this.state.success && !this.props.hideModal && this.Auth.loggedIn) {
+        if (this.state.success && !this.props.hideModal && this.props.loggedIn/*this.Auth.loggedIn*/) {
             return <Redirect to='/profile' />
         }
 
@@ -234,5 +237,24 @@ class SignupContent extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.auth.loggedIn
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logIn: () => {
+            dispatch(logIn())
+        },
+        logOut: () => {
+            dispatch(logOut())
+        }
+    }
+}
+
+
+SignupContent = connect(mapStateToProps, mapDispatchToProps)(SignupContent)
 
 export default SignupContent;

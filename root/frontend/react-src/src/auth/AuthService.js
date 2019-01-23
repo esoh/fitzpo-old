@@ -75,7 +75,7 @@ export default class AuthService {
     }
 
     fetch = (url, options) => {
-        // performs api calls sneding the required auth headers
+        // performs api calls sending the required auth headers
         const headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

@@ -1,5 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import { connect } from 'react-redux'
+
 import './Profile.css';
 import AuthService from '../auth/AuthService';
 
@@ -156,7 +158,7 @@ class Profile extends React.Component {
 
     // Look into benefits of didMount vs willMount
     componentWillMount() {
-        if (!this.Auth.loggedIn()) {
+        if (/*!this.Auth.loggedIn()*/!this.props.loggedIn) {
             return <Redirect to='/login' />
         } else {
             this.getProfile();
@@ -164,7 +166,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        if (!this.Auth.loggedIn()) {
+        if (/*!this.Auth.loggedIn()*/!this.props.loggedIn) {
             return <Redirect to='/login' />
         }
         return (
@@ -238,5 +240,14 @@ class Profile extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.auth.loggedIn
+    }
+}
+
+Profile = connect(mapStateToProps)(Profile)
 
 export default Profile;

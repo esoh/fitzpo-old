@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, Redirect} from 'react-router-dom';
+import { connect } from 'react-redux'
 
+import { logIn, logOut } from './authActions'
 import { Entry } from './Entry';
 import {EntryField, PwField} from './EntryComponents';
 import AuthService from './AuthService';
@@ -76,14 +78,16 @@ class LoginContent extends React.Component {
                 this.props.hideModal();
             }
         }
+        if (this.props.logIn) {
+            this.props.logIn();
+        }
         event.preventDefault();
     };
 
     render() {
-        if (this.Auth.loggedIn() && !this.props.hideModal) {
+        if (/*this.Auth.loggedIn()*/this.props.loggedIn && !this.props.hideModal) {
             return <Redirect to='/home' />
         }
-
         return (
             <Entry title="Log In"
                 body={(
@@ -144,5 +148,25 @@ class LoginContent extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.auth.loggedIn
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logIn: () => {
+            dispatch(logIn())
+        },
+        logOut: () => {
+            dispatch(logOut())
+        }
+    }
+}
+
+
+LoginContent = connect(mapStateToProps, mapDispatchToProps)(LoginContent)
 
 export default LoginContent;
