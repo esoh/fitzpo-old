@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { hideModal } from './modalActions'
 import Modal from './Modal'
-import EntryModalContent from '../auth/EntryModalContent'
+import EntryModalContent from '../../auth/EntryModalContent'
 
 const getModalContent = (modalType, modalProps) => {
     return (<EntryModalContent modalType={modalType}/>)

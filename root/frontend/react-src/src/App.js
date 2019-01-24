@@ -6,14 +6,14 @@ import { faEye, faEyeSlash, faUser, faKey, faEnvelope } from '@fortawesome/free-
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 import './App.css';
-import Navbar from './common/Navbar';
+import Navbar from './common/navbar/Navbar';
 import Home from './home/Home';
 import Programs from './programs/Programs';
 import Exercises from './exercises/Exercises';
 import Profile from './profile/Profile';
 import { Login, Signup } from './auth/Entry';
 import Password from './auth/Password';
-import ModalContainer from './common/ModalContainer';
+import ModalContainer from './common/modal/ModalContainer';
 
 library.add(faEye, faEyeSlash, faUser, faKey, faEnvelope, faTimesCircle);
 
