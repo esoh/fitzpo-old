@@ -26,7 +26,7 @@ class App extends Component {
                         <Route path="/login" component={Login}/>
                         <Route path="/signup" component={Signup}/>
                         <Route>
-                            <>
+                            <div className="nav-container">
                                 <Navbar/>
                                 <Switch>
                                     <Route exact path="/" component={Home}/>
@@ -36,7 +36,7 @@ class App extends Component {
                                     <Route path="/password" component={Password}/>
                                     <Route path="*" render={() => <Redirect to="/"/>}/>
                                 </Switch>
-                            </>
+                            </div>
                         </Route>
                     </Switch>
                     <ModalContainer />

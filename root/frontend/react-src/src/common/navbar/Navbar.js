@@ -64,15 +64,21 @@ class Navbar extends React.Component {
                         <ul className="navbar-nav">
 
                             <li className="nav-item" onClick={this.collapseNavbar}>
-                                <NavLink className="nav-link" exact to="/">Home</NavLink>
+                                <button className="link-btn">
+                                    <NavLink className="nav-link" exact to="/">Home</NavLink>
+                                </button>
                             </li>
 
                             <li className="nav-item" onClick={this.collapseNavbar}>
-                                <NavLink className="nav-link" to="/programs">Programs</NavLink>
+                                <button className="link-btn">
+                                    <NavLink className="nav-link" to="/programs">Programs</NavLink>
+                                </button>
                             </li>
 
                             <li className="nav-item" onClick={this.collapseNavbar}>
-                                <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
+                                <button className="link-btn">
+                                    <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
+                                </button>
                             </li>
 
                             {!this.props.loggedIn/*this.state.isLoggedIn*/ ? (
