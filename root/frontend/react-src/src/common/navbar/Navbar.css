@@ -8,6 +8,7 @@
     left: 0;
     z-index: 1030;
     background-color: #f8f9fa;
+    font-size: .875rem;
 }
 
 .navbar>.container {
@@ -71,5 +72,9 @@
 }
 
 .nav-item {
-    padding: 0 1rem;
+    padding: .75rem 1rem;
+}
+
+.navbar-brand {
+    padding: .875rem 1rem;
 }
