@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../constants/modalTypes'
-import { showModal, hideModal } from '../common/modalActions'
+import { showModal, hideModal } from '../common/modal/modalActions'
 import SignupContent from './SignupContent';
 import LoginContent from './LoginContent';
-import '../common/Modal.css';
+import '../common/modal/Modal.css';
 
 let EntryModalContent = (props) => {
     return(

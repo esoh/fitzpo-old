@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-import Portal from './Portal';
+import Portal from '../Portal';
 import './Modal.css';
 
 // since 3rd party apps like to render to body, we don't want to render to body.

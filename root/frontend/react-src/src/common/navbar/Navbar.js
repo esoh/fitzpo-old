@@ -3,12 +3,12 @@ import { NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
-import { logOut } from '../auth/authActions'
-import { SIGNUP_MODAL, LOGIN_MODAL } from '../constants/modalTypes'
-import { showModal } from './modalActions'
+import { logOut } from '../../auth/authActions'
+import { SIGNUP_MODAL, LOGIN_MODAL } from '../../constants/modalTypes'
+import { showModal } from '../modal/modalActions'
 import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
-import AuthService from '../auth/AuthService'
+import AuthService from '../../auth/AuthService'
 
 const propTypes = {
     openSignup: PropTypes.func,

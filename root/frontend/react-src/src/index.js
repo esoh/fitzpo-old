@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import App from './App';
-import modalReducer from './common/modalReducer';
+import modalReducer from './common/modal/modalReducer';
 import authReducer from './auth/authReducer';
 
 const rootReducer = combineReducers({modal: modalReducer, auth: authReducer})
