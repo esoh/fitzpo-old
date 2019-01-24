@@ -12,6 +12,7 @@ body, html {
     height: 100%;
     width: 100%;
     color: var(--normaltext);
+    background-color: #f8f8f8;
 }
 
 *, ::after, ::before {
