@@ -90,12 +90,19 @@ class Profile extends React.Component {
     handleUpload = () => {
         this.toggleUpload();
         if (this.state.selectedFile !== null) {
+            let imgName = this.state.profilePic
+            if (imgName.length > 0) {
+                imgName = imgName.slice(50)
+            } else {
+                imgName = "none"
+            }
             const data = new FormData();
             data.append('image', this.state.selectedFile) /*need 'image' due to singleUpload initialization in users.js*/
-            fetch('profiles/profile-pictures/' + this.Auth.getToken().user.username, {
+            fetch('profiles/profile-pictures/' + this.Auth.getToken().user.username + "/" + imgName, {
                 method: "POST", /*Must not set Content-Type header*/
                 body: data })
                     .then(res => {
+                        this.setState({selectedFile: null});
                         this.getProfile();
                     })
         }
@@ -103,12 +110,19 @@ class Profile extends React.Component {
 
     handleCoverUpload = () => {
         if (this.state.selectedCoverFile !== null) {
+            let imgName = this.state.coverPhoto
+            if (imgName.length > 0) {
+                imgName = imgName.slice(46)
+            } else {
+                imgName = "none"
+            }
             const data = new FormData();
             data.append('cover-image', this.state.selectedCoverFile) /*need 'image' due to singleUpload initialization in users.js*/
-            fetch('profiles/cover-photos/' + this.Auth.getToken().user.username, {
+            fetch('profiles/cover-photos/' + this.Auth.getToken().user.username + '/' + imgName, {
                 method: "POST", /*Must not set Content-Type header*/
                 body: data })
                     .then(res => {
+                        this.setState({selectedCoverFile: null});
                         this.getProfile();
                     })
         }
