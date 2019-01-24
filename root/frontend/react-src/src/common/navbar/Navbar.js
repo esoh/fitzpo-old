@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { logOut } from '../../auth/authActions'
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../../constants/modalTypes'
+import { APP_NAME } from '../../constants/appConstants'
 import { showModal } from '../modal/modalActions'
 import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
@@ -51,7 +52,7 @@ class Navbar extends React.Component {
                 <div className="container">
 
                     {/* Brand */}
-                    <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>GymMate</Link>
+                    <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>{APP_NAME}</Link>
 
                     {/* Collapse toggler button */}
                     <button onClick={this.toggleNavbar} className="navbar-toggler" type="button">

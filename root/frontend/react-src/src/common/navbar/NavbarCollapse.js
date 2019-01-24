@@ -27,7 +27,6 @@ const collapseStyles = {
     },
 }
 const propTypes = {
-    expand: PropTypes.bool,
     in: PropTypes.bool,
 }
 
@@ -56,7 +55,7 @@ class NavbarCollapse extends React.Component {
 
     onExiting = elem => {
         // prevent closing animation from closing to 0 when navbar is expanded
-        if(!this.props.expand || window.innerWidth < expandWidth){
+        if(window.innerWidth < expandWidth){
             elem.style['height'] = '0';
         }
     };

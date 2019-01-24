@@ -159,7 +159,7 @@
 
 .submit-btn {
     /*background-image: linear-gradient(to bottom right, #92fe9d, #00c9ff);*/
-    background-color: #4582ec;
+    background-color: var(--primary);
     box-shadow: 0 1px 1px rgba(104, 104, 104, 0.8);
     padding: .5rem 1rem;
     border-radius: 2.688em;
@@ -176,32 +176,27 @@
 }
 
 .submit-btn:focus, .submit-btn:active {
-    background-color: #4582ec;
+    background-color: var(--primary);
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
 
 .submit-btn:hover {
-    background-color: #226be8;
+    background-color: var(--primary-dark);
 }
 
 .alt-entry {
     margin-left: 0.4rem;
     font-weight: bold;
     font-size: 0.75rem;
-    color: #4582ec;
+    color: var(--primary);
 }
 
 .alt-entry:focus {
-    color: #4582ec;
+    color: var(--primary);
 }
 
-.alt-entry:hover {
-    color: #226be8;
-    text-decoration: underline;
-}
-
-.alt-entry:active {
-    color: #1863e6;
+.alt-entry:hover, .alt-entry:active {
+    color: var(--primary-dark);
     text-decoration: underline;
 }
 
@@ -238,11 +233,11 @@
 }
 
 #show-btn:hover {
-    color: #4582ec;
+    color: var(--primary);
 }
 
 #show-btn:active {
-    color: #226be8;
+    color: var(--primary-dark);
 }
 
 .entry-footer {

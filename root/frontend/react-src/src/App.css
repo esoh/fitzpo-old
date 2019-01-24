@@ -1,7 +1,17 @@
+:root {
+    --normaltext: #343a40;
+    --primary: #4582ec;
+    --primary-dark: #226be8;
+}
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
 body, html {
-  height: 100%;
-  width: 100%;
-  color: #343a40;
+    height: 100%;
+    width: 100%;
+    color: var(--normaltext);
 }
 
 *, ::after, ::before {
@@ -20,12 +30,12 @@ body, html {
 }
 
 .nav-container {
-    padding-top: 1rem;
     width: 100%;
     height: 100%;
 }
 
 .app-container {
+    padding-top: 2.75rem;
     width: 100%;
     height: 100%;
 }
@@ -35,7 +45,7 @@ ul {
 }
 
 a {
-    color: #4582ec;
+    color: var(--primary);
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
