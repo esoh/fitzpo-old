@@ -74,38 +74,41 @@ class Navbar extends React.Component {
                                 <NavLink className="nav-link" to="/exercises">Exercises</NavLink>
                             </li>
 
-                            <li className="nav-item" onClick={this.collapseNavbar}>
-                                <NavLink className="nav-link" to="/profile">Profile</NavLink>
-                            </li>
                             {!this.props.loggedIn/*this.state.isLoggedIn*/ ? (
-                            <>
-                                <li className="nav-item" onClick={this.collapseNavbar}>
-                                    <button type="button"
-                                        className="link-btn nav-link"
-                                        onClick={this.props.openSignup}
-                                    >
-                                        Sign up
-                                    </button>
-                                </li>
+                                <>
+                                    <li className="nav-item" onClick={this.collapseNavbar}>
+                                        <button type="button"
+                                            className="link-btn nav-link"
+                                            onClick={this.props.openSignup}
+                                        >
+                                            Sign up
+                                        </button>
+                                    </li>
 
-                                <li className="nav-item" onClick={this.collapseNavbar}>
-                                    <button type="button"
-                                        className="link-btn nav-link"
-                                        onClick={this.props.openLogin}
-                                    >
-                                        Log in
-                                    </button>
-                                </li>
-                            </>
+                                    <li className="nav-item" onClick={this.collapseNavbar}>
+                                        <button type="button"
+                                            className="link-btn nav-link"
+                                            onClick={this.props.openLogin}
+                                        >
+                                            Log in
+                                        </button>
+                                    </li>
+                                </>
                             ) : (
-                                <li className="nav-item" onClick={this.collapseNavbar}>
-                                    <button type="button"
-                                        className="link-btn nav-link"
-                                        onClick={this.logout}
-                                    >
-                                        Log out
-                                    </button>
-                                </li>
+                                <>
+                                    <li className="nav-item" onClick={this.collapseNavbar}>
+                                        <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                                    </li>
+
+                                    <li className="nav-item" onClick={this.collapseNavbar}>
+                                        <button type="button"
+                                            className="link-btn nav-link"
+                                            onClick={this.logout}
+                                        >
+                                            Log out
+                                        </button>
+                                    </li>
+                                </>
                             )}
                         </ul>
                     </NavbarCollapse>
