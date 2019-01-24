@@ -10,6 +10,7 @@ import { showModal } from '../modal/modalActions'
 import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
 import AuthService from '../../auth/AuthService'
+import DiamondIcon from '../DiamondIcon'
 
 const propTypes = {
     openSignup: PropTypes.func,
@@ -52,7 +53,12 @@ class Navbar extends React.Component {
                 <div className="container">
 
                     {/* Brand */}
-                    <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>{APP_NAME}</Link>
+                    <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>
+                        <div>
+                            <DiamondIcon />
+                            <p>{APP_NAME}</p>
+                        </div>
+                    </Link>
 
                     {/* Collapse toggler button */}
                     <button onClick={this.toggleNavbar} className="navbar-toggler" type="button">
@@ -104,7 +110,9 @@ class Navbar extends React.Component {
                             ) : (
                                 <>
                                     <li className="nav-item" onClick={this.collapseNavbar}>
-                                        <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                                        <button type="button" className="link-btn">
+                                            <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                                        </button>
                                     </li>
 
                                     <li className="nav-item" onClick={this.collapseNavbar}>
