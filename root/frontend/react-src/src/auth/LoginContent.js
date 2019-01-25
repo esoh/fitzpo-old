@@ -69,6 +69,9 @@ class LoginContent extends React.Component {
                         pwErrMsg: null,
                         userErrMsg: null,
                     });
+                    if (this.props.logIn) {
+                        this.props.logIn();
+                    }
                 }
 
             })
@@ -78,9 +81,6 @@ class LoginContent extends React.Component {
             if (this.props.hideModal) {
                 this.props.hideModal();
             }
-        }
-        if (this.props.logIn) {
-            this.props.logIn();
         }
         event.preventDefault();
     };
