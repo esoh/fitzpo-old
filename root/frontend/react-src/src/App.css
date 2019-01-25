@@ -1,7 +1,7 @@
 :root {
     --normaltext: #343a40;
-    --primary: #4582ec;
-    --primary-dark: #226be8;
+    --primary: #25d589;
+    --primary-dark: #22c37d;
 }
 
 body {
@@ -28,6 +28,10 @@ body, html {
 #root {
   height: 100%;
   width: 100%;
+}
+
+svg#icon {
+    fill: var(--primary)
 }
 
 .nav-container {
