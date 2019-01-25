@@ -87,15 +87,24 @@ class Profile extends React.Component {
         });
     }
 
+    nameFromLink = link => {
+        let name = ""
+        if (link.length > 0) {
+            for (let i = link.length-  1; i > -1; i--) {
+                let c = link.charAt(i);
+                if (c === '/') break;
+                name = c + name;
+            }
+        } else {
+            name = "none"
+        }
+        return name
+    }
+
     handleUpload = () => {
         this.toggleUpload();
         if (this.state.selectedFile !== null) {
-            let imgName = this.state.profilePic
-            if (imgName.length > 0) {
-                imgName = imgName.slice(50)
-            } else {
-                imgName = "none"
-            }
+            let imgName = this.nameFromLink(this.state.profilePic);
             const data = new FormData();
             data.append('image', this.state.selectedFile) /*need 'image' due to singleUpload initialization in users.js*/
             fetch('profiles/profile-pictures/' + this.Auth.getToken().user.username + "/" + imgName, {
@@ -110,12 +119,7 @@ class Profile extends React.Component {
 
     handleCoverUpload = () => {
         if (this.state.selectedCoverFile !== null) {
-            let imgName = this.state.coverPhoto
-            if (imgName.length > 0) {
-                imgName = imgName.slice(46)
-            } else {
-                imgName = "none"
-            }
+            let imgName = this.nameFromLink(this.state.coverPhoto);
             const data = new FormData();
             data.append('cover-image', this.state.selectedCoverFile) /*need 'image' due to singleUpload initialization in users.js*/
             fetch('profiles/cover-photos/' + this.Auth.getToken().user.username + '/' + imgName, {
