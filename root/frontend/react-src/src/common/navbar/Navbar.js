@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { logOut } from '../../auth/authActions'
 import { SIGNUP_MODAL, LOGIN_MODAL } from '../../constants/modalTypes'

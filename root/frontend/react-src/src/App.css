@@ -79,14 +79,34 @@ h1, h2, h3, h4, h5, h6, p {
     text-align: left;
 }
 
-.link-btn:hover {
+.link-btn:hover, .link-btn:active {
     cursor: pointer;
 }
 
-.link-btn:active {
+.btn {
+    border-radius: 2.688em;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    justify-self: center;
     cursor: pointer;
+    border: none;
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    box-shadow: 0 1px 1px rgba(104, 104, 104, 0.8);
 }
 
+.btn:focus, .btn:active {
+    box-shadow: 0 0 0 0.2rem rgba(0, 200, 100, 0.5);
+}
+
+.btn-primary {
+    color: white;
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
 
 @media (min-width: 576px) {
   .container {
