@@ -208,7 +208,7 @@ class SignupContent extends React.Component {
                 footer={(
                     <>
                         <button
-                            className="submit-btn"
+                            className="btn btn-primary submit-btn"
                             type="submit"
                             onClick={this.handleSubmit}
                         >
