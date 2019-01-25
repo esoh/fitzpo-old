@@ -10,7 +10,7 @@ import { showModal } from '../modal/modalActions'
 import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
 import AuthService from '../../auth/AuthService'
-import DiamondIcon from '../DiamondIcon'
+import Icon from '../Icon'
 
 const propTypes = {
     openSignup: PropTypes.func,
@@ -55,7 +55,7 @@ class Navbar extends React.Component {
                     {/* Brand */}
                     <Link className="navbar-brand" to="/" onClick={this.collapseNavbar}>
                         <div>
-                            <DiamondIcon />
+                            <Icon />
                             <p>{APP_NAME}</p>
                         </div>
                     </Link>
