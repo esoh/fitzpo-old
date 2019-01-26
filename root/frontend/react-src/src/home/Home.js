@@ -2,21 +2,44 @@ import React from 'react'
 import { SIGNUP_MODAL } from '../constants/modalTypes'
 import { showModal } from '../common/modal/modalActions'
 import { connect } from 'react-redux'
+import Hero from './Hero'
 import './Home.css'
 
-const Home = ({dispatch}) => {
+function Home(props) {
     return (
         <div className="home">
-            <div className="container home-content">
-                <h1>Fitness for all.</h1>
-                <h3>Start your fitness journey for free today.</h3>
-                <button
-                    className="btn-primary btn signup"
-                    onClick={() => dispatch(showModal(SIGNUP_MODAL))}
-                >Join Now</button>
-            </div>
+            <Hero
+                title="Fitness for all."
+                subtitle="Start your fitness journey for free today."
+                buttonClick={props.openSignup}
+                buttonText="Join Now"
+            />
+            <Hero
+                title="Find your fitness plan."
+                subtitle="Made for the community, by the community."
+                linkText="Browse Programs"
+                link="/programs"
+            />
+            <Hero
+                title="Discover new exercises."
+                subtitle="Watch. Learn. Do. For beginner or experts alike."
+                linkText="Browse Exercises"
+                link="/exercises"
+            />
+            <Hero
+                title="Track your progress."
+                subtitle="You train, we think."
+                linkText="Get Started"
+                link="/signup"
+            />
         </div>
     );
 }
 
-export default connect()(Home);
+export default connect(null,
+    dispatch => {
+        return {
+            openSignup: () => {dispatch(showModal(SIGNUP_MODAL))}
+        }
+    }
+)(Home);

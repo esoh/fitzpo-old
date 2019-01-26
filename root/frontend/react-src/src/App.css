@@ -51,9 +51,14 @@ ul {
 
 a {
     color: var(--primary);
-    text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: var(--primary-dark);
 }
 
 p {
