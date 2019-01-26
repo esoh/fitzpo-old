@@ -1,10 +1,15 @@
 .home {
+    display: block;
+}
+
+.hero {
     width: 100%;
-    height: 500px;
+    height: 650px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-content: center;
+    margin-bottom: 1rem;
 }
 
 .home-content {
@@ -12,17 +17,24 @@
     text-align: center;
 }
 
-h1 {
+.hero h1 {
     font-size: 3rem;
     margin: .75rem;
 }
 
-h3 {
+.hero h3 {
+    font-size: 21px;
     font-weight: normal;
-    margin: .75rem 0 1.125rem 0;
+    margin: .75rem 0 .75rem 0;
 }
 
-.signup {
+.home-content > button {
+    margin-top: .375rem;
     font-weight: bold;
     width: 80%;
+}
+
+.hero a {
+    font-size: 21px;
+    font-weight: normal;
 }

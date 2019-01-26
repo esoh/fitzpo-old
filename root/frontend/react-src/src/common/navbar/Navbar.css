@@ -87,3 +87,8 @@
 .nav-item {
     height: 2.6875rem;
 }
+
+.navbar a {
+    font-weight: normal;
+    text-decoration: none;
+}

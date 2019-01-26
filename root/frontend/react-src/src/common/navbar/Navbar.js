@@ -15,6 +15,7 @@ import Icon from '../Icon'
 const propTypes = {
     openSignup: PropTypes.func,
     openLogin: PropTypes.func,
+    location: PropTypes.object,
 }
 
 class Navbar extends React.Component {
