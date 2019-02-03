@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './Exercises.css';
 import { connect } from 'react-redux'
@@ -65,6 +66,13 @@ class Exercises extends React.Component{
             <tr key={i}>
                 <td className="text-left" key={exercise.name}>{exercise.name}</td>
                 <td className="text-left" key={exercise.description}>{exercise.description}</td>
+                {this.props.loggedIn && (
+                    <td>
+                        <div name={exercise._id} className="trash" onClick={this.handleDelete}>
+                            <FontAwesomeIcon icon="trash"/>
+                        </div>
+                    </td>
+                )}
             </tr>
             //<li>{exercise.name + ' ' + exercise.description}</li>
         );
@@ -81,6 +89,22 @@ class Exercises extends React.Component{
         )
     }
 
+    handleDelete = event => {
+        fetch('/exercises/' + event.currentTarget.getAttribute("name"), {
+            method: "DELETE"
+        })
+            .then(res => {
+                res.json()
+                this.handleSearch()
+            });
+    }
+
+    handleEnterSearch = event => {
+        if (event.key === 'Enter') {
+            this.handleSearch();
+        }
+    }
+
     componentDidMount() {
         this.handleSearch();
     }
@@ -89,12 +113,12 @@ class Exercises extends React.Component{
         return (
             <div className='exercises-contanier'>
                 <div className='search'>
-                    <input placeholder="Exercise Name" onChange={this.handleChangeSearch} value={this.state.searchValue}/>
-                    <button onClick={this.handleSearch}>Search</button>
+                    <input className="search-box" placeholder="Exercise Name" onChange={this.handleChangeSearch} value={this.state.searchValue} onKeyPress={this.handleEnterSearch}/>
+                    <button className="search-btn" onClick={this.handleSearch}>Search</button>
                 </div>
-                <div className="table-title">
+            {/*<div className="table-title">
                     <h3>Exercises</h3>
-                </div>
+                </div>*/}
 
                 {this.state.exercises && (
                     <this.ExerciseList exercises={this.state.exercises} />

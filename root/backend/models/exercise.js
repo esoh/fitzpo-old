@@ -11,4 +11,4 @@ const ExerciseSchema = mongoose.Schema({
     }
 });
 
-var Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);
+const Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);

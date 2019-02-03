@@ -10,6 +10,30 @@
     right: 1rem;
 }
 
+.search-box {
+    border-radius: 1rem;
+    border: solid thin #ddd;
+    padding: 8px;
+    width: 200px;
+}
+
+.search-btn {
+    background-color: var(--primary);
+    border: none;
+    color: white;
+    border-radius: 1rem;
+    padding: 8px;
+}
+
+.search-btn:hover {
+    background-color: var(--primary-dark);
+    cursor: pointer;
+}
+
+.search-box:focus {
+    border-color: var(--primary);
+}
+
 .create {
     position: absolute;
     bottom: 1rem;
@@ -67,11 +91,12 @@ div.table-title {
 /*** Table Styles **/
 
 .table-fill {
-  background: white;
+  background: transparent;
   border-radius:3px;
   border-collapse: collapse;
-  height: 500px;
+  height: 600px;
   margin: auto;
+  margin-top: 1rem;
   max-width: 80%;
   padding:5px;
   width: 100%;
@@ -91,8 +116,8 @@ thead {
 }
 
 th {
-  color:#D5DDE5;;
-  background:#1b1e24;
+  color:#D5DDE5;
+  background:#363A42;
   border-bottom:4px solid var(--primary);
   border-right: 1px solid #343a45;
   font-size:13px;
@@ -105,6 +130,10 @@ th {
 
 th:first-child {
   border-top-left-radius:3px;
+}
+
+.trash {
+    cursor: pointer;
 }
 
 th:last-child {
