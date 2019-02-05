@@ -72,15 +72,15 @@ class LoginContent extends React.Component {
                     if (this.props.logIn) {
                         this.props.logIn();
                     }
+                    if (this.props.hideModal) {
+                        this.props.hideModal();
+                    }
                 }
 
             })
                 .catch(err => {
                     alert(err);
                 })
-            if (this.props.hideModal) {
-                this.props.hideModal();
-            }
         }
         if (event) {
             event.preventDefault();
