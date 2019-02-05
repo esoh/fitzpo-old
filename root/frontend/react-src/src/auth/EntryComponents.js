@@ -26,6 +26,7 @@ export class PwField extends React.Component {
                            onChange={this.props.inputChange}
                            onBlur={this.props.onBlur}
                            autoComplete={this.props.autoComplete}
+                           onKeyPress={this.props.handleEnterSubmit}
                     />
                     <button type="button" onClick={this.togglePwShow} id="show-btn">
                         {this.state.pwShow ? "HIDE": "SHOW"}
@@ -50,6 +51,7 @@ export function EntryField(props) {
                        onChange={props.inputChange}
                        onBlur={props.onBlur}
                        autoComplete={props.autoComplete}
+                       onKeyPress={props.handleEnterSubmit}
                        required
                 />
             </div>

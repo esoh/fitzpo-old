@@ -158,6 +158,12 @@ class SignupContent extends React.Component {
         }
     };
 
+    handleEnterSubmit = event => {
+        if (event.key === "Enter") {
+            this.handleSubmit();
+        }
+    }
+
     handleSubmit = event => {
         if (this.validateUser() & this.validateEmail() & this.validatePw()) {
             this.signup();
@@ -165,7 +171,9 @@ class SignupContent extends React.Component {
                 this.props.hideModal();
             }
         }
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
     };
 
     render() {
@@ -184,6 +192,7 @@ class SignupContent extends React.Component {
                             errorMsg={this.state.userErrMsg}
                             inputChange={this.handleChangeUser}
                             onBlur={this.validateUser}
+                            handleEnterSubmit={this.handleEnterSubmit}
                             autoComplete="username"
                         />
                         <EntryField inputId="email-field"
@@ -194,6 +203,7 @@ class SignupContent extends React.Component {
                             errorMsg={this.state.emailErrMsg}
                             inputChange={this.handleChangeEmail}
                             onBlur={this.validateEmail}
+                            handleEnterSubmit={this.handleEnterSubmit}
                             autoComplete="email"
                         />
                         <PwField id="pw-field"
@@ -201,6 +211,7 @@ class SignupContent extends React.Component {
                             errorMsg={this.state.pwErrMsg}
                             inputChange={this.handleChangePw}
                             onBlur={this.validatePw}
+                            handleEnterSubmit={this.handleEnterSubmit}
                             autoComplete="new-password"
                         />
                     </form>
