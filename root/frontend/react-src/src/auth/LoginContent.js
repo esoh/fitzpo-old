@@ -8,7 +8,7 @@ import {EntryField, PwField} from './EntryComponents';
 import AuthService from './AuthService';
 
 class LoginContent extends React.Component {
-    _isMounted = false;
+    _isMounted = false; // used to stop async memory leaks when component is not mounted
     constructor() {
         super();
         this.Auth = new AuthService(); // creates instance of AuthService so we can use it's methods
@@ -82,8 +82,17 @@ class LoginContent extends React.Component {
                 this.props.hideModal();
             }
         }
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
     };
+
+    handleEnterSubmit = event => {
+        if (event.key === "Enter") {
+            this.handleSubmit();
+        }
+    }
+
 
     componentDidMount() {
         this._isMounted = true;
@@ -109,12 +118,14 @@ class LoginContent extends React.Component {
                             inputChange={this.handleChangeUserOrEmail}
                             errorMsg={this.state.userErrMsg}
                             inputValue={this.state.userOrEmailValue}
+                            handleEnterSubmit = {this.handleEnterSubmit}
                         />
                         <PwField autoComplete="password"
                             onBlur={this.handleChangePassword}
                             errorMsg={this.state.pwErrMsg}
                             inputChange={this.handleChangePassword}
                             inputValue={this.state.pwValue}
+                            handleEnterSubmit = {this.handleEnterSubmit}
                         />
                         <div className="signup-footer">
                             <div className="checkbox">
