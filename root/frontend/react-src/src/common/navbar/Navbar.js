@@ -18,7 +18,7 @@ const propTypes = {
     location: PropTypes.object,
 }
 
-class Navbar extends React.Component {
+class Navbar extends React.PureComponent {
     constructor(){
         super();
         this.Auth = new AuthService();
