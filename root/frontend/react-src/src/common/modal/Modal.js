@@ -65,7 +65,7 @@ class Modal extends React.Component {
 
     // if modal is shown, set focus and update body classname
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.isOpen && !prevState.isOpen && this._modalDialog) {
+        if (this._modalDialog && this.state.isOpen && (!prevState.isOpen || this.props.children !== prevProps.children)) {
             this._modalDialog.parentNode.focus();
             document.body.classList.add("modal-open");
         }
