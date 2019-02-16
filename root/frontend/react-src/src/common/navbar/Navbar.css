@@ -53,6 +53,18 @@
     padding-left: 0;
 }
 
+.navbar-toggler {
+    transition: color 0.3s ease-in-out;
+    position: absolute;
+    right: 1rem;
+    top: 0.75rem;
+    cursor: pointer;
+}
+
+.navbar-toggler:hover {
+    color: var(--primary)
+}
+
 @media (min-width: 768px) {
     .navbar .navbar-collapse {
         display: -ms-flexbox!important;
