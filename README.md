@@ -1,4 +1,4 @@
-# Fitzpo
+# fitzpo
 This repo contains the web app powering Fitzpo.
 
 ## Getting started
@@ -7,7 +7,7 @@ This repo contains the web app powering Fitzpo.
 1. Git
 1. Node.js
 1. A clone of the repo: `git clone https://github.com/esoh/fitzpo`
-1. MongoDB
+1. Python3
 
 ### React.js website
 #### Installing dependencies
@@ -18,21 +18,16 @@ This repo contains the web app powering Fitzpo.
 1. `npm start` to run the development server
 1. `open http://localhost:3000` to open the site in browser, or enter in `http://localhost:3000` in the browser address bar
 
-### Express.js/Node.js server
+### Django server
 #### Installing dependencies
-1. `cd fitzpo/root/backend` to go to express directory
-1. `npm i` to install dependencies
+1. `cd fitzpo/root/backend` to navigate to backend directory
+1. `python3 -m venv env` to create a virtual environment called `env`
+1. `source env/bin/activate` to use the new virtual environment
+1. `pip3 install -r requirements.txt` to install dependencies
 
 #### Running locally
-1. Run the MongoDB service on default port 27017
-1. `npm start` to run the express server on default port 8080
-
-    Developer note: running `nodemon` is suggested to prevent having to restart the server every time a write is made to the server code. `npm install -g nodemon` will install nodemon globally.
-
-#### Testing the API
-1. `cd fitzpo/root/backend` to go to express directory
-1. Run the express server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
-1. Run `npm test` to run the tests.
+1. You may need to migrate before running the server. `python3 manage.py migrate`
+1. `python3 manage.py runserver` to run the server.
 
 #### Before deploying
 Make sure to define your own production environmental variables and select the production environment (See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys#production-environment) for variables that must be set).
