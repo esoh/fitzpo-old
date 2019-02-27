@@ -11,7 +11,6 @@ import NavbarCollapse from './NavbarCollapse'
 import './Navbar.css';
 import AuthService from '../../auth/AuthService'
 import Icon from '../Icon'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const propTypes = {
     openSignup: PropTypes.func,
@@ -63,7 +62,11 @@ class Navbar extends React.PureComponent {
                     </Link>
 
                     {/* Collapse toggler button */}
-                    <FontAwesomeIcon icon="bars" onClick={this.toggleNavbar} className="navbar-toggler" size="lg"/>
+                    <div id="hamburger-icon" className={this.state.collapsed ? undefined : "active"} title="Menu" onClick={this.toggleNavbar}>
+                        <span className="line line-1"/>
+                        <span className="line line-2"/>
+                        <span className="line line-3"/>
+                    </div>
 
                     {/* Collapsible navbar items */}
                     <NavbarCollapse in={!this.state.collapsed}>
