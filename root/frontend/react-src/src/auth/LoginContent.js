@@ -12,6 +12,7 @@ class LoginContent extends React.Component {
     constructor() {
         super();
         this.Auth = new AuthService(); // creates instance of AuthService so we can use it's methods
+        this.textInput = null;
     }
 
     state = {
@@ -21,6 +22,14 @@ class LoginContent extends React.Component {
         pwErrMsg: null,
         rememberMe: true
     }
+
+    setRef = ref => {
+        this.textInput = ref;
+    }
+
+    focusTextInput = () => {
+        if (this.textInput) this.textInput.focus();
+    };
 
     handleChangeUserOrEmail = event => {
         this.setState({
@@ -96,6 +105,7 @@ class LoginContent extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
+        this.focusTextInput();
     }
 
     componentWillUnmount() {
@@ -119,6 +129,7 @@ class LoginContent extends React.Component {
                             errorMsg={this.state.userErrMsg}
                             inputValue={this.state.userOrEmailValue}
                             handleEnterSubmit = {this.handleEnterSubmit}
+                            setRef={this.setRef}
                         />
                         <PwField autoComplete="password"
                             onBlur={this.handleChangePassword}

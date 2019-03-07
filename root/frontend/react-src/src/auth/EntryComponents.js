@@ -52,6 +52,7 @@ export function EntryField(props) {
                        onBlur={props.onBlur}
                        autoComplete={props.autoComplete}
                        onKeyPress={props.handleEnterSubmit}
+                       ref={props.setRef}
                        required
                 />
             </div>
