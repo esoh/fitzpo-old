@@ -22,7 +22,16 @@ class SignupContent extends React.Component {
             emailErrMsg: null,
             pwErrMsg: null,
         };
+        this.textInput = null;
     }
+
+    setRef = ref => {
+        this.textInput = ref;
+    };
+
+    focusTextInput = () => {
+        if (this.textInput) this.textInput.focus();
+    };
 
     signup = () => {
         fetch('/users', {
@@ -176,6 +185,10 @@ class SignupContent extends React.Component {
         }
     };
 
+    componentDidMount() {
+        this.focusTextInput();
+    }
+
     render() {
         if (!this.props.hideModal && this.props.loggedIn/*this.Auth.loggedIn*/) { // the hideModal boolean is so that we don't redirect if signed in through the modal
             return <Redirect to='/home' />
@@ -194,6 +207,7 @@ class SignupContent extends React.Component {
                             onBlur={this.validateUser}
                             handleEnterSubmit={this.handleEnterSubmit}
                             autoComplete="username"
+                            setRef={this.setRef}
                         />
                         <EntryField inputId="email-field"
                             faIcon="envelope"
