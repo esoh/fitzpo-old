@@ -9,20 +9,16 @@ This repo contains the web app powering Fitzpo.
 1. A clone of the repo: `git clone https://github.com/esoh/fitzpo`
 1. MongoDB
 
-### React.js website
-#### Installing dependencies
-1. `cd fitzpo/root/frontend/react-src` to go to react directory
+### Installing dependencies
+1. `cd fitzpo` to go to base directory
 1. `npm i` to install dependencies
 
+### React.js website
 #### Running locally
 1. `npm start` to run the development server
 1. `open http://localhost:3000` to open the site in browser, or enter in `http://localhost:3000` in the browser address bar
 
 ### Express.js/Node.js server
-#### Installing dependencies
-1. `cd fitzpo/root/backend` to go to express directory
-1. `npm i` to install dependencies
-
 #### Running locally
 1. Run the MongoDB service on default port 27017
 1. `npm start` to run the express server on default port 8080
