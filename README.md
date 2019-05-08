@@ -13,21 +13,24 @@ This repo contains the web app powering Fitzpo.
 1. `cd fitzpo` to go to base directory
 1. `npm i` to install dependencies
 
+### Running both website and backend server
+1. `npm run dev` to run in development mode
+
 ### React.js website
-#### Running locally
+#### Running independently
 1. `npm start` to run the development server
 1. `open http://localhost:3000` to open the site in browser, or enter in `http://localhost:3000` in the browser address bar
 
 ### Express.js/Node.js server
-#### Running locally
+#### Running independently
 1. Run the MongoDB service on default port 27017
-1. `npm start` to run the express server on default port 8080
+1. `npm start` to run the node server on default port 8080
 
     Developer note: running `nodemon` is suggested to prevent having to restart the server every time a write is made to the server code. `npm install -g nodemon` will install nodemon globally.
 
 #### Testing the API
 1. `cd fitzpo/root/backend` to go to express directory
-1. Run the express server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
+1. Run the node server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
 1. Run `npm test` to run the tests.
 
 #### Before deploying
