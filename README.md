@@ -7,7 +7,7 @@ This repo contains the web app powering Fitzpo.
 1. Git
 1. Node.js
 1. A clone of the repo: `git clone https://github.com/esoh/fitzpo`
-1. MongoDB
+1. MySQL
 
 ### Installing dependencies
 1. `cd fitzpo` to go to base directory
@@ -23,7 +23,7 @@ This repo contains the web app powering Fitzpo.
 
 ### Express.js/Node.js server
 #### Running independently
-1. Run the MongoDB service on default port 27017
+1. Run the MySQL service on default port 3306
 1. `npm start` to run the node server on default port 8080
 
     Developer note: running `nodemon` is suggested to prevent having to restart the server every time a write is made to the server code. `npm install -g nodemon` will install nodemon globally.

@@ -10,18 +10,48 @@ require('dotenv').config({path:__dirname+'/../.env'})
 // default to 'dev'
 const env = process.env.NODE_ENV || 'dev'
 
-// localhost:27017/gymmate
-const dev = {
+const APP_PORT = parseInt(process.env.APP_PORT)
+const DB_HOST = process.env.DB_HOST
+const DB_PORT = parseInt(process.env.DB_PORT)
+const DB_NAME = process.env.DB_NAME
+const DB_USERNAME = process.env.DB_USERNAME
+const DB_PASSWORD = process.env.DB_PASSWORD
+const AUTH_SECRET = process.env.AUTH_SECRET
+const DEV_APP_PORT = parseInt(process.env.DEV_APP_PORT)
+const DEV_DB_HOST = process.env.DEV_DB_HOST
+const DEV_DB_PORT = parseInt(process.env.DEV_DB_PORT)
+const DEV_DB_NAME = process.env.DEV_DB_NAME
+const DEV_DB_USERNAME = process.env.DEV_DB_USERNAME
+const DEV_DB_PASSWORD = process.env.DEV_DB_PASSWORD
+const DEV_AUTH_SECRET = process.env.DEV_AUTH_SECRET
+const TEST_APP_PORT = parseInt(process.env.TEST_APP_PORT)
+const TEST_DB_HOST = process.env.TEST_DB_HOST
+const TEST_DB_PORT = parseInt(process.env.TEST_DB_PORT)
+const TEST_DB_NAME = process.env.TEST_DB_NAME
+const TEST_DB_USERNAME = process.env.TEST_DB_USERNAME
+const TEST_DB_PASSWORD = process.env.TEST_DB_PASSWORD
+const TEST_AUTH_SECRET = process.env.TEST_AUTH_SECRET
+const PROD_APP_PORT = parseInt(process.env.PROD_APP_PORT)
+const PROD_DB_HOST = process.env.PROD_DB_HOST
+const PROD_DB_PORT = parseInt(process.env.PROD_DB_PORT)
+const PROD_DB_NAME = process.env.PROD_DB_NAME
+const PROD_DB_USERNAME = process.env.PROD_DB_USERNAME
+const PROD_DB_PASSWORD = process.env.PROD_DB_PASSWORD
+const PROD_AUTH_SECRET = process.env.PROD_AUTH_SECRET
+
+const def = {
     app: {
-        port: parseInt(process.env.APP_PORT) || parseInt(process.env.DEV_APP_PORT) || 8080
+        port: 8080
     },
     db: {
-        host: process.env.DB_HOST || process.env.DEV_DB_HOST || 'localhost',
-        port: parseInt(process.env.DB_PORT) || parseInt(process.env.DEV_DB_PORT) || 27017,
-        name: process.env.DB_NAME || process.env.DEV_DB_NAME || 'gymmate'
+        host: 'localhost',
+        port: 3306,
+        name: 'fitzpo',
+        user: 'root',
+        password: 'password'
     },
     auth: {
-        secret: process.env.AUTH_SECRET || process.env.DEV_AUTH_SECRET || 'dev server secret'
+        secret: 'your own server secret here'
     },
     S3: {
         secretAccessKey: process.env.S3_SECRET_KEY,
@@ -30,43 +60,57 @@ const dev = {
     }
 }
 
-// localhost:27017/testGymmate
-const test = {
+// localhost:3306/gymmate
+const dev = {
     app: {
-        port: parseInt(process.env.APP_PORT) || parseInt(process.env.TEST_APP_PORT) || 8080
+        port: APP_PORT || DEV_APP_PORT || def.app.port
     },
     db: {
-        host: process.env.DB_HOST || process.env.TEST_DB_HOST || 'localhost',
-        port: parseInt(process.env.DB_PORT) || parseInt(process.env.TEST_DB_PORT) || 27017,
-        name: process.env.DB_NAME || process.env.TEST_DB_NAME || 'testGymmate'
+        host: DB_HOST || DEV_DB_HOST || def.db.host,
+        port: DB_PORT || DEV_DB_PORT || def.db.port,
+        name: DB_NAME || DEV_DB_NAME || def.db.name,
+        user: DB_USERNAME || DEV_DB_USERNAME || def.db.user,
+        password: DB_PASSWORD || DEV_DB_PASSWORD || def.db.password
     },
     auth: {
-        secret: process.env.AUTH_SECRET || process.env.TEST_AUTH_SECRET || 'test server secret'
+        secret: AUTH_SECRET || DEV_AUTH_SECRET || 'dev server secret'
     },
-    S3: {
-        secretAccessKey: process.env.S3_SECRET_KEY,
-        accessKeyId: process.env.S3_KEY,
-        region: process.env.S3_REGION
-    }
+    S3: def.S3
+}
+
+// localhost:3306/testGymmate
+const test = {
+    app: {
+        port: APP_PORT || TEST_APP_PORT || def.app.port
+    },
+    db: {
+        host: DB_HOST || TEST_DB_HOST || def.db.host,
+        port: DB_PORT || TEST_DB_PORT || def.db.port,
+        name: DB_NAME || TEST_DB_NAME || 'test_' + def.db.name,
+        user: DB_USERNAME || TEST_DB_USERNAME || def.db.user,
+        password: DB_PASSWORD || TEST_DB_PASSWORD || def.db.password
+    },
+    auth: {
+        secret: AUTH_SECRET || TEST_AUTH_SECRET || 'test server secret'
+    },
+    S3: def.S3
 }
 
 const prod = {
     app: {
-        port: parseInt(process.env.APP_PORT) || parseInt(process.env.PROD_APP_PORT)
+        port: APP_PORT || PROD_APP_PORT
     },
     db: {
-        host: process.env.DB_HOST || process.env.PROD_DB_HOST,
-        port: parseInt(process.env.DB_PORT) || parseInt(process.env.PROD_DB_PORT),
-        name: process.env.DB_NAME || process.env.PROD_DB_NAME
+        host: DB_HOST || PROD_DB_HOST,
+        port: DB_PORT || PROD_DB_PORT,
+        name: DB_NAME || PROD_DB_NAME,
+        user: DB_USERNAME || PROD_DB_USERNAME,
+        password: DB_PASSWORD || PROD_DB_PASSWORD
     },
     auth: {
-        secret: process.env.AUTH_SECRET || process.env.PROD_AUTH_SECRET
+        secret: AUTH_SECRET || PROD_AUTH_SECRET
     },
-    S3: {
-        secretAccessKey: process.env.S3_SECRET_KEY,
-        accessKeyId: process.env.S3_KEY,
-        region: process.env.S3_REGION
-    }
+    S3: def.S3
 }
 
 const config = {
@@ -76,10 +120,10 @@ const config = {
 }
 
 if(env == 'prod'){
-    console.log("Using production environment")
+    console.log("Using production environment.")
 } else if(env == 'test'){
-    console.log("Using testing environment")
+    console.log("Using testing environment.")
 } else {
-    console.log("Using development environment")
+    console.log("Using development environment.")
 }
 module.exports = config[env]
