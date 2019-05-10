@@ -1,30 +1,15 @@
-// 3rd party modules
+//3rd party modules
 const express = require('express')
-const Sequelize = require('sequelize')
 
-// setup & config
-const config = require('./config/config')
-const setup = require('./setup')
-
-// routes
-const users = require('./routes/users')
-
-const port = config.app.port
-
-// TODO: read up on connection pooling for production
-const sequelize = new Sequelize('', config.db.user, config.db.password, {
-    host: config.db.host,
-    dialect: 'mysql'
-});
-
-setup.ensureConnection(sequelize, config.db.host, config.db.port)
-setup.useDatabase(sequelize, config.db.name)
+const models = require('./models')
+const env = process.env.NODE_ENV || 'dev';
+const config = require('./config/config.js')[env]
+const routes = require('./routes')
 
 const app = express()
 
-//route /users to use the users module
-app.use('/users', users)
+app.use('/', routes)
 
-app.listen(port, () => {
-   console.log('Server started on port ' + port)
+app.listen(config.app.port, () => {
+    console.log('Server started on port ' + config.app.port)
 })

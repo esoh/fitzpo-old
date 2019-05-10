@@ -1,14 +1,6 @@
-// NODE_ENV can be set in the following ways:
-// 1. export NODE_ENV=<put string here> OR SET NODE_ENV=<put string here> if on
-//      windows
-// 2. run your app (NODE_ENV=<put string here> node app.js)
-// 3. put NODE_ENV=<put string here> in .env
-
+const fs = require('fs');
 // import from .env
 require('dotenv').config({path:__dirname+'/../.env'})
-
-// default to 'dev'
-const env = process.env.NODE_ENV || 'dev'
 
 const APP_PORT = parseInt(process.env.APP_PORT)
 const DB_HOST = process.env.DB_HOST
@@ -61,8 +53,8 @@ const def = {
     }
 }
 
-// localhost:3306/gymmate
-const dev = {
+module.exports = {
+  dev: {
     app: {
         port: APP_PORT || DEV_APP_PORT || def.app.port
     },
@@ -77,17 +69,15 @@ const dev = {
         secret: AUTH_SECRET || DEV_AUTH_SECRET || 'dev server secret'
     },
     S3: def.S3
-}
-
-// localhost:3306/testGymmate
-const test = {
+  },
+  test: {
     app: {
         port: APP_PORT || TEST_APP_PORT || def.app.port
     },
     db: {
         host: DB_HOST || TEST_DB_HOST || def.db.host,
         port: DB_PORT || TEST_DB_PORT || def.db.port,
-        name: DB_NAME || TEST_DB_NAME || 'test_' + def.db.name,
+        name: DB_NAME || TEST_DB_NAME || def.db.name + '_test',
         user: DB_USERNAME || TEST_DB_USERNAME || def.db.user,
         password: DB_PASSWORD || TEST_DB_PASSWORD || def.db.password
     },
@@ -95,9 +85,8 @@ const test = {
         secret: AUTH_SECRET || TEST_AUTH_SECRET || 'test server secret'
     },
     S3: def.S3
-}
-
-const prod = {
+  },
+  prod: {
     app: {
         port: APP_PORT || PROD_APP_PORT
     },
@@ -112,19 +101,5 @@ const prod = {
         secret: AUTH_SECRET || PROD_AUTH_SECRET
     },
     S3: def.S3
+  }
 }
-
-const config = {
-    dev,
-    test,
-    prod
-}
-
-if(env == 'prod'){
-    console.log("Using production environment.")
-} else if(env == 'test'){
-    console.log("Using testing environment.")
-} else {
-    console.log("Using development environment.")
-}
-module.exports = config[env]
