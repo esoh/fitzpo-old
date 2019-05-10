@@ -13,8 +13,10 @@ This repo contains the web app powering Fitzpo.
 1. `cd fitzpo` to go to base directory
 1. `npm i` to install dependencies
 
-### Setting up MySQL and other credentials
-1. Enter your MySQL credentials in `fitzpo/root/backend/.env` as environmental variables (See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys))
+### Setting up
+1. Enter your MySQL credentials in `fitzpo/root/backend/.env` as environmental variables (See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys)) as well as any other necessary environmental variables, such as the environment (`NODE_ENV=development|test|production`).
+1. Install `sequelize-cli` for command line interface (`npm install -g sequelize-cli`)
+1. Create the database in `fitzpo/root/backend` for the set environment using `sequelize db:create`.
 
 ### Running both website and backend server
 1. `npm run dev` to run in development mode
@@ -33,6 +35,7 @@ This repo contains the web app powering Fitzpo.
 
 #### Testing the API
 1. `cd fitzpo/root/backend` to go to express directory
+1. Make sure you've created the test database if you haven't already, using `NODE_ENV=test sequelize db:create`.
 1. Run the node server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
 1. Run `npm test` to run the tests.
 

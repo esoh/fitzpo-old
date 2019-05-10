@@ -1,3 +1,4 @@
+// this is for sequelize cli
 const path = require('path');
 
 module.exports = {
