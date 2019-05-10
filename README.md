@@ -13,6 +13,9 @@ This repo contains the web app powering Fitzpo.
 1. `cd fitzpo` to go to base directory
 1. `npm i` to install dependencies
 
+### Setting up MySQL and other credentials
+1. Enter your MySQL credentials in `fitzpo/root/backend/config/config.js`
+
 ### Running both website and backend server
 1. `npm run dev` to run in development mode
 
