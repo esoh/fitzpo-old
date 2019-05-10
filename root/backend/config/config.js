@@ -39,6 +39,7 @@ const PROD_DB_USERNAME = process.env.PROD_DB_USERNAME
 const PROD_DB_PASSWORD = process.env.PROD_DB_PASSWORD
 const PROD_AUTH_SECRET = process.env.PROD_AUTH_SECRET
 
+// define your own variables in fitzpo/backend/.env
 const def = {
     app: {
         port: 8080
@@ -51,7 +52,7 @@ const def = {
         password: 'password'
     },
     auth: {
-        secret: 'your own server secret here'
+        secret: 'server secret here'
     },
     S3: {
         secretAccessKey: process.env.S3_SECRET_KEY,

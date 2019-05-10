@@ -14,7 +14,7 @@ This repo contains the web app powering Fitzpo.
 1. `npm i` to install dependencies
 
 ### Setting up MySQL and other credentials
-1. Enter your MySQL credentials in `fitzpo/root/backend/config/config.js`
+1. Enter your MySQL credentials in `fitzpo/root/backend/.env` as environmental variables (See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys))
 
 ### Running both website and backend server
 1. `npm run dev` to run in development mode
