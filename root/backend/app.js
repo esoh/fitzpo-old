@@ -20,13 +20,34 @@ app.use('/', routes)
 // start the server
 // maybe move this to ./bin/www?
 //
+const server = http.createServer(app)
+
 // sync models that have not been synced yet, then start the server
 models.sequelize.sync()
     .then(() => {
-        app.listen(config.app.port, () => {
+        server.listen(config.app.port, () => {
             console.log('Server listening on port ' + config.app.port)
         })
+
+        server.on('error', onError)
     })
     .catch(err => { throw err })
 
 
+function onError(error){
+    if (error.syscall !== 'listen') throw error
+
+    // handle access and address in use errors gracefully
+    switch (error.code) {
+        case 'EACCES':
+            console.error('Port ' + config.app.port + ' requires elevated privileges')
+            process.exit(1)
+            break
+        case 'EADDRINUSE':
+            console.error('Port ' + config.app.port + ' is already in use')
+            process.exit(1)
+            break
+        default:
+            throw error
+    }
+}
