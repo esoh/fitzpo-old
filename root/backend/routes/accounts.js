@@ -1,14 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const account = require('../controllers/accountController')
 
 const models = require('../models')
 
 
-router.get('/', (req, res) => {
-    models.Account.findAll()
-        .then(accounts => {
-            res.send(accounts)
-        })
-})
+router.get('/', account.list)
 
 module.exports = router
