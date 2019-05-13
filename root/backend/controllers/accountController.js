@@ -1,16 +1,16 @@
-const model = require('../models')
+const {Account} = require('../models')
 
 module.exports = {
     list: function(req, res){
         // controller calls the method function
-        model.Account.list()
+        Account.list()
             .then(accounts => {
                 // this is where you would generate a view
                 res.send(accounts)
             })
     },
     post: function(req, res){
-        model.Account.post(req.body.username, req.body.email, req.body.password)
+        Account.post(req.body.username, req.body.email, req.body.password)
             .then(account => {
                res.send(account)
             })

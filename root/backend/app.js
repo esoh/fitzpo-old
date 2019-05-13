@@ -60,3 +60,5 @@ function onError(error){
             throw error
     }
 }
+
+module.exports = server // exported for test
