@@ -1,6 +1,7 @@
 //3rd party modules
 const express = require('express')
 const http = require('http')
+const bodyParser = require('body-parser')
 
 const env = process.env.NODE_ENV || 'development'
 const config = require('./config/config.js')[env]
@@ -12,9 +13,10 @@ const routes = require('./routes')
 
 const app = express()
 
+// Body Parser Middleware
+app.use(bodyParser.json());
+
 app.use('/', routes)
-
-
 
 
 

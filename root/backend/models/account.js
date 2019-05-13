@@ -18,5 +18,20 @@ module.exports = (sequelize, DataTypes) => {
                 .catch(err => { reject(err) })
         })
     }
+
+    Account.post = function(username, email, password) {
+        return new Promise((resolve, reject) => {
+            Account.build({
+                username,
+                email,
+                password
+            }).save()
+                .then(account => { resolve(account) })
+                .catch(err => {
+                    reject(err)
+                })
+        })
+    }
+
     return Account
 }
