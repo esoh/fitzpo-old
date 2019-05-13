@@ -10,7 +10,7 @@
   "dependencies": {
     "aws-sdk": "^2.386.0",
     "bad-words": "^3.0.0",
-    "bcrypt": "*",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "*",
     "dotenv": "^6.2.0",

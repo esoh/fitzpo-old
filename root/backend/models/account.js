@@ -1,10 +1,29 @@
 'use strict'
+const bcrypt = require('bcrypt')
+
+const SALT_ROUNDS = 10
+
 module.exports = (sequelize, DataTypes) => {
     const Account = sequelize.define('Account', {
         username: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING
-    }, {})
+    }, {
+        hooks: {
+            beforeCreate: (account) => {
+                return new Promise((resolve, reject) => {
+                    bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
+                        if(err) reject(err)
+                        bcrypt.hash(account.password, salt, (err, hash) => {
+                            if(err) reject(err)
+                            account.password = hash
+                            resolve()
+                        })
+                    })
+                })
+            }
+        }
+    })
     Account.associate = function(models) {
         // associations can be defined here
     }
