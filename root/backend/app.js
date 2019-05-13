@@ -18,6 +18,13 @@ app.use(bodyParser.json());
 
 app.use('/', routes)
 
+// Default error handling middleware, must be defined last
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send({
+        error: 'Unhandled API Error!'
+    })
+})
 
 
 
