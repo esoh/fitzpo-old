@@ -8,13 +8,15 @@ const expect = chai.expect
 
 chai.use(chaiHttp)
 
-describe('/GET accounts', () => {
-    it('should GET all accounts', (done) => {
-        chai.request(server)
-            .get('/accounts')
-            .end((err, res) => {
-                expect(res.body).to.be.a('array')
-                done()
-            })
+describe('Accounts API', () => {
+    describe('/GET accounts', () => {
+        it('should GET all accounts', (done) => {
+            chai.request(server)
+                .get('/accounts')
+                .end((err, res) => {
+                    expect(res.body).to.be.a('array')
+                    done()
+                })
+        })
     })
 })

@@ -13,10 +13,6 @@ describe('models/account', () => {
         return this.Account.destroy({ truncate: true })
     })
 
-    after(() => {
-        return app.sequelize.close()
-    })
-
     describe('#create()', () => {
         it('successfully creates an account', () => {
             return this.Account.create({

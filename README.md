@@ -35,8 +35,7 @@ This repo contains the web app powering Fitzpo.
 
 #### Testing the API
 1. `cd fitzpo/root/backend` to go to express directory
-1. Make sure you've created the test database if you haven't already, using `NODE_ENV=test sequelize db:create`.
-1. Run the node server with `NODE_ENV=test npm start`. See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys) for more details and options about environmental variables.
+1. Create the test database using `NODE_ENV=test sequelize db:create` if you haven't already.
 1. Run `npm test` to run the tests.
 
 #### Before deploying
