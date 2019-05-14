@@ -16,7 +16,8 @@ module.exports = {
     post: function(req, res, next){
         Account.post(req.body.username, req.body.email, req.body.password)
             .then(account => {
-               res.send(account)
+                // TODO: Need to decide what to do with password
+                res.send(account)
             })
             .catch(err => {
                 //handle error thrown by model in controller. Business logic.
