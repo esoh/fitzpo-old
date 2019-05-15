@@ -58,24 +58,14 @@ module.exports = (sequelize, DataTypes) => {
     // list accounts
     // limit: up to <limit> accounts shown
     Account.list = function(limit=20) {
-        return new Promise((resolve, reject) => {
-            Account.findAll({ limit: limit })
-                .then(accounts => { resolve(accounts) })
-                .catch(err => { reject(err) })
-        })
+        return Account.findAll({ limit: limit })
     }
 
     Account.post = function(username, email, password) {
-        return new Promise((resolve, reject) => {
-            Account.build({
-                username,
-                email,
-                password
-            }).save()
-                .then(account => { resolve(account) })
-                .catch(err => {
-                    reject(err)
-                })
+        return Account.create({
+            username,
+            email,
+            password
         })
     }
 
