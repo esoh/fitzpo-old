@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     }, {
+        defaultScope: {
+            attributes: {
+                exclude: ['password']
+            }
+        },
         hooks: {
             beforeCreate: (account) => {
                 return new Promise((resolve, reject) => {
