@@ -39,6 +39,8 @@ describe('Accounts API', () => {
                     expect(err).to.be.null
                     expect(res).to.have.status(201)
                     expect(res.body.username).to.eql('username')
+                    expect(res.body.email).to.eql('email@email.com')
+                    expect(res.body).to.not.have.property('password')
                     done()
                 })
         })

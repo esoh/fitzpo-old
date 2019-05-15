@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
     }
 
+    // override the toJSON function to disallow exposing the password
+    Account.prototype.toJSON = function() {
+        var values = Object.assign({}, this.get());
+
+        delete values.password;
+        return values;
+    }
+
     // list accounts
     // limit: up to <limit> accounts shown
     Account.list = function(limit=20) {
