@@ -1,6 +1,7 @@
 'use strict'
 const bcrypt = require('bcrypt')
 const Filter = require('bad-words')
+const sequelizeErrCatcher = require('../utils/sequelizeErrorCatcher')
 
 const filter = new Filter();
 const SALT_ROUNDS = 10
@@ -75,10 +76,17 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     Account.post = function(username, email, password) {
-        return Account.create({
-            username,
-            email,
-            password
+        return new Promise((resolve, reject) => {
+            Account.create({
+                username,
+                email,
+                password
+            })
+                .then(account => { resolve(account) })
+                .catch(err => {
+                    err = sequelizeErrCatcher(err)
+                    reject(err)
+                })
         })
     }
 
