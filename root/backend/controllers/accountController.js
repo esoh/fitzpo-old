@@ -17,13 +17,11 @@ module.exports = {
         Account.post(req.body.username, req.body.email, req.body.password)
             .then(account => {
                 // TODO: Need to decide what to do with password
+                // TODO: Set location header that points to new resource
                 res.status(201).send(account)
             })
             .catch(err => {
                 //handle error thrown by model in controller. Business logic.
-                console.log(err)
-                res.send(err)
-
                 next(err)
             })
     }

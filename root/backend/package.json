@@ -22,7 +22,8 @@
     "mysql2": "^1.6.5",
     "passport": "*",
     "passport-jwt": "*",
-    "sequelize": "^5.8.5"
+    "sequelize": "^5.8.5",
+    "url": "^0.11.0"
   },
   "author": "Sean Oh",
   "license": "ISC",
