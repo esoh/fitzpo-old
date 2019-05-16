@@ -57,8 +57,108 @@ describe('Accounts API', () => {
                 .end((err, res) => {
                     // TODO: check for error
                     expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Not null constraint error')
                     done()
                 })
         })
     })
+
+    describe('/POST accounts', () => {
+        it('fail to POST account with no username', (done) => {
+            chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    email:      'email@email.com',
+                    password:   'Password!123'
+                })
+                .end((err, res) => {
+                    // TODO: check for error
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Not null constraint error')
+                    done()
+                })
+        })
+    })
+
+    describe('/POST accounts', () => {
+        it('fail to POST account with no email', (done) => {
+            chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'username',
+                    password:   'Password!123'
+                })
+                .end((err, res) => {
+                    // TODO: check for error
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Not null constraint error')
+                    done()
+                })
+        })
+    })
+
+    describe('/POST accounts', () => {
+        it('fail to POST account with no password', (done) => {
+            chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'username',
+                    email:      'email@email.com',
+                })
+                .end((err, res) => {
+                    // TODO: check for error
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Not null constraint error')
+                    done()
+                })
+        })
+    })
+
+    describe('/POST accounts', () => {
+        it('fail to POST account with invalid password', (done) => {
+            chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'username',
+                    email:      'email@email.com',
+                    password:   'pass'
+                })
+                .end((err, res) => {
+                    // TODO: check for error
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Input validation constraints error')
+                    done()
+                })
+        })
+    })
+
+    describe('/POST accounts', () => {
+        it('fail to POST account with profane username', (done) => {
+            chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'bitch',
+                    email:      'email@email.com',
+                    password:   'pass'
+                })
+                .end((err, res) => {
+                    // TODO: check for error
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.title).to.eql('Input validation constraints error')
+                    done()
+                })
+        })
+    })
+
 })
