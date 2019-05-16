@@ -8,7 +8,7 @@ const config = require('./config/config.js')[env]
 
 const models = require('./models')
 const routes = require('./routes')
-const APIError = require('./utils/apiErrorBuilder')
+const APIError = require('./utils/errorBuilder').APIError
 
 // set up express app
 

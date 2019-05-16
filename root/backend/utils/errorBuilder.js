@@ -4,6 +4,8 @@ class APIError {
     /**
     *
     * @param {Object} options
+    * @param {Number} [options.status]
+    *   HTTP Status code
     * @param {String} [options.title]
     *   A short, human-readable title for the general error type;
     *   the title should not change for given types.
@@ -17,8 +19,6 @@ class APIError {
     * @param {String} [options.instance]
     *   This optional key may be present, with a unique URI for the specific error;
     *   this will often point to an error log for that specific response.
-    * @param {Number} [options.status]
-    *   HTTP Status code
     */
 
     constructor(options){
@@ -27,8 +27,6 @@ class APIError {
         let type = options.type
         let title = options.title
         const status = options.status
-
-        'use strict';
 
         const statusCodes = {
             400: 'Bad Request',
@@ -66,4 +64,4 @@ class APIError {
     }
 }
 
-module.exports = APIError
+module.exports = {APIError}
