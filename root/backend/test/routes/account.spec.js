@@ -10,9 +10,6 @@ chai.use(chaiHttp)
 
 describe('Accounts API', () => {
 
-    beforeEach(() => {
-        return Account.destroy({ truncate: true })
-    })
 
     describe('/GET accounts', () => {
         it('should GET all accounts', (done) => {
@@ -26,126 +23,189 @@ describe('Accounts API', () => {
     })
 
     describe('/POST accounts', () => {
-        it('successfully POST valid account', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    username:   'username',
-                    email:      'email@email.com',
-                    password:   'Password!123'
-                })
-                .end((err, res) => {
-                    expect(err).to.be.null
-                    expect(res).to.have.status(201)
-                    expect(res.body.username).to.eql('username')
-                    expect(res.body.email).to.eql('email@email.com')
-                    expect(res.body).to.not.have.property('password')
-                    done()
-                })
+        describe('Singular request tests', () => {
+
+            beforeEach(() => {
+                return Account.destroy({ truncate: true })
+            })
+
+            it('successfully POST valid account', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        email:      'email@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        expect(err).to.be.null
+                        expect(res).to.have.status(201)
+                        expect(res.body.username).to.eql('username')
+                        expect(res.body.email).to.eql('email@email.com')
+                        expect(res.body).to.not.have.property('password')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with empty body', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        // empty body
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Not null constraint error')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with no username', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        email:      'email@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Not null constraint error')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with no email', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Not null constraint error')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with no password', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        email:      'email@email.com',
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Not null constraint error')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with invalid password', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        email:      'email@email.com',
+                        password:   'pass'
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        done()
+                    })
+            })
+
+            it('fail to POST account with profane username', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'bitch',
+                        email:      'email@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        // TODO: check for error
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        done()
+                    })
+            })
         })
 
-        it('fail to POST account with empty body', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    // empty body
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Not null constraint error')
-                    done()
-                })
-        })
+        describe('Tests with persistent database', () => {
 
-        it('fail to POST account with no username', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    email:      'email@email.com',
-                    password:   'Password!123'
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Not null constraint error')
-                    done()
-                })
-        })
+            it('successfully POST valid account', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        email:      'email@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        expect(err).to.be.null
+                        expect(res).to.have.status(201)
+                        expect(res.body.username).to.eql('username')
+                        expect(res.body.email).to.eql('email@email.com')
+                        expect(res.body).to.not.have.property('password')
+                        done()
+                    })
+            })
 
-        it('fail to POST account with no email', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    username:   'username',
-                    password:   'Password!123'
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Not null constraint error')
-                    done()
-                })
-        })
+            it('fail POST with taken username', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'USERNAME',
+                        email:      'email2@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        expect(res).to.have.status(409)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Unique constraint error')
+                        done()
+                    })
+            })
 
-        it('fail to POST account with no password', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    username:   'username',
-                    email:      'email@email.com',
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Not null constraint error')
-                    done()
-                })
-        })
-
-        it('fail to POST account with invalid password', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    username:   'username',
-                    email:      'email@email.com',
-                    password:   'pass'
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Input validation constraints error')
-                    done()
-                })
-        })
-
-        it('fail to POST account with profane username', (done) => {
-            chai.request(server)
-                .post('/accounts')
-                .set('Content-Type', 'application/json')
-                .send({
-                    username:   'bitch',
-                    email:      'email@email.com',
-                    password:   'Password!123'
-                })
-                .end((err, res) => {
-                    // TODO: check for error
-                    expect(res).to.have.status(400)
-                    expect(res.body).to.have.property('error')
-                    expect(res.body.error.title).to.eql('Input validation constraints error')
-                    done()
-                })
+            it('fail POST with taken email', (done) => {
+                chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username2',
+                        email:      'EmaIl@email.com',
+                        password:   'Password!123'
+                    })
+                    .end((err, res) => {
+                        expect(res).to.have.status(409)
+                        expect(res.body).to.have.property('error')
+                        expect(res.body.error.title).to.eql('Unique constraint error')
+                        done()
+                    })
+            })
         })
     })
 })
