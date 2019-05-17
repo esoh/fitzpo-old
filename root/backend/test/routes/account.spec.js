@@ -137,7 +137,7 @@ describe('Accounts API', () => {
                 .send({
                     username:   'bitch',
                     email:      'email@email.com',
-                    password:   'pass'
+                    password:   'Password!123'
                 })
                 .end((err, res) => {
                     // TODO: check for error
