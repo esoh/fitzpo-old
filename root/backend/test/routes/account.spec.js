@@ -44,9 +44,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with empty body', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -62,9 +60,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with no username', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -81,9 +77,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with no email', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -100,9 +94,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with no password', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -119,9 +111,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with invalid password', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -139,9 +129,7 @@ describe('Accounts API', () => {
                     done()
                 })
         })
-    })
 
-    describe('/POST accounts', () => {
         it('fail to POST account with profane username', (done) => {
             chai.request(server)
                 .post('/accounts')
@@ -160,5 +148,4 @@ describe('Accounts API', () => {
                 })
         })
     })
-
 })

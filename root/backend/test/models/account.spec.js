@@ -88,7 +88,6 @@ describe('models/account', () => {
                 })
         })
 
-        // TODO: figure out how to add 2 users then check for duplicate error
         it('fails to create an account with a duplicate username', async () => {
             try {
                 await this.Account.post('userName', 'test@email.com', 'Password!123')
