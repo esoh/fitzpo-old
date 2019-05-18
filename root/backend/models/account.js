@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
         return Account.findAll({ limit: limit })
     }
 
-    Account.post = function(username, email, password) {
+    Account.register = function(username, email, password) {
         return new Promise((resolve, reject) => {
             Account.create({
                 username,
