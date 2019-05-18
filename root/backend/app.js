@@ -62,11 +62,11 @@ function onError(error){
     // handle access and address in use errors gracefully
     switch (error.code) {
         case 'EACCES':
-            console.error('Port ' + config_app.port + ' requires elevated privileges')
+            console.error('Port ' + config.app_port + ' requires elevated privileges')
             process.exit(1)
             break
         case 'EADDRINUSE':
-            console.error('Port ' + config_app.port + ' is already in use')
+            console.error('Port ' + config.app_port + ' is already in use')
             process.exit(1)
             break
         default:
