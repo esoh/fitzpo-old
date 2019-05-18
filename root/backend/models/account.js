@@ -61,14 +61,6 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
     }
 
-    // override the toJSON function to disallow exposing the password
-    Account.prototype.toJSON = function() {
-        var values = Object.assign({}, this.get());
-
-        delete values.password;
-        return values;
-    }
-
     // list accounts
     // limit: up to <limit> accounts shown
     Account.list = function(limit=20) {
@@ -82,7 +74,9 @@ module.exports = (sequelize, DataTypes) => {
                 email,
                 password
             })
-                .then(account => { resolve(account) })
+                .then(account => {
+                    resolve(account)
+                })
                 .catch(err => {
                     err = sequelizeErrCatcher(err)
                     reject(err)
@@ -90,8 +84,12 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
-    Account.findByUsername = function(username) {
-        return Account.findOne({ where: {username: username} })
+    Account.findByUsername = function(username, showPassword=false) {
+        if(showPassword){
+            return Account.unscoped().findOne({ where: {username: username} })
+        } else {
+            return Account.findOne({ where: {username: username} })
+        }
     }
 
     Account.prototype.comparePassword = function(password) {

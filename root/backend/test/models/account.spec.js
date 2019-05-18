@@ -163,7 +163,6 @@ describe('models/account', () => {
             var account
             try{
                 account = await this.Account.post('userName', 'test@email.com', 'Password!123')
-                expect(account.username).to.eql('userName')
             } catch(err) {
                 throw err
             }

@@ -71,7 +71,9 @@ module.exports = {
             .then(account => {
                 // TODO: Need to decide what to do with password
                 // TODO: Set location header that points to new resource
-                res.status(201).send(account)
+                var accountJson = account.toJSON()
+                delete accountJson.password
+                res.status(201).json(accountJson)
             })
             .catch(err => {
                 //handle error thrown by model in controller. Business logic.
