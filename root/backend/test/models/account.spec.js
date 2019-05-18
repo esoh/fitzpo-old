@@ -8,12 +8,13 @@ describe('models/account', () => {
         return app.sequelize.sync()
     })
 
-    beforeEach(() => {
-        this.Account = require('../../models').Account
-        return this.Account.destroy({ truncate: true })
-    })
-
     describe('#create()', () => {
+
+        beforeEach(() => {
+            this.Account = require('../../models').Account
+            return this.Account.destroy({ truncate: true })
+        })
+
         it('successfully creates an account', () => {
             return this.Account.post('username-test', 'test@email.com', 'Password!123')
                 .then((account) => {
@@ -118,5 +119,37 @@ describe('models/account', () => {
                 })
         })
 
+    })
+
+    describe('#findByUsername()', () => {
+
+        before(() => {
+            return this.Account.destroy({ truncate: true })
+        })
+
+        it('succeeds in finding a user by username', async () => {
+            try{
+                await this.Account.post('userName', 'test@email.com', 'Password!123')
+            } catch(err) {
+                throw err
+            }
+
+            return this.Account.findByUsername('Username')
+                .then(account => {
+                    expect(account.username).to.eql('userName')
+                    expect(account.password).to.not.be.ok
+                }, err => {
+                    throw err
+                })
+        })
+
+        it('fails to find a non-existent user', () => {
+            return this.Account.findByUsername('Username2')
+                .then(account => {
+                    expect(account).to.not.be.ok
+                }, err => {
+                    throw err
+                })
+        })
     })
 })

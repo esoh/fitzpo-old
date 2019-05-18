@@ -148,6 +148,10 @@ describe('Accounts API', () => {
 
         describe('Tests with persistent database', () => {
 
+            before(() => {
+                return Account.destroy({ truncate: true })
+            })
+
             it('successfully POST valid account', (done) => {
                 chai.request(server)
                     .post('/accounts')
