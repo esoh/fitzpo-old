@@ -56,7 +56,6 @@ describe('Accounts API', () => {
                         // empty body
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Not null constraint error')
@@ -73,7 +72,6 @@ describe('Accounts API', () => {
                         password:   'Password!123'
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Not null constraint error')
@@ -90,7 +88,6 @@ describe('Accounts API', () => {
                         password:   'Password!123'
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Not null constraint error')
@@ -107,7 +104,6 @@ describe('Accounts API', () => {
                         email:      'email@email.com',
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Not null constraint error')
@@ -125,7 +121,6 @@ describe('Accounts API', () => {
                         password:   'pass'
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Input validation constraints error')
@@ -143,7 +138,6 @@ describe('Accounts API', () => {
                         password:   'Password!123'
                     })
                     .end((err, res) => {
-                        // TODO: check for error
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Input validation constraints error')
