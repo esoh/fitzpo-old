@@ -152,4 +152,46 @@ describe('models/account', () => {
                 })
         })
     })
+
+    describe('#prototype.comparePassword()', () => {
+
+        beforeEach(() => {
+            return this.Account.destroy({ truncate: true })
+        })
+
+        it('succeeds with the right password', async () => {
+            var account
+            try{
+                account = await this.Account.post('userName', 'test@email.com', 'Password!123')
+                expect(account.username).to.eql('userName')
+            } catch(err) {
+                throw err
+            }
+
+            return account.comparePassword('Password!123')
+                .then(match => {
+                    expect(match).to.be.true
+                }, err => {
+                    throw err
+                })
+        })
+
+        it('fails with the wrong password', async () => {
+            var account
+            try{
+                account = await this.Account.post('userName', 'test@email.com', 'Password!123')
+            } catch(err) {
+                throw err
+            }
+
+            return account.comparePassword('Password?123')
+                .then(match => {
+                    expect(match).to.be.false
+                }, err => {
+                    throw err
+                })
+        })
+
+
+    })
 })
