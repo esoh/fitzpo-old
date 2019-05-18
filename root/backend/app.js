@@ -2,6 +2,7 @@
 const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 
 const env = process.env.NODE_ENV || 'development'
 const config = require('./config/config.js')[env]
@@ -14,8 +15,9 @@ const APIError = require('./utils/errorBuilder').APIError
 
 const app = express()
 
-// Body Parser Middleware
-app.use(bodyParser.json());
+// middleware
+app.use(bodyParser.json())
+app.use(passport.initialize())
 
 app.use('/', routes)
 

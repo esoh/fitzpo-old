@@ -90,5 +90,13 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
+    Account.findByUsername = function(username) {
+        return Account.findOne({ where: {username: username} })
+    }
+
+    Account.prototype.comparePassword = function(password) {
+        return bcrypt.compare(password, this.local.password)
+    }
+
     return Account
 }
