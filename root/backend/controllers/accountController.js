@@ -1,6 +1,9 @@
 const {Account} = require('../models')
 const APIError = require('../utils/errorBuilder').APIError
 
+// TODO: throw same error for if username or email fail unique validation
+// TODO: think about defining some global error codes for validation errors
+
 catchSchemaErrors = function(err) {
     let details = []
     let params = []
@@ -72,8 +75,6 @@ module.exports = {
             })
             .catch(err => {
                 //handle error thrown by model in controller. Business logic.
-                let details = []
-                let params = []
                 schemaErr = catchSchemaErrors(err)
                 if(schemaErr) return res.status(schemaErr.statusCode).send(schemaErr.error)
                 next(err)

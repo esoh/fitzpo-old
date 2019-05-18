@@ -1,5 +1,7 @@
 const url = require('url')
 
+// TODO: Allow invalid_params with param and reason fields
+
 class APIError {
     /**
     *
