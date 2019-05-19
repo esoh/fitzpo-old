@@ -54,7 +54,7 @@ catchSchemaErrors = function(err) {
 }
 
 module.exports = {
-    list: function(req, res, next){
+    listUsers: function(req, res, next){
         // controller calls the method function
         Account.list()
             .then(accounts => {
@@ -63,10 +63,11 @@ module.exports = {
             })
             .catch(err => {
 
+                res.status(400).send(err)
                 next(err) //pass error to express middleware
             })
     },
-    post: function(req, res, next){
+    registerUser: function(req, res, next){
         Account.register(req.body.username, req.body.email, req.body.password)
             .then(account => {
                 // TODO: Need to decide what to do with password

@@ -4,7 +4,7 @@ const accountController = require('../controllers/accountController')
 
 const models = require('../models')
 
-router.get('/', accountController.list)
-router.post('/', accountController.post)
+router.get('/', accountController.listUsers)
+router.post('/', accountController.registerUser)
 
 module.exports = router
