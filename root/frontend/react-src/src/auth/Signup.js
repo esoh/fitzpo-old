@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 // TODO: Add verify password field
 // TODO: center fields in middle of page
 // TODO: display error if response fails
 
-class Register extends React.Component {
+class Signup extends React.Component {
 
     state = {
         formControls: {
@@ -54,23 +55,26 @@ class Register extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Username:
-                    <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
-                </label>
-                <label>
-                    Email:
-                    <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} />
-                </label>
-                <label>
-                    Password:
-                    <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Sign Up" />
-            </form>
+            <>
+                <Link to="/">Home</Link>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Username:
+                        <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Email:
+                        <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Password:
+                        <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="Sign Up" />
+                </form>
+            </>
         )
     }
 }
 
-export default Register;
+export default Signup;
