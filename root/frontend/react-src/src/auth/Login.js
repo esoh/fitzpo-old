@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import './Entry.css';
 
 // TODO: center fields in middle of page
 // TODO: display error if response fails
@@ -52,8 +53,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <>
-                <Link to="/">Home</Link>
+            <div className="entry">
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Username:
@@ -65,7 +65,8 @@ class Login extends React.Component {
                     </label>
                     <input type="submit" value="Login" />
                 </form>
-            </>
+                <Link to="/">Home</Link>
+            </div>
         )
     }
 }

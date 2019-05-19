@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import './Entry.css';
 
 // TODO: Add verify password field
 // TODO: center fields in middle of page
@@ -55,8 +56,7 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <>
-                <Link to="/">Home</Link>
+            <div className="entry">
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Username:
@@ -72,7 +72,8 @@ class Signup extends React.Component {
                     </label>
                     <input type="submit" value="Sign Up" />
                 </form>
-            </>
+                <Link to="/">Home</Link>
+            </div>
         )
     }
 }
