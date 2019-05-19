@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const accountController = require('../controllers/accountController')
+const authController = require('../controllers/authController')
 
-router.post('/token-jwt', accountController.authenticateUser)
+router.post('/token-jwt', authController.authorizeAccount)
 
 module.exports = router

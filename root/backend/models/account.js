@@ -84,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
-    Account.login = function(username, password) {
+    Account.authorize = function(username, password) {
         // find account with matching username (with password hash)
         return new Promise((resolve, reject) => {
             Account.unscoped().findOne({ where: { username: username } })
@@ -93,7 +93,6 @@ module.exports = (sequelize, DataTypes) => {
                     account.comparePassword(password)
                         .then(match => {
                             if(match) {
-                                // TODO: generate jwt
                                 resolve(account)
                             } else {
                                 resolve(null)
