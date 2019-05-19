@@ -192,7 +192,7 @@ describe('models/account', () => {
         })
     })
 
-    describe('#authorize()', () => {
+    describe('#authenticate()', () => {
 
         beforeEach(() => {
             return this.Account.destroy({ truncate: true })
@@ -206,7 +206,7 @@ describe('models/account', () => {
                 throw err
             }
 
-            return this.Account.authorize('Username', 'Password!123')
+            return this.Account.authenticate('Username', 'Password!123')
                 .then(account => {
                     expect(account).to.be.ok
                     expect(account.username).to.eql('userName')
@@ -224,7 +224,7 @@ describe('models/account', () => {
                 throw err
             }
 
-            return this.Account.authorize('Username', 'Password?123')
+            return this.Account.authenticate('Username', 'Password?123')
                 .then(account => {
                     expect(account).to.not.be.ok
                 }, err => {
@@ -240,7 +240,7 @@ describe('models/account', () => {
                 throw err
             }
 
-            return this.Account.authorize('blah', 'Password!123')
+            return this.Account.authenticate('blah', 'Password!123')
                 .then(account => {
                     expect(account).to.not.be.ok
                 }, err => {

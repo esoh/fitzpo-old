@@ -84,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
-    Account.authorize = function(username, password) {
+    Account.authenticate = function(username, password) {
         // find account with matching username (with password hash)
         return new Promise((resolve, reject) => {
             Account.unscoped().findOne({ where: { username: username } })

@@ -6,7 +6,7 @@ const APIError = require('../utils/errorBuilder').APIError
 const authService = require('../services/auth.service')
 
 module.exports = {
-    authorizeAccount: function(req, res, next){
+    authenticateAccount: function(req, res, next){
         let promise = new Promise((resolve, reject) => {
             passport.authenticate('local', (account, error, info) => {
                 if(error) {

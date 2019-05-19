@@ -9,7 +9,7 @@ const {Account} = require('../models')
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        Account.authorize(username, password)
+        Account.authenticate(username, password)
             .then(account => {
                 if(!account) {
                     return done(null, false)
