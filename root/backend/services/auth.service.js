@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const JwtStrategy = require('passport-jwt').Strategy
 const jwt = require('jsonwebtoken')
 
 const env = process.env.NODE_ENV || 'development'
@@ -20,6 +21,24 @@ passport.use(new LocalStrategy(
     }
 ))
 
+passport.use(new JwtStrategy({
+        jwtFromRequest: extractJwtFromCookie,
+        secretOrKey:    config.auth_secret,
+    },
+    function(jwtPayload, done){
+        Account.findByUsername(jwtPayload.username)
+            .then(account => {
+                if(!account) {
+                    return done(null, false)
+                }
+                return done(null, account)
+            })
+            .catch(err => {
+                return done(null, false)
+            })
+    }
+))
+
 function generateJwt(account){
     // TODO: maybe put expire date?
     const payload = {
@@ -27,6 +46,14 @@ function generateJwt(account){
         username:   account.username,
     }
     return jwt.sign(payload, config.auth_secret)
+}
+
+function extractJwtFromCookie(req){
+    var token = null
+    if(req && req.cookies){
+        token = req.cookies['fitzpo_access_token']
+    }
+    return token
 }
 
 module.exports = {

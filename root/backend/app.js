@@ -3,6 +3,7 @@ const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 
 const env = process.env.NODE_ENV || 'development'
 const config = require('./config/config.js')[env]
@@ -17,6 +18,7 @@ const app = express()
 
 // middleware
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use(passport.initialize())
 
 app.use('/', routes)
