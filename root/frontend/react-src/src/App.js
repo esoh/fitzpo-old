@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import './App.css';
-import Signup from './auth/Signup';
-import Login from './auth/Login';
+import Signup from './entry/Signup';
+import Login from './entry/Login';
 import Home from './home/Home';
 
 function App() {
