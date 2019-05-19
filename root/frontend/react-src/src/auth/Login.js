@@ -1,15 +1,13 @@
 import React from 'react';
 
-// TODO: Add verify password field
 // TODO: center fields in middle of page
 // TODO: display error if response fails
 
-class Register extends React.Component {
+class Login extends React.Component {
 
     state = {
         formControls: {
             username: { value: '' },
-            email: { value: '' },
             password: { value: '' }
         }
     }
@@ -31,16 +29,15 @@ class Register extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.signup();
+        this.login();
     }
 
-    signup = () => {
-        fetch('/accounts', {
+    login = () => {
+        fetch('/auth/token-jwt', {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
                 username: this.state.formControls.username.value,
-                email: this.state.formControls.email.value,
                 password: this.state.formControls.password.value,
             })
         })
@@ -60,17 +57,13 @@ class Register extends React.Component {
                     <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
                 </label>
                 <label>
-                    Email:
-                    <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} />
-                </label>
-                <label>
                     Password:
                     <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Sign Up" />
+                <input type="submit" value="Login" />
             </form>
         )
     }
 }
 
-export default Register;
+export default Login;
