@@ -190,7 +190,69 @@ describe('models/account', () => {
                     throw err
                 })
         })
+    })
 
+    describe('#login()', () => {
+
+        beforeEach(() => {
+            return this.Account.destroy({ truncate: true })
+        })
+
+        it('succeeds with the right password', async () => {
+            var baseAccount
+            try{
+                baseAccount = await this.Account.register('userName', 'test@email.com', 'Password!123')
+            } catch(err) {
+                throw err
+            }
+
+            return this.Account.login('Username', 'Password!123')
+                .then(account => {
+                    // TODO: this will later return account and a token. Check
+                    // for both.
+                    expect(account).to.be.ok
+                    expect(account.username).to.eql('userName')
+                    expect(account.username).to.eql(baseAccount.username)
+                }, err => {
+                    throw err
+                })
+        })
+
+        it('fails with null with the wrong password', async () => {
+            var baseAccount
+            try{
+                baseAccount = await this.Account.register('userName', 'test@email.com', 'Password!123')
+            } catch(err) {
+                throw err
+            }
+
+            return this.Account.login('Username', 'Password?123')
+                // TODO: this will later return account and a token. Check
+                // for both.
+                .then(account => {
+                    expect(account).to.not.be.ok
+                }, err => {
+                    throw err
+                })
+        })
+
+        it('fails with null with the wrong username', async () => {
+            var baseAccount
+            try{
+                baseAccount = await this.Account.register('userName', 'test@email.com', 'Password!123')
+            } catch(err) {
+                throw err
+            }
+
+            return this.Account.login('blah', 'Password!123')
+                // TODO: this will later return account and a token. Check
+                // for both.
+                .then(account => {
+                    expect(account).to.not.be.ok
+                }, err => {
+                    throw err
+                })
+        })
 
     })
 })
