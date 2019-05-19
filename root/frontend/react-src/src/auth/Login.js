@@ -11,7 +11,8 @@ class Login extends React.Component {
         formControls: {
             username: { value: '' },
             password: { value: '' }
-        }
+        },
+        msg: ''
     }
 
     handleChange = (event) => {
@@ -46,6 +47,11 @@ class Login extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                if(data.error){
+                    this.setState({ msg: data.error.title })
+                } else {
+                    this.setState({ msg: 'User authenticated!' })
+                }
                 // do stuff with the data here, like error checking
             })
             .catch(err => console.error(err))
@@ -65,6 +71,7 @@ class Login extends React.Component {
                     </label>
                     <input type="submit" value="Login" />
                 </form>
+                <p>{this.state.msg}</p>
                 <Link to="/">Home</Link>
             </div>
         )

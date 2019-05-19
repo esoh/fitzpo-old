@@ -13,7 +13,8 @@ class Signup extends React.Component {
             username: { value: '' },
             email: { value: '' },
             password: { value: '' }
-        }
+        },
+        msg: ''
     }
 
     handleChange = (event) => {
@@ -49,6 +50,11 @@ class Signup extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                if(data.error){
+                    this.setState({ msg: data.error.title })
+                } else {
+                    this.setState({ msg: 'User registered!' })
+                }
                 // do stuff with the data here, like error checking
             })
             .catch(err => console.error(err))
@@ -72,6 +78,7 @@ class Signup extends React.Component {
                     </label>
                     <input type="submit" value="Sign Up" />
                 </form>
+                <p>{this.state.msg}</p>
                 <Link to="/">Home</Link>
             </div>
         )
