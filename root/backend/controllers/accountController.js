@@ -82,5 +82,29 @@ module.exports = {
                 if(schemaErr) return res.status(schemaErr.statusCode).send(schemaErr.error)
                 next(err)
             })
+    },
+    //TODO: handle token
+    authenticateUser: function(req, res, next){
+        Account.login(req.body.username, req.body.password)
+            .then(response => {
+                if(!response) {
+                    const error = new APIError({
+                        title: "Invalid login credentials.",
+                        detail: "Username or password is incorrect."
+                    })
+                    res.status(400).send(error)
+                } else {
+                    // TODO: fix this
+                    var account = response
+                    var accountJson = account.toJSON()
+                    delete accountJson.password
+                    res.status(201).json(accountJson)
+                }
+            })
+            .catch(err => {
+                schemaErr = catchSchemaErrors(err)
+                if(schemaErr) return res.status(schemaErr.statusCode).send(schemaErr.error)
+                next(err)
+            })
     }
 }
