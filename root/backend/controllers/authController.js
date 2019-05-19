@@ -10,19 +10,19 @@ module.exports = {
         let promise = new Promise((resolve, reject) => {
             passport.authenticate('local', (account, error, info) => {
                 if(error) {
-                    reject(error)
+                    return reject(error)
                 }
                 if(!account) {
                     error = new APIError({
                         title: 'Invalid credentials',
                         detail: 'Username and/or password are incorrect.'
                     })
-                    reject(error)
+                    return reject(error)
                 }
 
-                //TODO: generate jwt, send back both account and jwt
                 //TODO: if user verified, generate jwt
-                resolve(account)
+                //authService.generateJwt(account)
+                return resolve(account)
             })(req, res)
         })
             .then(account => {

@@ -46,11 +46,11 @@ module.exports = (sequelize, DataTypes) => {
             beforeCreate: (account) => {
                 return new Promise((resolve, reject) => {
                     bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
-                        if(err) reject(err)
+                        if(err) return reject(err)
                         bcrypt.hash(account.password, salt, (err, hash) => {
-                            if(err) reject(err)
+                            if(err) return reject(err)
                             account.password = hash
-                            resolve()
+                            return resolve()
                         })
                     })
                 })
@@ -75,11 +75,11 @@ module.exports = (sequelize, DataTypes) => {
                 password
             })
                 .then(account => {
-                    resolve(account)
+                    return resolve(account)
                 })
                 .catch(err => {
                     err = sequelizeErrCatcher(err)
-                    reject(err)
+                    return reject(err)
                 })
         })
     }
@@ -89,19 +89,19 @@ module.exports = (sequelize, DataTypes) => {
         return new Promise((resolve, reject) => {
             Account.unscoped().findOne({ where: { username: username } })
                 .then(account => {
-                    if(!account) resolve(null) // return same response whether username not found or password not match to prevent exposing whether account exists
+                    if(!account) return resolve(null) // return same response whether username not found or password not match to prevent exposing whether account exists
                     account.comparePassword(password)
                         .then(match => {
                             if(match) {
-                                resolve(account)
+                                return resolve(account)
                             } else {
-                                resolve(null)
+                                return resolve(null)
                             }
                         })
                 })
                 .catch(err => {
                     err = sequelizeErrCatcher(err)
-                    reject(err)
+                    return reject(err)
                 })
         })
     }
