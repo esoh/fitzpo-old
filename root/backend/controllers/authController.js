@@ -3,7 +3,7 @@ const passport = require('passport')
 const APIError = require('../utils/errorBuilder').APIError
 
 // defines the strategy that calls the Account model functions
-require('../services/auth.service')(passport)
+const authService = require('../services/auth.service')
 
 module.exports = {
     authorizeAccount: function(req, res, next){
@@ -20,17 +20,18 @@ module.exports = {
                     return reject(error)
                 }
 
-                //TODO: if user verified, generate jwt
-                //authService.generateJwt(account)
-                return resolve(account)
+                //TODO: check if user verified (2factor with email) to generate jwt
+                let token = authService.generateJwt(account)
+                return resolve({
+                    account: account,
+                    token: token,
+                })
             })(req, res)
         })
-            .then(account => {
-                //TODO: change this to result because it will store both token
-                //and account
-                var accountJson = account.toJSON()
-                delete accountJson.password
-                res.status(201).json(accountJson)
+            .then(result => {
+                account = result.account.toJSON()
+                delete account.password
+                res.status(201).json({ account: account, token: result.token })
             })
             .catch(error => {
                 res.status(400).send(error)

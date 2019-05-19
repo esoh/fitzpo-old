@@ -33,9 +33,11 @@ describe('Auth API', () => {
                 .end((err, res) => {
                     expect(err).to.be.null
                     expect(res).to.have.status(201)
-                    expect(res.body.username).to.eql('userName')
-                    expect(res.body.email).to.eql('test@email.com')
-                    expect(res.body).to.not.have.property('password')
+                    expect(res.body.account.username).to.eql('userName')
+                    expect(res.body.account.email).to.eql('test@email.com')
+                    expect(res.body.account).to.not.have.property('password')
+                    expect(res.body).to.have.property('token')
+                    expect(res.body.token).to.be.ok
                 })
         })
 
