@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import './Entry.css';
+import { authenticateUser } from '../services/authService';
 
 // TODO: center fields in middle of page
 // TODO: display error if response fails
@@ -36,15 +37,8 @@ class Login extends React.Component {
     }
 
     login = () => {
-        fetch('/auth/token-jwt', {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: this.state.formControls.username.value,
-                password: this.state.formControls.password.value,
-            })
-        })
-            .then(res => res.json())
+        authenticateUser(this.state.formControls.username.value,
+                         this.state.formControls.password.value)
             .then(data => {
                 console.log(data)
                 if(data.error){
