@@ -31,7 +31,10 @@ module.exports = {
             .then(result => {
                 account = result.account.toJSON()
                 delete account.password
-                res.status(201).json({ account: account, token: result.token })
+                // cookie name: fitzpo_access_token
+                // TODO: set expiry date for token
+                res.cookie('fitzpo_access_token', result.token, { secure: true, httpOnly: true })
+                res.status(201).json(account)
             })
             .catch(error => {
                 res.status(400).send(error)
