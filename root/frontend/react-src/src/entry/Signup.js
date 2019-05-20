@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import './Entry.css';
 
 // TODO: Add verify password field
@@ -14,7 +14,8 @@ class Signup extends React.Component {
             email: { value: '' },
             password: { value: '' }
         },
-        msg: ''
+        msg: '',
+        redirect: false,
     }
 
     handleChange = (event) => {
@@ -53,7 +54,8 @@ class Signup extends React.Component {
                 if(data.error){
                     this.setState({ msg: data.error.title })
                 } else {
-                    this.setState({ msg: 'User registered!' })
+                    alert("User registered!")
+                    this.setState({ redirect: true })
                 }
                 // do stuff with the data here, like error checking
             })
@@ -61,6 +63,9 @@ class Signup extends React.Component {
     }
 
     render() {
+
+        if (this.state.redirect) return <Redirect to='/' />;
+
         return (
             <div className="entry">
                 <form onSubmit={this.handleSubmit}>
