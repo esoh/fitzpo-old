@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import './Entry.css';
 import { authenticateUser } from '../services/authService';
 
@@ -13,7 +13,8 @@ class Login extends React.Component {
             username: { value: '' },
             password: { value: '' }
         },
-        msg: ''
+        msg: '',
+        redirect: false,
     }
 
     handleChange = (event) => {
@@ -44,7 +45,8 @@ class Login extends React.Component {
                 if(data.error){
                     this.setState({ msg: data.error.title })
                 } else {
-                    this.setState({ msg: 'User authenticated!' })
+                    alert("User authenticated!")
+                    this.setState({ redirect: true })
                 }
                 // do stuff with the data here, like error checking
             })
@@ -52,6 +54,9 @@ class Login extends React.Component {
     }
 
     render() {
+
+        if (this.state.redirect) return <Redirect to='/' />;
+
         return (
             <div className="entry">
                 <form onSubmit={this.handleSubmit}>
