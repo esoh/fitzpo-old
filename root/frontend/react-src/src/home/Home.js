@@ -1,22 +1,11 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import GuestHome from './GuestHome'
+import UserHome from './UserHome'
 
-class Home extends React.Component {
-    render() {
-        return (
-            <>
-                <p>Welcome to Fitzpo!</p>
-                <ul>
-                    <li>
-                        <Link to="/signup">Sign Up</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Log In</Link>
-                    </li>
-                </ul>
-            </>
-        )
+export default function Home(props) {
+    const isLoggedIn = props.loggedIn;
+    if(isLoggedIn) {
+        return <UserHome />
     }
+    return <GuestHome />
 }
-
-export default Home;
