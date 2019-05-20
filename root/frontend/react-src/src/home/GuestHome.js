@@ -6,14 +6,10 @@ class GuestHome extends React.Component {
         return (
             <>
                 <p>Welcome to Fitzpo!</p>
-                <ul>
-                    <li>
-                        <Link to="/signup">Sign Up</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Log In</Link>
-                    </li>
-                </ul>
+                <div>
+                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/login">Log In</Link>
+                </div>
             </>
         )
     }

@@ -12,4 +12,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+a {
+    margin: 0 0.5rem;
 }

@@ -5,9 +5,4 @@
 .entry form {
     margin: 0 auto;
     border: solid black 1px;
-    display: inline-block;
-}
-
-.entry a {
-    display: block;
 }
