@@ -10,7 +10,7 @@ chai.use(chaiHttp)
 // TODO: test for token
 describe('Auth API', () => {
 
-    describe('/POST auth/token-jwt', () => {
+    describe('/POST auth/token', () => {
 
         before(() => {
             return Account.destroy({ truncate: true })
@@ -24,7 +24,7 @@ describe('Auth API', () => {
             }
 
             chai.request(server)
-                .post('/auth/token-jwt')
+                .post('/auth/token')
                 .set('Content-Type', 'application/json')
                 .send({
                     username:   'username',
@@ -42,7 +42,7 @@ describe('Auth API', () => {
 
         it('fail to validate nonexistent account', (done) => {
             chai.request(server)
-                .post('/auth/token-jwt')
+                .post('/auth/token')
                 .set('Content-Type', 'application/json')
                 .send({
                     username:   'username2',
@@ -59,7 +59,7 @@ describe('Auth API', () => {
 
         it('fail to validate account with wrong password', (done) => {
             chai.request(server)
-                .post('/auth/token-jwt')
+                .post('/auth/token')
                 .set('Content-Type', 'application/json')
                 .send({
                     username:   'username',

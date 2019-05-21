@@ -20,8 +20,8 @@ module.exports = {
                     return reject(error)
                 }
 
-                //TODO: check if user verified (2factor with email) to generate jwt
-                let token = authService.generateJwt(account)
+                //TODO: check if user verified (2factor with email) to generate token
+                let token = authService.generateToken(account)
                 return resolve({
                     account: account,
                     token: token,

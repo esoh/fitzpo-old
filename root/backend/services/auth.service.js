@@ -22,7 +22,7 @@ passport.use(new LocalStrategy(
 ))
 
 passport.use(new JwtStrategy({
-        jwtFromRequest: extractJwtFromCookie,
+        jwtFromRequest: extractTokenFromCookie,
         secretOrKey:    config.auth_secret,
     },
     function(jwtPayload, done){
@@ -39,7 +39,7 @@ passport.use(new JwtStrategy({
     }
 ))
 
-function generateJwt(account){
+function generateToken(account){
     // TODO: maybe put expire date?
     const payload = {
         _id:        account._id,
@@ -48,7 +48,7 @@ function generateJwt(account){
     return jwt.sign(payload, config.auth_secret)
 }
 
-function extractJwtFromCookie(req){
+function extractTokenFromCookie(req){
     var token = null
     if(req && req.cookies){
         token = req.cookies['fitzpo_access_token']
@@ -57,5 +57,5 @@ function extractJwtFromCookie(req){
 }
 
 module.exports = {
-    generateJwt,
+    generateToken,
 }
