@@ -1,58 +1,10 @@
-const {Account} = require('../models')
-const APIError = require('../utils/errorBuilder').APIError
-const authService = require('../services/auth.service')
+const {Account} = require('../models');
+const APIError = require('../utils/errorBuilder').APIError;
+const authService = require('../services/auth.service');
+const convertSchemaError = require('../services/errorHandler.service').convertSchemaError;
 
 // TODO: throw same error for if username or email fail unique validation
 // TODO: think about defining some global error codes for validation errors
-
-catchSchemaErrors = function(err) {
-    let details = []
-    let params = []
-    var error = null
-    switch(err.name){
-        case 'ValidationError':
-            for (var i in err.errors){
-                details.push(err.errors[i].details)
-            }
-            error = new APIError({
-                title: 'Input validation constraints error',
-                detail: 'The following messages for the violating fields are outputted below:\n' + details.join('\n')
-            })
-            return {
-                error,
-                statusCode: 400
-            }
-            break
-        case 'UniqueConstraintError':
-            for (var i in err.errors){
-                params.push(err.errors[i].param)
-            }
-            error = new APIError({
-                title: 'Unique constraint error',
-                detail: 'The inputs for the following fields must be unique: ' + params.join(", ")
-            })
-            return {
-                error,
-                statusCode: 409
-            }
-            break
-        case 'NotNullConstraintError':
-            for (var i in err.errors){
-                params.push(err.errors[i].param)
-            }
-            error = new APIError({
-                title: 'Not null constraint error',
-                detail: 'The inputs for the following fields are required: ' + params.join(", ")
-            })
-            return {
-                error,
-                statusCode: 400
-            }
-            break
-        default:
-            return null
-    }
-}
 
 function listAccounts(req, res, next){
     // controller calls the method function
@@ -61,11 +13,7 @@ function listAccounts(req, res, next){
             // this is where you would generate a view
             res.send(accounts)
         })
-        .catch(err => {
-
-            res.status(400).send(err)
-            next(err) //pass error to express middleware
-        })
+        .catch(next)
 }
 
 function registerAccount(req, res, next){
@@ -77,12 +25,7 @@ function registerAccount(req, res, next){
             delete accountJson.password
             res.status(201).json(accountJson)
         })
-        .catch(err => {
-            //handle error thrown by model in controller. Business logic.
-            schemaErr = catchSchemaErrors(err)
-            if(schemaErr) return res.status(schemaErr.statusCode).send(schemaErr.error)
-            next(err)
-        })
+        .catch(next)
 }
 
 function getAccountFromCookie(req, res, next){
@@ -113,11 +56,7 @@ function getAccountFromCookie(req, res, next){
 
             return res.status(200).send({ account: account })
         })
-        .catch(err => {
-            schemaErr = catchSchemaErrors(err)
-            if(schemaErr) return res.status(schemaErr.statusCode).send(schemaErr.error)
-            next(err)
-        })
+        .catch(next)
 }
 
 module.exports = {

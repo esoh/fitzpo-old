@@ -11,6 +11,7 @@ const config = require('./config/config.js')[env]
 const models = require('./models')
 const routes = require('./routes')
 const APIError = require('./utils/errorBuilder').APIError
+const errorHandler = require('./services/errorHandler.service');
 
 // set up express app
 
@@ -23,18 +24,9 @@ app.use(passport.initialize())
 
 app.use('/', routes)
 
-// Default error handling middleware, must be defined last
-app.use((err, req, res, next) => {
-    console.error('============== START ERROR STACK TRACE ==============')
-    console.error(err.stack)
-    console.error('============== END ERROR STACK TRACE ==============')
-    const error = new APIError({
-        title: 'Unhandled Internal Server Error',
-        detail: 'Server did not handle thrown error: ' + err.name,
-        status: 500
-    })
-    res.status(500).send(error)
-})
+// error handling middleware, must be defined last
+app.use(errorHandler.schemaErrorHandler)
+app.use(errorHandler.defaultErrorHandler)
 
 
 
