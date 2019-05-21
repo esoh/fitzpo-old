@@ -42,10 +42,13 @@ passport.use(new JwtStrategy({
 function generateToken(account){
     // TODO: maybe put expire date?
     const payload = {
-        _id:        account._id,
         username:   account.username,
     }
     return jwt.sign(payload, config.auth_secret)
+}
+
+function decodeToken(token){
+    return jwt.verify(token, config.auth_secret)
 }
 
 function extractTokenFromCookie(req){
@@ -58,4 +61,6 @@ function extractTokenFromCookie(req){
 
 module.exports = {
     generateToken,
+    decodeToken,
+    extractTokenFromCookie,
 }
