@@ -10,7 +10,6 @@ const config = require('./config/config.js')[env]
 
 const models = require('./models')
 const routes = require('./routes')
-const APIError = require('./utils/errorBuilder').APIError
 const errorHandler = require('./services/errorHandler.service');
 
 // set up express app

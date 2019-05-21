@@ -1,43 +1,32 @@
-const passport = require('passport')
+const passport = require('passport');
 
-const APIError = require('../utils/errorBuilder').APIError
+const APIError = require('../utils/APIError');
 
 // defines the strategy that calls the Account model functions
 const authService = require('../services/auth.service')
 
 module.exports = {
     authenticateAccount: function(req, res, next){
-        let promise = new Promise((resolve, reject) => {
-            passport.authenticate('local', (account, error, info) => {
-                if(error) {
-                    return reject(error)
-                }
-                if(!account) {
-                    error = new APIError({
-                        title: 'Invalid credentials',
-                        detail: 'Username and/or password are incorrect.'
-                    })
-                    return reject(error)
-                }
+        passport.authenticate('local', (account, error, info) => {
+            if(error) {
+                return next(error)
+            }
 
-                //TODO: check if user verified (2factor with email) to generate token
-                let token = authService.generateToken(account)
-                return resolve({
-                    account: account,
-                    token: token,
-                })
-            })(req, res)
-        })
-            .then(result => {
-                account = result.account.toJSON()
-                delete account.password
-                // cookie name: fitzpo_access_token
-                // TODO: set expiry date for token and figure out secure https transfer
-                res.cookie('fitzpo_access_token', result.token, { httpOnly: true })
-                res.status(201).json(account)
-            })
-            .catch(error => {
-                res.status(400).send(error)
-            })
+            if(!account) {
+                return new APIError(400, {
+                    title: 'Invalid credentials',
+                    detail: 'Username and/or password are incorrect.'
+                }).sendToRes(res)
+            }
+
+            //TODO: check if user verified (2factor with email) to generate token
+            let token = authService.generateToken(account)
+            // cookie name: fitzpo_access_token
+            // TODO: set expiry date for token and figure out secure https transfer
+            res.cookie('fitzpo_access_token', token, { httpOnly: true })
+            account = account.toJSON()
+            delete account.password
+            return res.status(201).send(account)
+        })(req, res)
     }
 }

@@ -1,5 +1,5 @@
 const {Account} = require('../models');
-const APIError = require('../utils/errorBuilder').APIError;
+const APIError = require('../utils/APIError');
 const authService = require('../services/auth.service');
 const convertSchemaError = require('../services/errorHandler.service').convertSchemaError;
 
@@ -29,11 +29,11 @@ function registerAccount(req, res, next){
             if(!schemaErr) return next(err);
 
             // TODO: replace with error code
-            if(schemaErr.error.title == 'Unique constraint error'){
-                return res.status(409).send(new APIError({
+            if(schemaErr.response.title == 'Unique constraint error'){
+                return new APIError(409, {
                     title: 'Taken username and/or email',
                     detail: 'Username and/or email are already in use.'
-                }));
+                }).sendToRes(res);
             }
 
             return next(err);
@@ -51,19 +51,19 @@ function getAccountFromCookie(req, res, next){
     try {
         payload = authService.decodeToken(token);
     } catch(err) {
-        return res.status(400).send(new APIError({
+        return new APIError(400, {
             title: 'Invalid token',
             detail: 'Could not decode token'
-        }))
+        }).sendToRes(res);
     }
 
     Account.findByUsername(payload.username)
         .then(account => {
             if(!account) {
-                return res.status(400).send(new APIError({
+                return new APIError(404, {
                     title: 'Invalid account',
                     detail: 'Could not find account'
-                }))
+                }).sendToRes(res);
             }
 
             return res.status(200).send({ account: account })
