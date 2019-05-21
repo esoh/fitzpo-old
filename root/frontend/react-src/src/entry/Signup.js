@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
+
+import { registerAccount } from '../services/authService';
 import './Entry.css';
 
 // TODO: Add verify password field
@@ -39,20 +41,12 @@ class Signup extends React.Component {
     }
 
     signup = () => {
-        fetch('/accounts', {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: this.state.formControls.username.value,
-                email: this.state.formControls.email.value,
-                password: this.state.formControls.password.value,
-            })
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if(data.error){
-                    this.setState({ msg: data.error.title })
+        registerAccount(this.state.formControls.username.value,
+                        this.state.formControls.email.value,
+                        this.state.formControls.password.value)
+            .then(result => {
+                if(result.error){
+                    this.setState({ msg: result.error.title })
                 } else {
                     alert("User registered!")
                     this.setState({ redirect: true })

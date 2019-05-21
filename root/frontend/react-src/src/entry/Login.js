@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import './Entry.css';
 import { authenticateUser } from '../services/authService';
+import { setLoggedIn } from '../redux/actions';
 
 // TODO: center fields in middle of page
 // TODO: display error if response fails
@@ -46,6 +50,7 @@ class Login extends React.Component {
                     this.setState({ msg: data.error.title })
                 } else {
                     alert("User authenticated!")
+                    this.props.setLoggedIn(true)
                     this.setState({ redirect: true })
                 }
                 // do stuff with the data here, like error checking
@@ -80,4 +85,11 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+Login.propTypes = {
+    setLoggedIn: PropTypes.func.isRequired,
+}
+
+export default connect(
+    null,
+    { setLoggedIn }
+)(Login)
