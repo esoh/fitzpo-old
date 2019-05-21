@@ -183,7 +183,7 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(409)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Taken username and/or email')
+                        expect(res.body.error.title).to.eql('Username and/or email taken')
                         done()
                     })
             })
@@ -200,7 +200,7 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(409)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Taken username and/or email')
+                        expect(res.body.error.title).to.eql('Username and/or email taken')
                         done()
                     })
             })

@@ -1,6 +1,6 @@
 const url = require('url')
 
-module.exports = class APIError {
+class APIError {
     /**
     *
     * @param {Number} [options.status]
@@ -79,4 +79,85 @@ module.exports = class APIError {
     sendToRes(res) {
         res.status(this.status).send({ error: this.response })
     }
+}
+
+class UsernameOrEmailNotUniqueError extends APIError {
+    constructor(options={}){
+        super(409, {
+            title: 'Username and/or email taken',
+            detail: 'Username and/or email already in use.',
+            ...options
+        })
+    }
+}
+
+class InvalidTokenError extends APIError {
+    constructor(options={}){
+        super(400, {
+            title: 'Invalid token',
+            detail: 'Could not decode token',
+            ...options
+        })
+    }
+}
+
+class AccountNotFoundError extends APIError {
+    constructor(options={}){
+        super(404, {
+            title: 'Invalid account',
+            detail: 'Could not find account',
+            ...options
+        })
+    }
+}
+
+class InvalidUsernameOrPasswordError extends APIError {
+    constructor(options={}){
+        super(400, {
+            title: 'Invalid credentials',
+            detail: 'Username and/or password are incorrect.',
+            ...options
+        })
+    }
+}
+
+class InvalidParametersError extends APIError {
+    constructor(options={}, status=400){
+        super(status, {
+            title: 'Input validation constraints error',
+            detail: 'Input violates certain conditions.',
+            ...options
+        })
+    }
+}
+
+class ParametersNotUniqueError extends InvalidParametersError {
+    constructor(options={}){
+        super({
+            title: 'Unique constraint error',
+            detail: 'Input parameters already exist in the database; they must be unique.',
+            ...options
+        }, 409)
+    }
+}
+
+class NullParametersError extends InvalidParametersError {
+    constructor(options={}){
+        super({
+            title: 'Not null constraint error',
+            detail: 'Input parameters are missing and must not be null.',
+            ...options
+        })
+    }
+}
+
+module.exports = {
+    APIError,
+    UsernameOrEmailNotUniqueError,
+    InvalidTokenError,
+    AccountNotFoundError,
+    InvalidUsernameOrPasswordError,
+    InvalidParametersError,
+    ParametersNotUniqueError,
+    NullParametersError,
 }

@@ -1,7 +1,7 @@
 'use strict'
 const bcrypt = require('bcrypt')
 const Filter = require('bad-words')
-const sequelizeErrCatcher = require('../utils/sequelizeErrorCatcher')
+const {SchemaError} = require('../utils/SchemaError')
 
 const filter = new Filter();
 const SALT_ROUNDS = 10
@@ -78,8 +78,9 @@ module.exports = (sequelize, DataTypes) => {
                     return resolve(account)
                 })
                 .catch(err => {
-                    err = sequelizeErrCatcher(err)
-                    return reject(err)
+                    var schemaErr = new SchemaError(err);
+                    if(schemaErr) return reject(schemaErr);
+                    return reject(err);
                 })
         })
     }
@@ -100,8 +101,9 @@ module.exports = (sequelize, DataTypes) => {
                         })
                 })
                 .catch(err => {
-                    err = sequelizeErrCatcher(err)
-                    return reject(err)
+                    var schemaErr = new SchemaError(err);
+                    if(schemaErr) return reject(schemaErr);
+                    return reject(err);
                 })
         })
     }

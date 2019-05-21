@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-const APIError = require('../utils/APIError');
+const {InvalidUsernameOrPasswordError} = require('../utils/APIError');
 
 // defines the strategy that calls the Account model functions
 const authService = require('../services/auth.service')
@@ -13,10 +13,7 @@ module.exports = {
             }
 
             if(!account) {
-                return new APIError(400, {
-                    title: 'Invalid credentials',
-                    detail: 'Username and/or password are incorrect.'
-                }).sendToRes(res)
+                return new InvalidUsernameOrPasswordError().sendToRes(res);
             }
 
             //TODO: check if user verified (2factor with email) to generate token

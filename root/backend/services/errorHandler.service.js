@@ -1,36 +1,29 @@
-const APIError = require('../utils/APIError')
+const { InvalidParametersError,
+        ParametersNotUniqueError,
+        NullParametersError,
+        APIError } = require('../utils/APIError');
+const { VALIDATION_ERROR,
+        UNIQUE_ERROR,
+        NOT_NULL_ERROR } = require('../utils/SchemaError');
 
 // handles sequelize MySQL errors
 function convertSchemaError(err) {
 
-    let details = []
-    let params = []
-    var error = null
+    var invalid_params = []
+    for(var i in err.errors){
+        invalid_params.push({
+            name: err.errors[i].param,
+            reason: err.errors[i].details
+        })
+    }
+
     switch(err.name){
-        case 'ValidationError':
-            for (var i in err.errors){
-                details.push(err.errors[i].details)
-            }
-            return new APIError(400, {
-                title: 'Input validation constraints error',
-                detail: 'The following messages for the violating fields are outputted below:\n' + details.join('\n')
-            })
-        case 'UniqueConstraintError':
-            for (var i in err.errors){
-                params.push(err.errors[i].param)
-            }
-            return new APIError(409, {
-                title: 'Unique constraint error',
-                detail: 'The inputs for the following fields must be unique: ' + params.join(", ")
-            })
-        case 'NotNullConstraintError':
-            for (var i in err.errors){
-                params.push(err.errors[i].param)
-            }
-            return new APIError(400, {
-                title: 'Not null constraint error',
-                detail: 'The inputs for the following fields are required: ' + params.join(", ")
-            })
+        case VALIDATION_ERROR:
+            return new InvalidParametersError({ invalid_params: invalid_params })
+        case UNIQUE_ERROR:
+            return new ParametersNotUniqueError({ invalid_params: invalid_params })
+        case NOT_NULL_ERROR:
+            return new NullParametersError({ invalid_params: invalid_params })
         default:
             return null
     }
@@ -49,7 +42,6 @@ function defaultErrorHandler(err, req, res, next){
     console.error('============== END ERROR STACK TRACE ==============')
 
     new APIError(500, {
-        title: 'Unhandled Internal Server Error',
         detail: 'Server did not handle thrown error: ' + err.name,
     }).sendToRes(res);
 }

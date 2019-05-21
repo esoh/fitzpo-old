@@ -1,7 +1,11 @@
 const {Account} = require('../models');
-const APIError = require('../utils/APIError');
+const { UsernameOrEmailNotUniqueError,
+        InvalidTokenError,
+        AccountNotFoundError,
+        InvalidParametersError } = require('../utils/APIError');
 const authService = require('../services/auth.service');
 const convertSchemaError = require('../services/errorHandler.service').convertSchemaError;
+const {UNIQUE_ERROR} = require('../utils/SchemaError');
 
 // TODO: think about defining some global error codes for validation errors
 
@@ -28,12 +32,13 @@ function registerAccount(req, res, next){
             let schemaErr = convertSchemaError(err);
             if(!schemaErr) return next(err);
 
-            // TODO: replace with error code
-            if(schemaErr.response.title == 'Unique constraint error'){
-                return new APIError(409, {
-                    title: 'Taken username and/or email',
-                    detail: 'Username and/or email are already in use.'
-                }).sendToRes(res);
+            if(schemaErr instanceof InvalidParametersError &&
+               err.errors.some(paramErr =>
+                    (paramErr.param == 'username' || paramErr.param == 'email')
+                    && paramErr.error == UNIQUE_ERROR
+               ))
+            {
+               return new UsernameOrEmailNotUniqueError().sendToRes(res);
             }
 
             return next(err);
@@ -51,19 +56,13 @@ function getAccountFromCookie(req, res, next){
     try {
         payload = authService.decodeToken(token);
     } catch(err) {
-        return new APIError(400, {
-            title: 'Invalid token',
-            detail: 'Could not decode token'
-        }).sendToRes(res);
+        return new InvalidTokenError().sendToRes(res);
     }
 
     Account.findByUsername(payload.username)
         .then(account => {
             if(!account) {
-                return new APIError(404, {
-                    title: 'Invalid account',
-                    detail: 'Could not find account'
-                }).sendToRes(res);
+                return new AccountNotFoundError().sendToRes(res);
             }
 
             return res.status(200).send({ account: account })
