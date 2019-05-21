@@ -3,7 +3,6 @@ const APIError = require('../utils/errorBuilder').APIError;
 const authService = require('../services/auth.service');
 const convertSchemaError = require('../services/errorHandler.service').convertSchemaError;
 
-// TODO: throw same error for if username or email fail unique validation
 // TODO: think about defining some global error codes for validation errors
 
 function listAccounts(req, res, next){
@@ -25,7 +24,20 @@ function registerAccount(req, res, next){
             delete accountJson.password
             res.status(201).json(accountJson)
         })
-        .catch(next)
+        .catch(err => {
+            let schemaErr = convertSchemaError(err);
+            if(!schemaErr) return next(err);
+
+            // TODO: replace with error code
+            if(schemaErr.error.title == 'Unique constraint error'){
+                return res.status(409).send(new APIError({
+                    title: 'Taken username and/or email',
+                    detail: 'Username and/or email are already in use.'
+                }));
+            }
+
+            return next(err);
+        })
 }
 
 function getAccountFromCookie(req, res, next){
