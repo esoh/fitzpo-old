@@ -79,6 +79,10 @@ class APIError {
     sendToRes(res) {
         res.status(this.status).send({ error: this.response })
     }
+
+    setStatus(status) {
+        this.status = status;
+    }
 }
 
 class UsernameOrEmailNotUniqueError extends APIError {
@@ -122,8 +126,8 @@ class InvalidUsernameOrPasswordError extends APIError {
 }
 
 class InvalidParametersError extends APIError {
-    constructor(options={}, status=400){
-        super(status, {
+    constructor(options={}){
+        super(400, {
             title: 'Input validation constraints error',
             detail: 'Input violates certain conditions.',
             ...options
@@ -137,7 +141,8 @@ class ParametersNotUniqueError extends InvalidParametersError {
             title: 'Unique constraint error',
             detail: 'Input parameters already exist in the database; they must be unique.',
             ...options
-        }, 409)
+        })
+        this.status = 409;
     }
 }
 
