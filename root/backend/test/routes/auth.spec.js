@@ -7,7 +7,7 @@ const server = require('../../app')
 const expect = chai.expect
 
 chai.use(chaiHttp)
-// TODO: test for token
+
 describe('Auth API', () => {
 
     describe('/POST auth/token', () => {
@@ -74,7 +74,65 @@ describe('Auth API', () => {
                 })
         })
 
+    })
 
+    describe('/GET accounts/me', () => {
 
+        before(() => {
+            return Account.destroy({ truncate: true })
+        })
+
+        it('successfully return no account without token', (done) => {
+            chai.request(server)
+                .get('/accounts/me')
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.eql({})
+                    done()
+                })
+        })
+
+        it('successfully register, login, and return account with valid token', (done) => {
+            // make a login
+            Account.register('userName', 'test@email.com', 'Password!123')
+                .then(res => {
+                    chai.request(server)
+                        .post('/auth/token')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username:   'username',
+                            password:   'Password!123'
+                        })
+                        .end((err, res) => {
+                            if(err) done(err)
+
+                            chai.request(server)
+                                .get('/accounts/me')
+                                .set('Cookie', res.headers['set-cookie'])
+                                .end((err, res) => {
+                                    if(err) done(err)
+                                    expect(res).to.have.status(200)
+                                    expect(res.body).to.have.property('account')
+                                    expect(res.body.account.username).to.eql('userName')
+                                    done()
+                                })
+                        })
+                }, err => {
+                    done(err)
+                })
+        })
+
+        it('fail to return account with invalid token', (done) => {
+            chai.request(server)
+                .get('/accounts/me')
+                .set('Cookie', 'fitzpo_access_token=invalid;')
+                .end((err, res) => {
+                    if(err) done(err)
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    done()
+                })
+        })
     })
 })
