@@ -17,7 +17,7 @@ class Login extends React.Component {
             username: { value: '' },
             password: { value: '' }
         },
-        msg: '',
+        messages: [],
         redirect: false,
     }
 
@@ -44,10 +44,12 @@ class Login extends React.Component {
     login = () => {
         authenticateUser(this.state.formControls.username.value,
                          this.state.formControls.password.value)
-            .then(data => {
-                console.log(data)
-                if(data.error){
-                    this.setState({ msg: data.error.title })
+            .then(result => {
+                console.log(result)
+                if(result.error){
+                    this.setState({
+                        messages: [result.error.title]
+                    })
                 } else {
                     alert("User authenticated!")
                     this.props.setLoggedIn(true)
@@ -62,6 +64,8 @@ class Login extends React.Component {
 
         if (this.state.redirect) return <Redirect to='/' />;
 
+        var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
+
         return (
             <div className="entry">
                 <form onSubmit={this.handleSubmit}>
@@ -75,7 +79,7 @@ class Login extends React.Component {
                     </label>
                     <input type="submit" value="Login" />
                 </form>
-                <p>{this.state.msg}</p>
+                {messages}
                 <div>
                     <Link to="/">Home</Link>
                     <Link to="/signup">Sign Up</Link>

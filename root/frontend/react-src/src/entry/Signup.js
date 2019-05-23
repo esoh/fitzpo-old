@@ -5,8 +5,6 @@ import { registerAccount } from '../services/authService';
 import './Entry.css';
 
 // TODO: Add verify password field
-// TODO: center fields in middle of page
-// TODO: display error if response fails
 
 class Signup extends React.Component {
 
@@ -16,7 +14,7 @@ class Signup extends React.Component {
             email: { value: '' },
             password: { value: '' }
         },
-        msg: '',
+        messages: [],
         redirect: false,
     }
 
@@ -46,9 +44,20 @@ class Signup extends React.Component {
                         this.state.formControls.password.value)
             .then(result => {
                 if(result.error){
-                    this.setState({ msg: result.error.title })
+                    switch(result.error.code){
+                        case 1004:
+                            this.setState({
+                                messages: result.error.invalid_params.map(param => param.name + ": " + param.reason)
+                            });
+                            break;
+                        default:
+                            this.setState({
+                                messages: [result.error.title]
+                            })
+                    }
                 } else {
                     alert("User registered!")
+                    console.log(result)
                     this.setState({ redirect: true })
                 }
                 // do stuff with the data here, like error checking
@@ -59,6 +68,8 @@ class Signup extends React.Component {
     render() {
 
         if (this.state.redirect) return <Redirect to='/' />;
+
+        var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
         return (
             <div className="entry">
@@ -77,7 +88,7 @@ class Signup extends React.Component {
                     </label>
                     <input type="submit" value="Sign Up" />
                 </form>
-                <p>{this.state.msg}</p>
+                {messages}
                 <div>
                     <Link to="/">Home</Link>
                     <Link to="/login">Log In</Link>
