@@ -7,14 +7,18 @@ import UserHome from './UserHome';
 
 function Home(props) {
     const isLoggedIn = props.isLoggedIn;
-    if(isLoggedIn) {
-        return <UserHome />
+
+    if(isLoggedIn === true) {
+        return <UserHome />;
+    } else if(isLoggedIn === false){
+        return <GuestHome />;
     }
-    return <GuestHome />
+    // login state not yet retrieved from api server
+    return null;
 }
 
 Home.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool,
 }
 
 export default connect(
