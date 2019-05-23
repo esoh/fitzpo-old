@@ -55,6 +55,14 @@ function decodeToken(token){
 function extractTokenFromCookie(req){
     var token = null
     if(req && req.cookies){
+
+        // if expiration date and is past today, return null
+        if(req.cookies['Expires']){
+            var expirationDate = new Date(req.cookies['Expires'])
+            var today = new Date();
+            if(today >= expirationDate) return token;
+        }
+
         token = req.cookies[ACCESS_TOKEN]
     }
     return token

@@ -139,6 +139,42 @@ describe('Auth API', () => {
                 })
         })
 
+        it('successfully register, login, fail to get account with expired cookie', (done) => {
+            // make a login
+            Account.register('userName2', 'test2@email.com', 'Password!123')
+                .then(res => {
+                    chai.request(server)
+                        .post('/auth/token')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username:   'username2',
+                            password:   'Password!123'
+                        })
+                        .end((err, res) => {
+                            if(err) done(err)
+
+                            var cookie = res.headers['set-cookie'][0];
+                            if(cookie.indexOf('; Expires') != -1){
+                                cookie = cookie.slice(0, cookie.indexOf('; Expires'))
+                            }
+                            cookie +=  '; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+
+                            chai.request(server)
+                                .get('/accounts/me')
+                                .set('Cookie', [cookie])
+                                .end((err, res) => {
+                                    if(err) done(err)
+                                    expect(err).to.be.null
+                                    expect(res).to.have.status(200)
+                                    expect(res.body).to.eql({})
+                                    done()
+                                })
+                        })
+                }, err => {
+                    done(err)
+                })
+        })
+
         it('fail to return account with invalid token', (done) => {
             chai.request(server)
                 .get('/accounts/me')
