@@ -1,13 +1,9 @@
 const {Account} = require('../models');
-const { UsernameOrEmailNotUniqueError,
-        InvalidTokenError,
+const { InvalidTokenError,
         AccountNotFoundError,
         InvalidParametersError } = require('../utils/APIError');
 const authService = require('../services/auth.service');
-const convertSchemaError = require('../services/errorHandler.service').convertSchemaError;
-const {UNIQUE_ERROR} = require('../utils/SchemaError');
-
-// TODO: think about defining some global error codes for validation errors
+const SchemaError = require('../utils/SchemaError');
 
 function listAccounts(req, res, next){
     // controller calls the method function
@@ -29,17 +25,8 @@ function registerAccount(req, res, next){
             res.status(201).json(accountJson)
         })
         .catch(err => {
-            let schemaErr = convertSchemaError(err);
-            if(!schemaErr) return next(err);
-
-            if(schemaErr instanceof InvalidParametersError &&
-               err.errors.some(paramErr =>
-                    (paramErr.param == 'username' || paramErr.param == 'email')
-                    && paramErr.error == UNIQUE_ERROR
-               ))
-            {
-               return new UsernameOrEmailNotUniqueError().sendToRes(res);
-            }
+            // hides if email is taken or not
+            if(err instanceof SchemaError) err.combineUsernameEmailNotUnique();
 
             return next(err);
         })

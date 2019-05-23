@@ -85,17 +85,6 @@ class APIError {
     }
 }
 
-class UsernameOrEmailNotUniqueError extends APIError {
-    constructor(options={}){
-        super(409, {
-            title: 'Username and/or email taken',
-            detail: 'Username and/or email already in use.',
-            code: 1000,
-            ...options
-        })
-    }
-}
-
 class InvalidTokenError extends APIError {
     constructor(options={}){
         super(400, {
@@ -140,36 +129,10 @@ class InvalidParametersError extends APIError {
     }
 }
 
-class ParametersNotUniqueError extends InvalidParametersError {
-    constructor(options={}){
-        super({
-            title: 'Unique constraint error',
-            detail: 'Input parameters already exist in the database; they must be unique.',
-            code: 1005,
-            ...options
-        })
-        this.status = 409;
-    }
-}
-
-class NullParametersError extends InvalidParametersError {
-    constructor(options={}){
-        super({
-            title: 'Not null constraint error',
-            detail: 'Input parameters are missing and must not be null.',
-            code: 1006,
-            ...options
-        })
-    }
-}
-
 module.exports = {
     APIError,
-    UsernameOrEmailNotUniqueError,
     InvalidTokenError,
     AccountNotFoundError,
     InvalidUsernameOrPasswordError,
     InvalidParametersError,
-    ParametersNotUniqueError,
-    NullParametersError,
 }

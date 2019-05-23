@@ -1,7 +1,7 @@
 'use strict'
 const bcrypt = require('bcrypt')
 const Filter = require('bad-words')
-const {SchemaError} = require('../utils/SchemaError')
+const SchemaError = require('../utils/SchemaError')
 
 const filter = new Filter();
 const SALT_ROUNDS = 10

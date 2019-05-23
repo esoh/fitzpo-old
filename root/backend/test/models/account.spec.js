@@ -32,6 +32,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'username', error: 'CustomValidatorError'});
                 })
         })
 
@@ -41,6 +43,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'username', error: 'CustomValidatorError'});
                 })
         })
 
@@ -50,6 +54,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'email', error: 'EmailValidatorError'});
                 })
         })
 
@@ -59,6 +65,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'email', error: 'EmailValidatorError'});
                 })
         })
 
@@ -68,6 +76,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'password', error: 'CustomValidatorError'});
                 })
         })
 
@@ -77,6 +87,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'password', error: 'CustomValidatorError'});
                 })
         })
 
@@ -86,6 +98,8 @@ describe('models/account', () => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'password', error: 'CustomValidatorError'});
                 })
         })
 
@@ -100,7 +114,9 @@ describe('models/account', () => {
                 .then(account => {
                     throw new Error('Create was not supposed to succeed')
                 }, err => {
-                    expect(err.name).to.equal('UniqueConstraintError')
+                    expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'username', error: 'UniqueValidatorError'});
                 })
         })
 
@@ -115,7 +131,9 @@ describe('models/account', () => {
                 .then(account => {
                     throw new Error('Create was not supposed to succeed')
                 }, err => {
-                    expect(err.name).to.equal('UniqueConstraintError')
+                    expect(err.name).to.equal('ValidationError')
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'email', error: 'UniqueValidatorError'});
                 })
         })
 

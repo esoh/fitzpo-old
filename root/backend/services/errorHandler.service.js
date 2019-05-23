@@ -1,36 +1,24 @@
 const { InvalidParametersError,
-        ParametersNotUniqueError,
-        NullParametersError,
         APIError } = require('../utils/APIError');
-const { VALIDATION_ERROR,
-        UNIQUE_ERROR,
-        NOT_NULL_ERROR } = require('../utils/SchemaError');
+const SchemaError = require('../utils/SchemaError');
 
 // handles sequelize MySQL errors
-function convertSchemaError(err) {
+function convertSchemaErrorToAPIError(err) {
+    if(!(err instanceof SchemaError)) return null;
 
-    var invalid_params = []
-    for(var i in err.errors){
-        invalid_params.push({
-            name: err.errors[i].param,
-            reason: err.errors[i].details
-        })
-    }
+    var invalid_params = err.errors.map(subErr => {
+        return {
+            name: subErr.param,
+            reason: subErr.details,
+            error: subErr.error,
+        }
+    })
 
-    switch(err.name){
-        case VALIDATION_ERROR:
-            return new InvalidParametersError({ invalid_params: invalid_params })
-        case UNIQUE_ERROR:
-            return new ParametersNotUniqueError({ invalid_params: invalid_params })
-        case NOT_NULL_ERROR:
-            return new NullParametersError({ invalid_params: invalid_params })
-        default:
-            return null
-    }
+    return new InvalidParametersError({ invalid_params: invalid_params })
 }
 
 function schemaErrorHandler(err, req, res, next){
-    let schemaErr = convertSchemaError(err);
+    let schemaErr = new convertSchemaErrorToAPIError(err);
     if(!schemaErr) return next(err);
 
     return schemaErr.sendToRes(res);
@@ -47,7 +35,7 @@ function defaultErrorHandler(err, req, res, next){
 }
 
 module.exports = {
-    convertSchemaError,
+    convertSchemaErrorToAPIError,
     schemaErrorHandler,
     defaultErrorHandler,
 }

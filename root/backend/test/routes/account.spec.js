@@ -58,8 +58,14 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Not null constraint error')
-                        expect(res.body.error.code).to.eql(1006)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = [{name: 'username', error: 'NotNullValidatorError'},
+                                             {name: 'email', error: 'NotNullValidatorError'},
+                                             {name: 'password', error: 'NotNullValidatorError'}]
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.have.deep.members(targetMembers);
                         done()
                     })
             })
@@ -75,8 +81,12 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Not null constraint error')
-                        expect(res.body.error.code).to.eql(1006)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = {name: 'username', error: 'NotNullValidatorError'}
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.deep.include(targetMembers);
                         done()
                     })
             })
@@ -92,8 +102,12 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Not null constraint error')
-                        expect(res.body.error.code).to.eql(1006)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = {name: 'email', error: 'NotNullValidatorError'}
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.deep.include(targetMembers);
                         done()
                     })
             })
@@ -109,8 +123,12 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Not null constraint error')
-                        expect(res.body.error.code).to.eql(1006)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = {name: 'password', error: 'NotNullValidatorError'}
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.deep.include(targetMembers);
                         done()
                     })
             })
@@ -187,10 +205,14 @@ describe('Accounts API', () => {
                         password:   'Password!123'
                     })
                     .end((err, res) => {
-                        expect(res).to.have.status(409)
+                        expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Username and/or email taken')
-                        expect(res.body.error.code).to.eql(1000)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = {name: 'usernameOrEmail', error: 'UniqueValidatorError'}
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.deep.include(targetMembers);
                         done()
                     })
             })
@@ -205,10 +227,14 @@ describe('Accounts API', () => {
                         password:   'Password!123'
                     })
                     .end((err, res) => {
-                        expect(res).to.have.status(409)
+                        expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
-                        expect(res.body.error.title).to.eql('Username and/or email taken')
-                        expect(res.body.error.code).to.eql(1000)
+                        expect(res.body.error.title).to.eql('Input validation constraints error')
+                        expect(res.body.error.code).to.eql(1004)
+
+                        var targetMembers = {name: 'usernameOrEmail', error: 'UniqueValidatorError'}
+                        var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
+                        expect(sourceMembers).to.deep.include(targetMembers);
                         done()
                     })
             })

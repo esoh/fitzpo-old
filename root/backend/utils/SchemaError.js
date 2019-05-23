@@ -1,48 +1,68 @@
 const Sequelize = require('sequelize')
 
-const VALIDATION_ERROR = 'ValidationError';
-const UNIQUE_ERROR = 'UniqueConstraintError';
-const NOT_NULL_ERROR = 'NotNullConstraintError';
+const UNIQUE_VALIDATOR_ERROR = 'UniqueValidatorError';
 
-const sequelizeErrorTypes = {
-    'Validation error': VALIDATION_ERROR,
-    'unique violation': UNIQUE_ERROR,
-    'notNull Violation': NOT_NULL_ERROR,
+const validatorTypes = {
+    'is': {
+        error: 'CustomValidatorError',
+        message: 'Value does not follow custom constraints'
+    },
+    'isEmail': {
+        error: 'EmailValidatorError',
+        message: 'Value is not an email'
+    },
+    'not_unique': {
+        error: UNIQUE_VALIDATOR_ERROR,
+        message: 'Value must be unique'
+    },
+    'is_null': {
+        error: 'NotNullValidatorError',
+        message: 'Value must not be null'
+    },
+    'isNotProfane': {
+        error: 'ProfanityValidatorError',
+        message: 'Profanity is not allowed'
+    }
 }
 
 class SchemaParamError {
     constructor(error){
-        this.error = sequelizeErrorTypes[error.type];
+        if(!error.validatorKey) throw Error('Not a schema validator error with a validatorkey:' + error)
+        const validatorError = validatorTypes[error.validatorKey];
+        if(!validatorError) throw Error('Sequelize error not found?? ' + error.validatorKey)
+
         this.param = error.path;
-        this.details = error.message;
-        if(!this.error){
-            console.error("SEQUELIZE ERROR NOT FOUND: " + err.type)
-            return null;
-        }
+        this.error = validatorError.error;
+        this.details = validatorError.message;
     }
 }
 
 class SchemaError {
     constructor(err) {
         if(!(err instanceof Sequelize.ValidationError)) return null;
+        this.name = 'ValidationError'
+        this.errors = err.errors.map(subErr => new SchemaParamError(subErr));
+    }
 
-        this.errors = [];
-        this.name = sequelizeErrorTypes[err.errors[0].type];
+    combineUsernameEmailNotUnique() {
+        // see if username not unique or email not unique is an error
+        var usernameOrEmailUniqueError = this.errors.some(paramErr => {
+            return (paramErr.param == 'username' ||
+                    paramErr.param == 'email') &&
+                   paramErr.error == UNIQUE_VALIDATOR_ERROR;
+        })
+        if(!usernameOrEmailUniqueError) return;
 
-        for (var i in err.errors){
-            let schemaParamError = new SchemaParamError(err.errors[i]);
-            this.errors.push(schemaParamError)
-            if(this.name != sequelizeErrorTypes[err.errors[i].type]){
-                this.name = VALIDATION_ERROR
-            }
-        }
-
+        this.errors = this.errors.filter(paramErr => {
+            return !((paramErr.param == 'username' ||
+                      paramErr.param == 'email') &&
+                     paramErr.error == UNIQUE_VALIDATOR_ERROR);
+        })
+        this.errors.push(new SchemaParamError({
+            validatorKey: 'not_unique',
+            path: 'usernameOrEmail'
+        }))
     }
 }
 
-module.exports = {
-    SchemaError,
-    VALIDATION_ERROR,
-    UNIQUE_ERROR,
-    NOT_NULL_ERROR,
-}
+module.exports = SchemaError;
