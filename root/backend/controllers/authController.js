@@ -17,9 +17,8 @@ function authenticateAccount(req, res, next){
 
         //TODO: check if user verified (2factor with email) to generate token
         let token = authService.generateToken(account)
-        // cookie name: fitzpo_access_token
         // TODO: set expiry date for token and figure out secure https transfer
-        res.cookie('fitzpo_access_token', token, { httpOnly: true })
+        res.cookie(authService.ACCESS_TOKEN, token, { httpOnly: true })
         account = account.toJSON()
         delete account.password
         return res.status(201).send(account)
@@ -27,7 +26,7 @@ function authenticateAccount(req, res, next){
 }
 
 function deauthenticateAccountLocally(req, res){
-    res.clearCookie('fitzpo_access_token');
+    res.clearCookie(authService.ACCESS_TOKEN);
     return res.sendStatus(200)
 }
 

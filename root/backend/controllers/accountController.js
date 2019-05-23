@@ -42,6 +42,7 @@ function getAccountFromCookie(req, res, next){
     try {
         payload = authService.decodeToken(token);
     } catch(err) {
+        res.clearCookie(authService.ACCESS_TOKEN);
         return new InvalidTokenError().sendToRes(res);
     }
 

@@ -147,6 +147,8 @@ describe('Auth API', () => {
                     if(err) done(err)
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')
+                    expect(res).to.have.header('Set-Cookie');
+                    expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
                     expect(res.body.error.code).to.eql(1001)
                     done()
                 })

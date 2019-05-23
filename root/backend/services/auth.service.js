@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken')
 
 const env = process.env.NODE_ENV || 'development'
 const config = require('../config/config.js')[env]
-
 const {Account} = require('../models')
+
+const ACCESS_TOKEN = 'fitzpo_access_token';
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
@@ -54,7 +55,7 @@ function decodeToken(token){
 function extractTokenFromCookie(req){
     var token = null
     if(req && req.cookies){
-        token = req.cookies['fitzpo_access_token']
+        token = req.cookies[ACCESS_TOKEN]
     }
     return token
 }
@@ -63,4 +64,5 @@ module.exports = {
     generateToken,
     decodeToken,
     extractTokenFromCookie,
+    ACCESS_TOKEN,
 }
