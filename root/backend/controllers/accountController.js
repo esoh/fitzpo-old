@@ -1,7 +1,6 @@
 const {Account} = require('../models');
 const { InvalidTokenError,
-        AccountNotFoundError,
-        InvalidParametersError } = require('../utils/APIError');
+        AccountNotFoundError } = require('../utils/APIError');
 const authService = require('../services/auth.service');
 const SchemaError = require('../utils/SchemaError');
 

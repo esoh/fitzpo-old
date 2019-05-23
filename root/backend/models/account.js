@@ -108,7 +108,6 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
-    // TODO: is this function really necessary?
     Account.findByUsername = function(username) {
         return Account.findOne({ where: {username: username} })
     }

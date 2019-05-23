@@ -1,7 +1,8 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
+
+const {InvalidParametersError} = require('../utils/APIError');
 
 const UNIQUE_VALIDATOR_ERROR = 'UniqueValidatorError';
-
 const validatorTypes = {
     'is': {
         error: 'CustomValidatorError',
@@ -62,6 +63,18 @@ class SchemaError {
             validatorKey: 'not_unique',
             path: 'usernameOrEmail'
         }))
+    }
+
+    toAPIError() {
+        var invalid_params = this.errors.map(subErr => {
+            return {
+                name: subErr.param,
+                reason: subErr.details,
+                error: subErr.error,
+            }
+        })
+
+        return new InvalidParametersError({ invalid_params })
     }
 }
 
