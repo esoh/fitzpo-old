@@ -78,6 +78,20 @@ describe('Auth API', () => {
 
     })
 
+    describe('/DELETE auth/token', () => {
+
+        it('should return empty set-cookie', async () => {
+            chai.request(server)
+                .delete('/auth/token')
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.header('Set-Cookie');
+                    expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
+                    expect(res).to.have.status(200)
+                })
+        })
+    })
+
     describe('/GET accounts/me', () => {
 
         before(() => {

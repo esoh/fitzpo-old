@@ -7,9 +7,6 @@ import './Entry.css';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 
-// TODO: center fields in middle of page
-// TODO: display error if response fails
-
 class Login extends React.Component {
 
     state = {

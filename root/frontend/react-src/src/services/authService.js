@@ -47,8 +47,13 @@ function checkLoggedIn(){
     })
 }
 
+function deauthenticateAccountLocally(){
+    return fetch('/auth/token', { method: "DELETE" });
+}
+
 module.exports = {
     registerAccount,
     authenticateUser,
     checkLoggedIn,
+    deauthenticateAccountLocally,
 }
