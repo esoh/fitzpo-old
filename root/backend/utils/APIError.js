@@ -90,6 +90,7 @@ class UsernameOrEmailNotUniqueError extends APIError {
         super(409, {
             title: 'Username and/or email taken',
             detail: 'Username and/or email already in use.',
+            code: 1000,
             ...options
         })
     }
@@ -100,6 +101,7 @@ class InvalidTokenError extends APIError {
         super(400, {
             title: 'Invalid token',
             detail: 'Could not decode token',
+            code: 1001,
             ...options
         })
     }
@@ -110,6 +112,7 @@ class AccountNotFoundError extends APIError {
         super(404, {
             title: 'Invalid account',
             detail: 'Could not find account',
+            code: 1002,
             ...options
         })
     }
@@ -120,6 +123,7 @@ class InvalidUsernameOrPasswordError extends APIError {
         super(400, {
             title: 'Invalid credentials',
             detail: 'Username and/or password are incorrect.',
+            code: 1003,
             ...options
         })
     }
@@ -130,6 +134,7 @@ class InvalidParametersError extends APIError {
         super(400, {
             title: 'Input validation constraints error',
             detail: 'Input violates certain conditions.',
+            code: 1004,
             ...options
         })
     }
@@ -140,6 +145,7 @@ class ParametersNotUniqueError extends InvalidParametersError {
         super({
             title: 'Unique constraint error',
             detail: 'Input parameters already exist in the database; they must be unique.',
+            code: 1005,
             ...options
         })
         this.status = 409;
@@ -151,6 +157,7 @@ class NullParametersError extends InvalidParametersError {
         super({
             title: 'Not null constraint error',
             detail: 'Input parameters are missing and must not be null.',
+            code: 1006,
             ...options
         })
     }

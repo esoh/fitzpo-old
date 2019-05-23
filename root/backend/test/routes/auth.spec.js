@@ -52,6 +52,7 @@ describe('Auth API', () => {
                     expect(err).to.be.null
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
                     expect(res).to.not.have.header('Set-Cookie');
                     done()
                 })
@@ -69,6 +70,7 @@ describe('Auth API', () => {
                     expect(err).to.be.null
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
                     expect(res).to.not.have.header('Set-Cookie');
                     done()
                 })
@@ -131,6 +133,7 @@ describe('Auth API', () => {
                     if(err) done(err)
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1001)
                     done()
                 })
         })
