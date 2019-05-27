@@ -8,6 +8,8 @@ import './Entry.css';
 
 class Signup extends React.Component {
 
+    abortController = new window.AbortController();
+
     state = {
         formControls: {
             username: { value: '' },
@@ -16,6 +18,10 @@ class Signup extends React.Component {
         },
         messages: [],
         redirect: false,
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     handleChange = (event) => {
@@ -62,7 +68,10 @@ class Signup extends React.Component {
                 }
                 // do stuff with the data here, like error checking
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                console.error(err)
+            })
     }
 
     render() {

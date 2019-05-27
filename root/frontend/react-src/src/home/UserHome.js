@@ -7,7 +7,14 @@ import { deauthenticateAccountLocally } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 
 class UserHome extends React.Component {
+
+    abortController = new window.AbortController();
+
     state = { redirect: false, }
+
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
 
     handleLogout = (event) => {
         deauthenticateAccountLocally()
@@ -15,7 +22,10 @@ class UserHome extends React.Component {
                 this.setState({ redirect: true })
                 this.props.setLoggedIn(false)
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                console.error(err)
+            })
     }
 
     render() {

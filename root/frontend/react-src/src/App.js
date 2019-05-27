@@ -11,6 +11,9 @@ import { setLoggedIn } from './redux/actions';
 import { checkLoggedIn } from './services/authService';
 
 class App extends React.Component {
+
+    abortController = new window.AbortController();
+
     componentDidMount() {
         checkLoggedIn()
             .then(response => {
@@ -32,9 +35,14 @@ class App extends React.Component {
                 return this.props.setLoggedIn(true);
             })
             .catch(err => {
+                if (err.name === 'AbortError') return;
                 console.error(err)
                 return this.props.setLoggedIn(false);
             })
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     render() {
