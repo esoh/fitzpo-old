@@ -1,5 +1,8 @@
-# Fitzpo
+# fitzpo
 This repo contains the web app powering Fitzpo.
+
+[![Build Status](https://travis-ci.org/esoh/fitzpo.svg?branch=master)](https://travis-ci.org/esoh/fitzpo)
+
 
 ## Getting started
 
