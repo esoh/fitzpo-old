@@ -10,7 +10,7 @@ import Home from './home/Home';
 import { setLoggedIn } from './redux/actions';
 import { checkLoggedIn } from './services/authService';
 
-class App extends React.Component {
+export class App extends React.Component {
 
     abortController = new window.AbortController();
 
