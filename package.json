@@ -4,7 +4,7 @@
   "description": "This repo contains the web app powering GymMate.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "(cd ./root/frontend/react-src && npm test); (cd ./root/backend && npm test);",
     "dev": "concurrently --kill-others \"npm start --prefix root/frontend/react-src\" \"nodemon root/backend\"",
     "postinstall": "(cd ./root/frontend/react-src && npm i); (cd ./root/backend && npm i);"
   },
