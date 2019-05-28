@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -48,9 +48,11 @@ export class App extends React.Component {
     render() {
         return (
             <Router>
-                <Route path='/' exact component={Home} />
-                <Route path='/signup' component={Signup} />
-                <Route path='/login' component={Login} />
+                <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route path='/signup' component={Signup} />
+                    <Route path='/login' component={Login} />
+                </Switch>
             </Router>
         );
     }
