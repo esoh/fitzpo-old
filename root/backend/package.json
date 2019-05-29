@@ -1,7 +1,7 @@
 {
-  "name": "gymmate",
+  "name": "fitzpo",
   "version": "1.0.0",
-  "description": "gymmate app",
+  "description": "fitzpo app",
   "main": "app.js",
   "scripts": {
     "test": "NODE_ENV=test mocha --recursive",
