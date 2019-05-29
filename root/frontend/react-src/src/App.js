@@ -8,7 +8,7 @@ import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
 import { setLoggedIn } from './redux/actions';
-import { checkLoggedIn } from './services/authService';
+import { checkLoggedIn, deauthenticateAccountLocally } from './services/authService';
 
 export class App extends React.Component {
 
@@ -22,8 +22,19 @@ export class App extends React.Component {
                 }
 
                 if(response.error){
-                    // TODO: clear cookie and user info
+                    // TODO: redirect user to You have been logged out page
                     console.error(response)
+
+                    // ask server to send token clear to client
+                    deauthenticateAccountLocally()
+                        .then(deauthRes => {
+                            if(deauthRes) console.error("deauth response is supposed to be empty??");
+                        })
+                        .catch(err => {
+                            if(err.name === 'AbortError') return;
+                            console.error(err);
+                        })
+
                     return this.props.setLoggedIn(false);
                 }
 

@@ -9,7 +9,10 @@ import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
 
-import { checkLoggedIn } from './services/authService';
+import {
+    checkLoggedIn,
+    deauthenticateAccountLocally,
+} from './services/authService';
 
 const setLoggedIn = jest.fn();
 
@@ -31,6 +34,7 @@ describe('App component', () => {
     afterEach(() => {
         checkLoggedIn.mockClear();
         setLoggedIn.mockClear();
+        deauthenticateAccountLocally.mockClear();
     })
 
     it('Should render router successfully', () => {
@@ -64,6 +68,7 @@ describe('App component', () => {
         }).then(() => {
             expect(setLoggedIn.mock.calls.length).toBe(1);
             expect(setLoggedIn.mock.calls[0][0]).toBe(true);
+            expect(deauthenticateAccountLocally.mock.calls.length).toBe(0);
         })
     })
 
@@ -81,6 +86,29 @@ describe('App component', () => {
         }).then(() => {
             expect(setLoggedIn.mock.calls.length).toBe(1);
             expect(setLoggedIn.mock.calls[0][0]).toBe(false);
+            expect(deauthenticateAccountLocally.mock.calls.length).toBe(0);
         })
     })
+
+    it('Should call mocked checkLoggedIn which returns an error to call setLoggedIn with param false and call the deactivateAccountLocally method', () => {
+        const promise = Promise.resolve({ error: { name: 'TestError' } });
+        checkLoggedIn.mockReturnValue(promise);
+        const deauthPromise = Promise.resolve(null);
+        deauthenticateAccountLocally.mockReturnValue(deauthPromise);
+
+        expect(checkLoggedIn.mock.calls.length).toBe(0);
+        expect(setLoggedIn.mock.calls.length).toBe(0);
+        expect(deauthenticateAccountLocally.mock.calls.length).toBe(0);
+        const { wrapper } = setup();
+        expect(checkLoggedIn.mock.calls.length).toBe(1);
+
+        return deauthPromise.then(() => {
+            wrapper.update();
+        }).then(() => {
+            expect(setLoggedIn.mock.calls.length).toBe(1);
+            expect(setLoggedIn.mock.calls[0][0]).toBe(false);
+            expect(deauthenticateAccountLocally.mock.calls.length).toBe(1);
+        })
+    })
+
 })
