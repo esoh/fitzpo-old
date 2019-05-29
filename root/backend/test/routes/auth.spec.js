@@ -78,11 +78,11 @@ describe('Auth API', () => {
 
     })
 
-    describe('/DELETE auth/token', () => {
+    describe('/DELETE auth/cookie', () => {
 
         it('should return empty set-cookie', async () => {
             chai.request(server)
-                .delete('/auth/token')
+                .delete('/auth/cookie')
                 .end((err, res) => {
                     expect(err).to.be.null
                     expect(res).to.have.header('Set-Cookie');

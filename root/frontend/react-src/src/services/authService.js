@@ -48,7 +48,7 @@ function checkLoggedIn(){
 }
 
 function deauthenticateAccountLocally(){
-    return fetch('/auth/token', { method: "DELETE" });
+    return fetch('/auth/cookie', { method: "DELETE" });
 }
 
 module.exports = {
