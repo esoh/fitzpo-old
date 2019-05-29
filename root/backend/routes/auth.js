@@ -4,6 +4,7 @@ const authController = require('../controllers/authController')
 
 router.route('/token')
     .post(authController.authenticateAccount)
-    .delete(authController.deauthenticateAccountLocally)
+
+router.delete('/cookie', authController.deauthenticateAccountLocally)
 
 module.exports = router
