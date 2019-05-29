@@ -1,7 +1,7 @@
 {
-  "name": "gymmate",
+  "name": "fitzpo",
   "version": "1.0.0",
-  "description": "This repo contains the web app powering GymMate.",
+  "description": "This repo contains the web app powering fitzpo.",
   "main": "index.js",
   "scripts": {
     "test": "(cd ./root/frontend/react-src && npm test); (cd ./root/backend && npm test);",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/esoh/gymmate.git"
+    "url": "git+https://github.com/esoh/fitzpo.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/esoh/gymmate/issues"
+    "url": "https://github.com/esoh/fitzpo/issues"
   },
-  "homepage": "https://github.com/esoh/gymmate#readme",
+  "homepage": "https://github.com/esoh/fitzpo#readme",
   "devDependencies": {
     "concurrently": "^4.1.0"
   },
