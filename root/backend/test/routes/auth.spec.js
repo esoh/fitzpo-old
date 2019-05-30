@@ -94,7 +94,7 @@ describe('Auth API', () => {
 
     describe('/GET accounts/me', () => {
 
-        before(() => {
+        beforeEach(() => {
             return Account.destroy({ truncate: true })
         })
 
@@ -189,5 +189,42 @@ describe('Auth API', () => {
                     done()
                 })
         })
+
+        it('successfully register, login, delete account, and fail to return account with valid token', (done) => {
+            // make a login
+            Account.register('userName', 'test@email.com', 'Password!123')
+                .then(res => {
+                    chai.request(server)
+                        .post('/auth/token')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username:   'username',
+                            password:   'Password!123'
+                        })
+                        .end((err, res) => {
+                            if(err) done(err)
+
+                            Account.destroy({ truncate: true })
+                                .then(() => {
+                                    chai.request(server)
+                                        .get('/accounts/me')
+                                        .set('Cookie', res.headers['set-cookie'])
+                                        .end((err, res) => {
+                                            if(err) done(err)
+
+                                            expect(res).to.have.status(400)
+                                            expect(res.body).to.have.property('error')
+                                            expect(res).to.have.header('Set-Cookie');
+                                            expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
+                                            expect(res.body.error.code).to.eql(1001)
+                                            done()
+                                        })
+                                })
+                        })
+                }, err => {
+                    done(err)
+                })
+        })
+
     })
 })

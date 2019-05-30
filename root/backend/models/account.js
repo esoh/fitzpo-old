@@ -101,8 +101,6 @@ module.exports = (sequelize, DataTypes) => {
                         })
                 })
                 .catch(err => {
-                    var schemaErr = new SchemaError(err);
-                    if(schemaErr) return reject(schemaErr);
                     return reject(err);
                 })
         })

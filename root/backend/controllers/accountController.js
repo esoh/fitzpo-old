@@ -49,7 +49,8 @@ function getAccountFromCookie(req, res, next){
     Account.findByUsername(payload.username)
         .then(account => {
             if(!account) {
-                return new AccountNotFoundError().sendToRes(res);
+                res.clearCookie(authService.ACCESS_TOKEN);
+                return new InvalidTokenError().sendToRes(res);
             }
 
             return res.status(200).send({ account: account })
