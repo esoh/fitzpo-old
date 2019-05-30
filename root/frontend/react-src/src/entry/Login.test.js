@@ -99,7 +99,7 @@ describe('Login component', () => {
     });
 
     it('if authenticateUser returns a valid account, call redirect', () => {
-        const promise = Promise.resolve({ username: 'username' });
+        const promise = Promise.resolve({ account: { username: 'username' } });
         authenticateUser.mockReturnValue(promise);
 
         const { wrapper } = setup();

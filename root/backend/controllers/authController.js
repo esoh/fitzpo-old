@@ -21,7 +21,7 @@ function authenticateAccount(req, res, next){
         res.cookie(authService.ACCESS_TOKEN, token, { httpOnly: true })
         account = account.toJSON()
         delete account.password
-        return res.status(201).send(account)
+        return res.status(201).send({ account })
     })(req, res)
 }
 
