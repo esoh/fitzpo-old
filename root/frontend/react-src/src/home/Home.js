@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import GuestHome from './GuestHome';
 import UserHome from './UserHome';
 
-function Home(props) {
+export function Home(props) {
     const isLoggedIn = props.isLoggedIn;
 
     if(isLoggedIn === true) {
