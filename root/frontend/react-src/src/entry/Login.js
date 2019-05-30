@@ -7,7 +7,7 @@ import './Entry.css';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 
-class Login extends React.Component {
+export class Login extends React.Component {
 
     abortController = new window.AbortController();
 
