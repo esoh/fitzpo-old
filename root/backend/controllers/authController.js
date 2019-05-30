@@ -6,7 +6,7 @@ const {InvalidUsernameOrPasswordError} = require('../utils/APIError');
 const authService = require('../services/auth.service')
 
 function authenticateAccount(req, res, next){
-    passport.authenticate('local', (account, error, info) => {
+    passport.authenticate('local', (error, account, info) => {
         if(error) {
             return next(error)
         }

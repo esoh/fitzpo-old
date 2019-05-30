@@ -16,7 +16,7 @@ passport.use(new LocalStrategy(
                 if(!account) {
                     return done(null, false)
                 }
-                return done(account)
+                return done(null, account)
             })
             .catch(err => { return done(err) })
     }
