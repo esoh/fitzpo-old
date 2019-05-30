@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 import { deauthenticateAccountLocally } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 
-class UserHome extends React.Component {
+export class UserHome extends React.Component {
 
     abortController = new window.AbortController();
 
