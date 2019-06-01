@@ -10,9 +10,9 @@ describe('models/account', () => {
 
     describe('#create()', () => {
 
-        beforeEach(() => {
+        beforeEach(async () => {
             this.Account = require('../../models').Account
-            return this.Account.destroy({ truncate: true })
+            await this.Account.destroy({ truncate: {cascade: true}})
         })
 
         it('successfully creates an account', () => {
@@ -27,13 +27,13 @@ describe('models/account', () => {
         })
 
         it('fails to create an account with a profane username', () => {
-            return this.Account.register('fuck9!', 'test@email.com', 'Password!123')
+            return this.Account.register('fuck', 'test@email.com', 'Password!123')
                 .then(account => {
                     throw new Error('was not supposed to succeed')
                 }, err => {
                     expect(err.name).to.equal('ValidationError')
                     var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
-                    expect(errors).to.deep.include({param: 'username', error: 'CustomValidatorError'});
+                    expect(errors).to.deep.include({param: 'username', error: 'ProfanityValidatorError'});
                 })
         })
 
@@ -142,7 +142,7 @@ describe('models/account', () => {
     describe('#findByUsername()', () => {
 
         before(() => {
-            return this.Account.destroy({ truncate: true })
+            return this.Account.destroy({ truncate: {cascade: true}})
         })
 
         it('succeeds in finding a user by username', async () => {
@@ -174,7 +174,7 @@ describe('models/account', () => {
     describe('#prototype.comparePassword()', () => {
 
         beforeEach(() => {
-            return this.Account.destroy({ truncate: true })
+            return this.Account.destroy({ truncate: {cascade: true}})
         })
 
         it('succeeds with the right password', async () => {
@@ -213,7 +213,7 @@ describe('models/account', () => {
     describe('#authenticate()', () => {
 
         beforeEach(() => {
-            return this.Account.destroy({ truncate: true })
+            return this.Account.destroy({ truncate: {cascade: true}})
         })
 
         it('succeeds with the right password', async () => {
