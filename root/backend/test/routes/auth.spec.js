@@ -13,7 +13,7 @@ describe('Auth API', () => {
     describe('/POST auth/token', () => {
 
         before(() => {
-            return Account.destroy({ truncate: true })
+            return Account.destroy({ truncate: { cascade: true } })
         })
 
         it('successfully validate existing account', async () => {
@@ -95,7 +95,7 @@ describe('Auth API', () => {
     describe('/GET accounts/me', () => {
 
         before(() => {
-            return Account.destroy({ truncate: true })
+            return Account.destroy({ truncate: { cascade: true } })
         })
 
         it('successfully return no account without token', (done) => {

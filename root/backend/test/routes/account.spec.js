@@ -26,7 +26,7 @@ describe('Accounts API', () => {
         describe('Singular request tests', () => {
 
             beforeEach(() => {
-                return Account.destroy({ truncate: true })
+                return Account.destroy({ truncate: {cascade: true}})
             })
 
             it('successfully POST valid account', (done) => {
@@ -173,7 +173,7 @@ describe('Accounts API', () => {
         describe('Tests with persistent database', () => {
 
             before(() => {
-                return Account.destroy({ truncate: true })
+                return Account.destroy({ truncate: {cascade: true}})
             })
 
             it('successfully POST valid account', (done) => {
