@@ -25,8 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     User.associate = function(models) {
-        // creates foreign key to Account if it has one (can be null)
-        User.belongsTo(models.Account);
     };
 
     User.addUser = function(username) {

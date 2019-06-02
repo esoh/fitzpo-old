@@ -10,6 +10,10 @@ chai.use(chaiHttp)
 
 describe('Auth API', () => {
 
+    before(() => {
+        return require('../../models').sequelize.sync({force: true})
+    })
+
     describe('/POST auth/token', () => {
 
         before(() => {

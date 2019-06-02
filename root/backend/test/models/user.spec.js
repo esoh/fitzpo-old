@@ -4,48 +4,41 @@ const app = require('../../models');
 
 describe('models/user', () => {
     before(() => {
-        return app.sequelize.sync();
+        return app.sequelize.sync({force: true})
     })
 
     describe('#addUser()', () => {
 
-        beforeEach(async () => {
+        beforeEach(() => {
             this.User = require('../../models').User;
-            await this.User.destroy({ truncate: {cascade: true}})
+            return this.User.destroy({ truncate: {cascade: true}})
         })
 
-        it('successfully creates a user', (done) => {
-            this.User.addUser('tusername')
+        it('successfully creates a user', () => {
+            return this.User.addUser('tusername')
                 .then(() => {
-
-                    this.User.findOne({ where: { username: 'tusername' } })
-                        .then(user => {
-                            expect(user.username).to.be.ok;
-                            expect(user.username).to.equal('tusername');
-                            done();
-                        })
-                        .catch(err => {
-                            throw err;
-                            done(err);
-                        });
+                    return this.User.findOne({ where: { username: 'tusername' } })
                 })
-                .catch(err => {
-                    throw err;
-                    done(err);
+                .then(user => {
+                    expect(user.username).to.be.ok;
+                    expect(user.username).to.equal('tusername');
                 });
         });
 
         it('fails to create a user with a duplicate username', () => {
             return this.User.addUser('tusername')
                 .then(() => {
-                    this.User.addUser('tusername')
-                        .then(() => {
-                            throw new Error("wasn't supposed to succeed")
-                        }, err => {
-                            expect(err.name).to.equal('ValidationError');
-                            var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
-                            expect(errors).to.deep.include({param: 'username', error: 'UniqueValidatorError'});
-                        })
+                    return this.User.addUser('tusername')
+                })
+                .then(() => {
+                        throw new Error("wasn't supposed to succeed")
+                }, err => {
+                    expect(err.name).to.equal('ValidationError');
+                    var errors = err.errors.map(subErr => { return { param: subErr.param, error: subErr.error } })
+                    expect(errors).to.deep.include({param: 'username', error: 'UniqueValidatorError'});
+                })
+                .catch(err => {
+                    throw err;
                 })
         });
 
