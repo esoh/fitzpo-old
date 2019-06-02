@@ -1,7 +1,10 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-const {Account} = require('../../models')
+const {
+    Account,
+    User
+} = require('../../models')
 const server = require('../../app')
 
 const expect = chai.expect
@@ -44,10 +47,9 @@ describe('Accounts API', () => {
                     .end((err, res) => {
                         expect(err).to.be.null
                         expect(res).to.have.status(201)
-                        expect(res.body.username).to.eql('username')
-                        expect(res.body.email).to.eql('email@email.com')
-                        expect(res.body).to.not.have.property('password')
-                        done()
+                        expect(res.body).to.have.property('user');
+                        expect(res.body.user.username).to.eql('username');
+                        done();
                     })
             })
 
@@ -175,12 +177,14 @@ describe('Accounts API', () => {
 
         describe('Tests with persistent database', () => {
 
-            before(() => {
-                return Account.destroy({ truncate: {cascade: true}})
+            before(async () => {
+                await Account.destroy({ truncate: {cascade: true}})
+                await User.destroy({ truncate: {cascade: true}})
             })
 
-            it('successfully POST valid account', (done) => {
-                chai.request(server)
+            it('successfully POST valid account', () => {
+                var userUuid;
+                return chai.request(server)
                     .post('/accounts')
                     .set('Content-Type', 'application/json')
                     .send({
@@ -188,18 +192,41 @@ describe('Accounts API', () => {
                         email:      'email@email.com',
                         password:   'Password!123'
                     })
-                    .end((err, res) => {
-                        expect(err).to.be.null
+                    .then(res => {
                         expect(res).to.have.status(201)
-                        expect(res.body.username).to.eql('username')
-                        expect(res.body.email).to.eql('email@email.com')
-                        expect(res.body).to.not.have.property('password')
-                        done()
+                        expect(res.body).to.have.property('user')
+                        expect(res.body.user.username).to.eql('username')
+                        userUuid = res.body.user.uuid;
+                        return Account.findByUsername('username')
+                    })
+                    .then(account => {
+                        expect(account.userUuid).to.eql(userUuid);
                     })
             })
 
-            it('fail POST with taken username', (done) => {
-                chai.request(server)
+            it('successfully deletes account when user is deleted', () => {
+                return Account.findByUsername('username')
+                    .then(user => {
+                        expect(user).to.be.ok;
+                        return User.destroy({ where: { username: 'username' } })
+                    })
+                    .then(() => Account.findByUsername('username'))
+                    .then(account => {
+                        expect(account).to.not.be.ok;
+                    })
+            })
+
+            it('fail POST with taken username', async () => {
+                await chai.request(server)
+                    .post('/accounts')
+                    .set('Content-Type', 'application/json')
+                    .send({
+                        username:   'username',
+                        email:      'email@email.com',
+                        password:   'Password!123'
+                    })
+
+                await chai.request(server)
                     .post('/accounts')
                     .set('Content-Type', 'application/json')
                     .send({
@@ -207,7 +234,7 @@ describe('Accounts API', () => {
                         email:      'email2@email.com',
                         password:   'Password!123'
                     })
-                    .end((err, res) => {
+                    .then(res => {
                         expect(res).to.have.status(400)
                         expect(res.body).to.have.property('error')
                         expect(res.body.error.title).to.eql('Input validation constraints error')
@@ -216,7 +243,6 @@ describe('Accounts API', () => {
                         var targetMembers = {name: 'usernameOrEmail', error: 'UniqueValidatorError'}
                         var sourceMembers = res.body.error.invalid_params.map(param => { return { name: param.name, error: param.error } });
                         expect(sourceMembers).to.deep.include(targetMembers);
-                        done()
                     })
             })
 

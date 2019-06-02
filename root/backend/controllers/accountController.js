@@ -1,4 +1,7 @@
-const {Account} = require('../models');
+const {
+    Account,
+    User
+} = require('../models');
 const { InvalidTokenError,
         AccountNotFoundError } = require('../utils/APIError');
 const authService = require('../services/auth.service');
@@ -17,11 +20,15 @@ function listAccounts(req, res, next){
 function registerAccount(req, res, next){
     Account.register(req.body.username, req.body.email, req.body.password)
         .then(account => {
-            // TODO: Need to decide what to do with password
-            // TODO: Set location header that points to new resource
-            var accountJson = account.toJSON()
-            delete accountJson.password
-            res.status(201).json(accountJson)
+            // TODO: if user found and no associated account found, create the
+            // account only and connect it to the user
+            return User.addUser(req.body.username)
+                .then(user => {
+                    account.setUser(user)
+                        .then(() => {
+                            res.status(201).send({ user });
+                        })
+                })
         })
         .catch(err => {
             // hides if email is taken or not
