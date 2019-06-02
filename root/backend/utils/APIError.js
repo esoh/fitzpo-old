@@ -129,10 +129,22 @@ class InvalidParametersError extends APIError {
     }
 }
 
+class UserNotFoundError extends APIError {
+    constructor(options={}){
+        super(404, {
+            title: 'Invalid user',
+            detail: 'Could not find user',
+            code: 1005,
+            ...options
+        })
+    }
+}
+
 module.exports = {
     APIError,
     InvalidTokenError,
     AccountNotFoundError,
     InvalidUsernameOrPasswordError,
     InvalidParametersError,
+    UserNotFoundError,
 }

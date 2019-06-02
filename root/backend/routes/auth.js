@@ -3,8 +3,8 @@ const router = express.Router()
 const authController = require('../controllers/authController')
 
 router.route('/token')
-    .post(authController.authenticateAccount)
+    .post(authController.authenticateUser)
 
-router.delete('/cookie', authController.deauthenticateAccountLocally)
+router.delete('/cookie', authController.deleteTokenCookie)
 
 module.exports = router
