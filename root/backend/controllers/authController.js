@@ -1,12 +1,16 @@
 const passport = require('passport');
 
-const {InvalidUsernameOrPasswordError} = require('../utils/APIError');
+const {
+    InvalidUsernameOrPasswordError,
+    UserNotFoundError,
+} = require('../utils/APIError');
+const {User} = require('../models');
 
 // defines the strategy that calls the Account model functions
 const authService = require('../services/auth.service')
 
-function authenticateAccount(req, res, next){
-    passport.authenticate('local', (account, error, info) => {
+function authenticateUser(req, res, next){
+    passport.authenticate('local', (error, account, info) => {
         if(error) {
             return next(error)
         }
@@ -15,17 +19,24 @@ function authenticateAccount(req, res, next){
             return new InvalidUsernameOrPasswordError().sendToRes(res);
         }
 
-        //TODO: check if user verified (2factor with email) to generate token
-        let token = authService.generateToken(account)
-        // TODO: set expiry date for token and figure out secure https transfer
-        res.cookie(authService.ACCESS_TOKEN, token, { httpOnly: true })
-        account = account.toJSON()
-        delete account.password
-        return res.status(201).send({ account })
+        User.findByPk(account.userUuid)
+            .then(user => {
+                if(!user) {
+                    return new UserNotFoundError().sendToRes(res);
+                }
+
+                //TODO: check if user verified (2factor with email) to generate token
+                let token = authService.generateToken(user);
+                // TODO: set expiry date for token and figure out secure https transfer
+                res.cookie(authService.ACCESS_TOKEN, token, { httpOnly: true })
+                return res.status(201).send({ user });
+
+            })
+            .catch(err => next(err));
     })(req, res)
 }
 
-function deauthenticateAccountLocally(req, res){
+function deleteTokenCookie(req, res){
     res.clearCookie(authService.ACCESS_TOKEN);
     return res.sendStatus(200)
 }
@@ -34,6 +45,6 @@ function deauthenticateAccountLocally(req, res){
 // cleaned up by the expired token cleaner
 
 module.exports = {
-    authenticateAccount,
-    deauthenticateAccountLocally,
+    authenticateUser,
+    deleteTokenCookie,
 }

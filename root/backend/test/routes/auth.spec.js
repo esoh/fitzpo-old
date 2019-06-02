@@ -1,7 +1,7 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-const {Account} = require('../../models')
+const {Account, User} = require('../../models')
 const server = require('../../app')
 
 const expect = chai.expect
@@ -21,25 +21,25 @@ describe('Auth API', () => {
         })
 
         it('successfully validate existing account', async () => {
-            try{
-                await Account.register('userName', 'test@email.com', 'Password!123')
-            } catch(err) {
-                throw err
-            }
+            await chai.request(server)
+                .post ('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'userName',
+                    email:      'test@email.com',
+                    password:   'Password!123',
+                })
 
-            chai.request(server)
+            return chai.request(server)
                 .post('/auth/token')
                 .set('Content-Type', 'application/json')
                 .send({
                     username:   'username',
                     password:   'Password!123'
                 })
-                .end((err, res) => {
-                    expect(err).to.be.null
+                .then(res => {
                     expect(res).to.have.status(201)
-                    expect(res.body.account.username).to.eql('userName')
-                    expect(res.body.account.email).to.eql('test@email.com')
-                    expect(res.body.account).to.not.have.property('password')
+                    expect(res.body.user.username).to.eql('userName')
                     expect(res).to.have.header('Set-Cookie');
                 })
         })
@@ -98,99 +98,96 @@ describe('Auth API', () => {
 
     describe('/GET accounts/me', () => {
 
-        before(() => {
-            return Account.destroy({ truncate: { cascade: true } })
+        before(async () => {
+            await Account.destroy({ truncate: { cascade: true } })
+            await User.destroy({ truncate: { cascade: true } })
         })
 
-        it('successfully return no account without token', (done) => {
-            chai.request(server)
+        it('successfully return no account without token', () => {
+            return chai.request(server)
                 .get('/accounts/me')
-                .end((err, res) => {
-                    expect(err).to.be.null
+                .then(res => {
                     expect(res).to.have.status(200)
                     expect(res.body).to.eql({})
-                    done()
                 })
         })
 
-        it('successfully register, login, and return account with valid token', (done) => {
-            // make a login
-            Account.register('userName', 'test@email.com', 'Password!123')
-                .then(res => {
-                    chai.request(server)
+        it('successfully register, login, and return account with valid token', () => {
+
+            return chai.request(server)
+                .post ('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'userName',
+                    email:      'test@email.com',
+                    password:   'Password!123',
+                })
+                .then(() => {
+                    return chai.request(server)
                         .post('/auth/token')
                         .set('Content-Type', 'application/json')
                         .send({
                             username:   'username',
                             password:   'Password!123'
                         })
-                        .end((err, res) => {
-                            if(err) done(err)
-
-                            chai.request(server)
-                                .get('/accounts/me')
-                                .set('Cookie', res.headers['set-cookie'])
-                                .end((err, res) => {
-                                    if(err) done(err)
-                                    expect(res).to.have.status(200)
-                                    expect(res.body).to.have.property('account')
-                                    expect(res.body.account.username).to.eql('userName')
-                                    done()
-                                })
+                })
+                .then(res => {
+                    return chai.request(server)
+                        .get('/accounts/me')
+                        .set('Cookie', res.headers['set-cookie'])
+                        .then(res => {
+                            expect(res).to.have.status(200)
+                            expect(res.body).to.have.property('account')
+                            expect(res.body.account.username).to.eql('userName')
                         })
-                }, err => {
-                    done(err)
                 })
         })
 
-        it('successfully register, login, fail to get account with expired cookie', (done) => {
-            // make a login
-            Account.register('userName2', 'test2@email.com', 'Password!123')
-                .then(res => {
-                    chai.request(server)
+        it('successfully register, login, fail to get account with expired cookie', () => {
+            return chai.request(server)
+                .post ('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'userName2',
+                    email:      'test2@email.com',
+                    password:   'Password!123',
+                })
+                .then(() => {
+                    return chai.request(server)
                         .post('/auth/token')
                         .set('Content-Type', 'application/json')
                         .send({
                             username:   'username2',
                             password:   'Password!123'
                         })
-                        .end((err, res) => {
-                            if(err) done(err)
+                })
+                .then(res => {
+                    var cookie = res.headers['set-cookie'][0];
+                    if(cookie.indexOf('; Expires') != -1){
+                        cookie = cookie.slice(0, cookie.indexOf('; Expires'))
+                    }
+                    cookie +=  '; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
 
-                            var cookie = res.headers['set-cookie'][0];
-                            if(cookie.indexOf('; Expires') != -1){
-                                cookie = cookie.slice(0, cookie.indexOf('; Expires'))
-                            }
-                            cookie +=  '; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
-
-                            chai.request(server)
-                                .get('/accounts/me')
-                                .set('Cookie', [cookie])
-                                .end((err, res) => {
-                                    if(err) done(err)
-                                    expect(err).to.be.null
-                                    expect(res).to.have.status(200)
-                                    expect(res.body).to.eql({})
-                                    done()
-                                })
+                    return chai.request(server)
+                        .get('/accounts/me')
+                        .set('Cookie', [cookie])
+                        .then(res => {
+                            expect(res).to.have.status(200);
+                            expect(res.body).to.eql({});
                         })
-                }, err => {
-                    done(err)
                 })
         })
 
-        it('fail to return account with invalid token', (done) => {
-            chai.request(server)
+        it('fail to return account with invalid token', () => {
+            return chai.request(server)
                 .get('/accounts/me')
                 .set('Cookie', 'fitzpo_access_token=invalid;')
-                .end((err, res) => {
-                    if(err) done(err)
+                .then(res => {
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')
                     expect(res).to.have.header('Set-Cookie');
                     expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
                     expect(res.body.error.code).to.eql(1001)
-                    done()
                 })
         })
     })

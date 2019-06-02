@@ -16,7 +16,7 @@ passport.use(new LocalStrategy(
                 if(!account) {
                     return done(null, false)
                 }
-                return done(account)
+                return done(null, account)
             })
             .catch(err => { return done(err) })
     }
@@ -27,12 +27,12 @@ passport.use(new JwtStrategy({
         secretOrKey:    config.auth_secret,
     },
     function(jwtPayload, done){
-        Account.findByUsername(jwtPayload.username)
-            .then(account => {
-                if(!account) {
+        User.findByPk(jwtPayload.id)
+            .then(user => {
+                if(!user) {
                     return done(null, false)
                 }
-                return done(null, account)
+                return done(null, user)
             })
             .catch(err => {
                 return done(null, false)
@@ -40,10 +40,11 @@ passport.use(new JwtStrategy({
     }
 ))
 
-function generateToken(account){
+function generateToken(user){
     // TODO: maybe put expire date?
     const payload = {
-        username:   account.username,
+        id:         user.uuid,
+        username:   user.username,
     }
     return jwt.sign(payload, config.auth_secret)
 }
