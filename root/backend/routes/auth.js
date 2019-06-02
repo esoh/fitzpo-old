@@ -7,4 +7,6 @@ router.route('/token')
 
 router.delete('/cookie', authController.deleteTokenCookie)
 
+router.get('/me', authController.getUserFromCookie)
+
 module.exports = router

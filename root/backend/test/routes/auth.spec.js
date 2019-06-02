@@ -96,7 +96,7 @@ describe('Auth API', () => {
         })
     })
 
-    describe('/GET accounts/me', () => {
+    describe('/GET auth/me', () => {
 
         before(async () => {
             await Account.destroy({ truncate: { cascade: true } })
@@ -105,7 +105,7 @@ describe('Auth API', () => {
 
         it('successfully return no account without token', () => {
             return chai.request(server)
-                .get('/accounts/me')
+                .get('/auth/me')
                 .then(res => {
                     expect(res).to.have.status(200)
                     expect(res.body).to.eql({})
@@ -133,12 +133,12 @@ describe('Auth API', () => {
                 })
                 .then(res => {
                     return chai.request(server)
-                        .get('/accounts/me')
+                        .get('/auth/me')
                         .set('Cookie', res.headers['set-cookie'])
                         .then(res => {
                             expect(res).to.have.status(200)
-                            expect(res.body).to.have.property('account')
-                            expect(res.body.account.username).to.eql('userName')
+                            expect(res.body).to.have.property('user')
+                            expect(res.body.user.username).to.eql('userName')
                         })
                 })
         })
@@ -169,7 +169,7 @@ describe('Auth API', () => {
                     cookie +=  '; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
 
                     return chai.request(server)
-                        .get('/accounts/me')
+                        .get('/auth/me')
                         .set('Cookie', [cookie])
                         .then(res => {
                             expect(res).to.have.status(200);
@@ -180,7 +180,7 @@ describe('Auth API', () => {
 
         it('fail to return account with invalid token', () => {
             return chai.request(server)
-                .get('/accounts/me')
+                .get('/auth/me')
                 .set('Cookie', 'fitzpo_access_token=invalid;')
                 .then(res => {
                     expect(res).to.have.status(400)
