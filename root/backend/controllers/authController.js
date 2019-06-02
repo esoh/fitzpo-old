@@ -63,7 +63,8 @@ function getUserFromCookie(req, res, next){
     User.findByPk(payload.id)
         .then(user => {
             if(!user) {
-                return new UserNotFoundError().sendToRes(res);
+                res.clearCookie(authService.ACCESS_TOKEN);
+                return new InvalidTokenError().sendToRes(res);
             }
 
             return res.status(200).send({ user })
