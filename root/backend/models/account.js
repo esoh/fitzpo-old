@@ -8,6 +8,11 @@ const SALT_ROUNDS = 10
 
 module.exports = (sequelize, DataTypes) => {
     const Account = sequelize.define('Account', {
+        uuid: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,
