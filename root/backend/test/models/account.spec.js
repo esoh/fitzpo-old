@@ -5,7 +5,7 @@ const app = require('../../models')
 
 describe('models/account', () => {
     before(() => {
-        return app.sequelize.sync()
+        return app.sequelize.sync({force: true})
     })
 
     describe('#create()', () => {
@@ -266,5 +266,39 @@ describe('models/account', () => {
                 })
         })
 
+    })
+
+    var user;
+    describe('#prototype.setUser()', () => {
+
+        beforeEach(async () => {
+            await this.Account.destroy({ truncate: {cascade: true}})
+            await require('../../models').User.destroy({ truncate: {cascade: true}})
+            user = await require('../../models').User.addUser('username');
+        })
+
+
+        it('successfully creates an account with correct reference', async () => {
+            let account = await this.Account.register('username-test', 'test@email.com', 'Password!123');
+            await account.setUser(user);
+
+            return this.Account.findByUsername('username-test')
+                .then(account => {
+                    expect(account.userUuid).to.eql(user.uuid);
+                }, err => {
+                    throw err
+                })
+        });
+
+        it('successfully deletes itself when referenced table deletes its column', async () => {
+            let account = await this.Account.register('username-test', 'test@email.com', 'Password!123');
+            await account.setUser(user);
+
+            await require('../../models').User.destroy({ where: { username: 'username' } })
+            return this.Account.findByUsername('username-test')
+                .then(account => {
+                    expect(account).to.not.be.ok;
+                });
+        });
     })
 })

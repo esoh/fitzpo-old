@@ -58,7 +58,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Account.associate = function(models) {
-        // associations can be defined here
+        // has a UserUUID field
+        Account.belongsTo(models.User, {
+            as: 'user',
+            onDelete: 'CASCADE',
+        });
     }
 
     // list accounts
@@ -67,12 +71,13 @@ module.exports = (sequelize, DataTypes) => {
         return Account.findAll({ limit: limit })
     }
 
-    Account.register = function(username, email, password) {
+    Account.register = function(username, email, password, userUuid) {
         return new Promise((resolve, reject) => {
             Account.create({
                 username,
                 email,
-                password
+                password,
+                userUuid,
             })
                 .then(account => {
                     return resolve(account)
