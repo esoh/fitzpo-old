@@ -2,9 +2,6 @@ const {
     Account,
     User
 } = require('../models');
-const { InvalidTokenError,
-        AccountNotFoundError } = require('../utils/APIError');
-const authService = require('../services/auth.service');
 const SchemaError = require('../utils/SchemaError');
 
 function listAccounts(req, res, next){
@@ -38,34 +35,7 @@ function registerAccount(req, res, next){
         })
 }
 
-function getAccountFromCookie(req, res, next){
-    const token = authService.extractTokenFromCookie(req);
-
-    if(!token) {
-        return res.status(200).send({})
-    }
-
-    var payload;
-    try {
-        payload = authService.decodeToken(token);
-    } catch(err) {
-        res.clearCookie(authService.ACCESS_TOKEN);
-        return new InvalidTokenError().sendToRes(res);
-    }
-
-    Account.findByUsername(payload.username)
-        .then(account => {
-            if(!account) {
-                return new AccountNotFoundError().sendToRes(res);
-            }
-
-            return res.status(200).send({ account: account })
-        })
-        .catch(next)
-}
-
 module.exports = {
     listAccounts,
     registerAccount,
-    getAccountFromCookie,
 }
