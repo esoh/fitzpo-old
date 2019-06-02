@@ -98,7 +98,7 @@ describe('Auth API', () => {
 
     describe('/GET auth/me', () => {
 
-        before(async () => {
+        beforeEach(async () => {
             await Account.destroy({ truncate: { cascade: true } })
             await User.destroy({ truncate: { cascade: true } })
         })
@@ -188,6 +188,47 @@ describe('Auth API', () => {
                     expect(res).to.have.header('Set-Cookie');
                     expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
                     expect(res.body.error.code).to.eql(1001)
+                })
+        })
+
+        it('successfully register, login, delete account, and fail to return account with valid token', () => {
+
+            //register
+            return chai.request(server)
+                .post ('/accounts')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'userName',
+                    email:      'test@email.com',
+                    password:   'Password!123',
+                })
+                .then(() => {
+                    //login
+                    return chai.request(server)
+                        .post('/auth/token')
+                        .set('Content-Type', 'application/json')
+                        .send({
+                            username:   'username',
+                            password:   'Password!123'
+                        })
+                })
+                .then((res) => {
+                    //delete stuff
+                    return User.destroy({ truncate: {cascade: true}})
+                        .then(() => Account.destroy({ truncate: {cascade: true}}))
+                        .then(() => {
+                            // try to use access token to get profile
+                            return chai.request(server)
+                                .get('/auth/me')
+                                .set('Cookie', res.headers['set-cookie'])
+                                .then(res => {
+                                    expect(res).to.have.status(400)
+                                    expect(res.body).to.have.property('error')
+                                    expect(res).to.have.header('Set-Cookie');
+                                    expect(res.header['set-cookie']).to.include('fitzpo_access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT')
+                                    expect(res.body.error.code).to.eql(1001)
+                                })
+                        })
                 })
         })
     })
