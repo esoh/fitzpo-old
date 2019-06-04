@@ -13,10 +13,6 @@ chai.use(chaiHttp)
 
 describe('Accounts API', () => {
 
-    before(() => {
-        return require('../../models').sequelize.sync({force: true})
-    })
-
     describe('/GET accounts', () => {
         it('should GET all accounts', (done) => {
             chai.request(server)

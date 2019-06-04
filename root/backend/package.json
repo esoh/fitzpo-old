@@ -4,6 +4,8 @@
   "description": "fitzpo app",
   "main": "app.js",
   "scripts": {
+    "preinstall": "npm install -g sequelize-cli",
+    "pretest": "NODE_ENV=test sequelize db:create && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all",
     "test": "NODE_ENV=test mocha --recursive",
     "start": "node app"
   },
