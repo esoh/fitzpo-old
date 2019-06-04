@@ -4,9 +4,6 @@ const expect = chai.expect
 const app = require('../../models')
 
 describe('models/account', () => {
-    before(() => {
-        return app.sequelize.sync({force: true})
-    })
 
     describe('#create()', () => {
 

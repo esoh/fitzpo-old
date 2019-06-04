@@ -3,9 +3,6 @@ const expect = chai.expect;
 const app = require('../../models');
 
 describe('models/user', () => {
-    before(() => {
-        return app.sequelize.sync({force: true})
-    })
 
     describe('#addUser()', () => {
 

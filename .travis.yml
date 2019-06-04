@@ -4,8 +4,7 @@ node_js:
 services: mysql
 env:
     - NODE_ENV=test DB_USERNAME=travis DB_LOGGING=false
-before_install:
-    - (cd ./root/backend && npm install sequelize-cli && sequelize db:create)
 branches:
     only:
+        - dev
         - master

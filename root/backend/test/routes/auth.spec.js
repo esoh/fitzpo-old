@@ -10,19 +10,16 @@ chai.use(chaiHttp)
 
 describe('Auth API', () => {
 
-    before(() => {
-        return require('../../models').sequelize.sync({force: true})
-    })
-
     describe('/POST auth/token', () => {
 
-        before(() => {
-            return Account.destroy({ truncate: { cascade: true } })
+        before(async () => {
+            await User.destroy({ truncate: { cascade: true } })
+            await Account.destroy({ truncate: { cascade: true } })
         })
 
         it('successfully validate existing account', async () => {
             await chai.request(server)
-                .post ('/accounts')
+                .post('/accounts')
                 .set('Content-Type', 'application/json')
                 .send({
                     username:   'userName',
