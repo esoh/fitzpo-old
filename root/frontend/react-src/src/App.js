@@ -38,8 +38,8 @@ export class App extends React.Component {
                     return this.props.setLoggedIn(false);
                 }
 
-                if(!response.account){
-                    console.error("No account found??")
+                if(!response.user){
+                    console.error("No user found??")
                     return this.props.setLoggedIn(false);
                 }
 

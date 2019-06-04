@@ -55,7 +55,7 @@ describe('App component', () => {
     })
 
     it('Should call mocked checkLoggedIn which returns a valid account then call setLoggedIn with param true', () => {
-        const promise = Promise.resolve({ account: { username: 'test_username' } })
+        const promise = Promise.resolve({ user: { username: 'test_username' } })
         checkLoggedIn.mockReturnValue(promise);
 
         expect(checkLoggedIn.mock.calls.length).toBe(0);

@@ -86,7 +86,7 @@ describe('Signup component', () => {
     });
 
     it('if registerAccount returns a valid account, call redirect', () => {
-        const promise = Promise.resolve({ account: { username: 'username' } });
+        const promise = Promise.resolve({ user: { username: 'username' } });
         registerAccount.mockReturnValue(promise);
 
         const wrapper = shallow(<Signup />);
