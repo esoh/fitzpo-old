@@ -25,7 +25,7 @@ function authenticateUser(username, password){
 
 function checkLoggedIn(){
     return new Promise((resolve, reject) => {
-        fetch('/accounts/me')
+        fetch('/auth/me')
             .then(res => res.json())
             .then(data => {
                 // possibly invalid cookie
@@ -34,12 +34,12 @@ function checkLoggedIn(){
                 }
 
                 // empty response means no cookie was sent
-                if(!data.account){
+                if(!data.user){
                     resolve(null)
                 }
 
                 // success: return returned account
-                resolve({account: data.account})
+                resolve({user: data.user})
             })
             .catch(err => {
                 reject(err)
