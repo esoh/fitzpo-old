@@ -89,7 +89,7 @@ class InvalidTokenError extends APIError {
     constructor(options={}){
         super(400, {
             title: 'Invalid token',
-            detail: 'Could not decode token',
+            detail: 'Could not decode token.',
             code: 1001,
             ...options
         })
@@ -100,7 +100,7 @@ class AccountNotFoundError extends APIError {
     constructor(options={}){
         super(404, {
             title: 'Invalid account',
-            detail: 'Could not find account',
+            detail: 'Could not find account.',
             code: 1002,
             ...options
         })
@@ -133,7 +133,7 @@ class UserNotFoundError extends APIError {
     constructor(options={}){
         super(404, {
             title: 'Invalid user',
-            detail: 'Could not find user',
+            detail: 'Could not find user.',
             code: 1005,
             ...options
         })
@@ -144,7 +144,7 @@ class UnauthorizedError extends APIError {
     constructor(options={}){
         super(401, {
             title: 'Unauthorized request',
-            detail: 'You are not authorized to perform this action',
+            detail: 'Not authorized to perform this request.',
             code: 1006,
             ...options
         })
