@@ -140,11 +140,11 @@ class UserNotFoundError extends APIError {
     }
 }
 
-class UserUnauthorizedError extends APIError {
+class UnauthorizedError extends APIError {
     constructor(options={}){
         super(401, {
-            title: 'Unauthorized user',
-            detail: 'User is not authorized to perform this action',
+            title: 'Unauthorized request',
+            detail: 'You are not authorized to perform this action',
             code: 1006,
             ...options
         })
@@ -158,5 +158,5 @@ module.exports = {
     InvalidUsernameOrPasswordError,
     InvalidParametersError,
     UserNotFoundError,
-    UserUnauthorizedError,
+    UnauthorizedError,
 }

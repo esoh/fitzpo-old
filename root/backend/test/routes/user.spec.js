@@ -18,10 +18,11 @@ describe('User API', () => {
     describe('/GET users/:username/exercise-history', () => {
 
         var cookie;
+        var expiredcookie;
         var invalidcookie;
         var user;
         var account = {
-            username: 'test_username',
+            username: 'Test_username',
             email: 'test@email.com',
             password: 'Password!123',
         }
@@ -56,7 +57,10 @@ describe('User API', () => {
                         token = token.slice(0, token.indexOf('; Expires'))
                     }
                     token +=  '; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
-                    invalidcookie = [ token ];
+                    expiredcookie = [ token ];
+
+                    token = res.headers['set-cookie'][0];
+                    invalidcookie = [ token.slice(0, token.indexOf('=')) + '=invalidtoken' + token.slice(token.indexOf(';')) ];
 
                     user = res.body.user;
                     return ExerciseLog.create({
@@ -77,7 +81,7 @@ describe('User API', () => {
         it('successfully gets user\'s exercise history', () => {
             expect(user.username).to.eql(account.username);
             return chai.request(server)
-                .get('/users/' + user.username + '/exercise-history')
+                .get('/users/test_Username/exercise-history')
                 .set('Cookie', cookie)
                 .then(res => {
                     expect(res).to.have.status(200);
@@ -117,6 +121,28 @@ describe('User API', () => {
                     expect(res).to.have.status(401);
                     expect(res.body).to.have.property('error');
                     expect(res.body.error.code).to.eql(1006);
+                })
+        })
+
+        it('fails to get user\'s exercise history with expired cookie', () => {
+            return chai.request(server)
+                .get('/users/' + user.username + '/exercise-history')
+                .set('Cookie', expiredcookie)
+                .then(res => {
+                    expect(res).to.have.status(401);
+                    expect(res.body).to.have.property('error');
+                    expect(res.body.error.code).to.eql(1006);
+                })
+        })
+
+        it('fails to get user\'s exercise history with invalid cookie', () => {
+            return chai.request(server)
+                .get('/users/' + user.username + '/exercise-history')
+                .set('Cookie', invalidcookie)
+                .then(res => {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('error');
+                    expect(res.body.error.code).to.eql(1001);
                 })
         })
     })

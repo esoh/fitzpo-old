@@ -178,7 +178,7 @@ describe('Auth API', () => {
         it('fail to return account with invalid token', () => {
             return chai.request(server)
                 .get('/auth/me')
-                .set('Cookie', 'fitzpo_access_token=invalid;')
+                .set('Cookie', ['fitzpo_access_token=invalid;'])
                 .then(res => {
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.property('error')

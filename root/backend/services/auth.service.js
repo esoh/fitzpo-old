@@ -38,7 +38,7 @@ passport.use(new JwtStrategy({
                 return done(null, user)
             })
             .catch(err => {
-                return done(null, false)
+                return done(err, false)
             })
     }
 ))
@@ -50,10 +50,6 @@ function generateToken(user){
         username:   user.username,
     }
     return jwt.sign(payload, config.auth_secret)
-}
-
-function decodeToken(token){
-    return jwt.verify(token, config.auth_secret)
 }
 
 function extractTokenFromCookie(req){
@@ -74,7 +70,5 @@ function extractTokenFromCookie(req){
 
 module.exports = {
     generateToken,
-    decodeToken,
-    extractTokenFromCookie,
     ACCESS_TOKEN,
 }
