@@ -11,14 +11,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          is: /^(?=.*[A-Za-z])[A-Za-z0-9d._-]{1,}$/,
-          isNotProfane(value) {
-            if(filter.isProfane(value)) {
-              throw new Error('Inappropriate Username')
-            }
-          }
-        }
       },
       createdAt: {
         allowNull: false,
