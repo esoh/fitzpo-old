@@ -73,4 +73,30 @@ describe('models/user', () => {
         })
 
     })
+
+    describe('#findByUsername()', () => {
+
+        beforeEach(() => {
+            this.User = require('../../models').User;
+            return this.User.destroy({ truncate: {cascade: true}})
+        })
+
+        it('successfully creates a user and finds it by username', () => {
+            return this.User.addUser('tusername')
+                .then(() => {
+                    return this.User.findByUsername('tusername');
+                })
+                .then(user => {
+                    expect(user.username).to.be.ok;
+                    expect(user.username).to.equal('tusername');
+                });
+        });
+
+        it('fails to find user with username that does not exist', () => {
+                return this.User.findByUsername('tusername')
+                    .then(user => {
+                        expect(user).to.not.be.ok;
+                    });
+        });
+    })
 })
