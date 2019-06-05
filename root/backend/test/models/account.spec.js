@@ -5,7 +5,7 @@ const app = require('../../models')
 
 describe('models/account', () => {
 
-    describe('#create()', () => {
+    describe('#register()', () => {
 
         beforeEach(async () => {
             this.Account = require('../../models').Account
