@@ -1,8 +1,5 @@
-# fitzpo
+# fitzpo &nbsp; [![Build Status](https://travis-ci.org/esoh/fitzpo.svg?branch=master)](https://travis-ci.org/esoh/fitzpo) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#Contributing)
 This repo contains the web app powering Fitzpo.
-
-[![Build Status](https://travis-ci.org/esoh/fitzpo.svg?branch=master)](https://travis-ci.org/esoh/fitzpo)
-
 
 ## Getting started
 
@@ -14,12 +11,12 @@ This repo contains the web app powering Fitzpo.
 
 ### Installing dependencies
 1. `cd fitzpo` to go to base directory
-1. `npm i` to install dependencies
+1. `npm i` to install dependencies and the sequelize-cli
 
 ### Setting up
 1. Enter your MySQL credentials in `fitzpo/root/backend/.env` as environmental variables (See the [wiki](https://github.com/esoh/fitzpo/wiki/Environments,-Secrets,-and-Keys)) as well as any other necessary environmental variables, such as the environment (`NODE_ENV=development|test|production`).
-1. Install `sequelize-cli` for command line interface (`npm install -g sequelize-cli`)
 1. Create the database in `fitzpo/root/backend` for the set environment using `sequelize db:create`.
+1. Create tables for the database using `sequelize db:migrate`.
 
 ### Running both website and backend server
 1. `npm run dev` to run in development mode
@@ -36,9 +33,8 @@ This repo contains the web app powering Fitzpo.
 
     Developer note: running `nodemon` is suggested to prevent having to restart the server every time a write is made to the server code. `npm install -g nodemon` will install nodemon globally.
 
-#### Testing the API
-1. `cd fitzpo/root/backend` to go to express directory
-1. Create the test database using `NODE_ENV=test sequelize db:create` if you haven't already.
+#### Testing
+1. `cd fitzpo` to go to the base directory
 1. Run `npm test` to run the tests.
 
 #### Before deploying
