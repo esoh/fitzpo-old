@@ -1,3 +1,5 @@
+// defines the strategy that calls the Account model functions
+const authService = require('../services/auth.service')
 const passport = require('passport');
 
 const {
@@ -7,8 +9,6 @@ const {
 } = require('../utils/APIError');
 const {Account, User} = require('../models');
 
-// defines the strategy that calls the Account model functions
-const authService = require('../services/auth.service')
 
 function authenticateUser(req, res, next){
     passport.authenticate('local', (error, account, info) => {
