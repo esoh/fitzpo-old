@@ -2,7 +2,11 @@
 const authService = require('../services/auth.service');
 const passport = require('passport');
 
-const { UserUnauthorizedError } = require('../utils/APIError');
+const {
+    UnauthorizedError,
+    UserNotFoundError,
+    InvalidTokenError,
+} = require('../utils/APIError');
 const {
     User,
     ExerciseLog,
@@ -12,6 +16,8 @@ function getUserExerciseHistory(req, res, next){
     // called after passport, so req.user is set
     return User.findByUsername(req.params.username)
         .then(user => {
+            if(!user) { return new UserNotFoundError().sendToRes(res); }
+
             return ExerciseLog.getExerciseHistory(user.uuid);
         })
         .then(exerciseLogs => {
@@ -24,10 +30,32 @@ function getUserExerciseHistory(req, res, next){
 function authenticateSelf(req, res, next){
     passport.authenticate('jwt', function(err, user, info){
         if(err){ return next(err); }
-        if(!user || user.username != req.params.username){
-            return new UserUnauthorizedError().sendToRes(res);
+        if(info) {
+            switch(info.name){
+                case 'Error':
+                    if(info.message == 'No auth token'){
+                        return new UnauthorizedError().sendToRes(res);
+                    }
+                case 'JsonWebTokenError':
+                    res.clearCookie(authService.ACCESS_TOKEN);
+                    return new InvalidTokenError().sendToRes(res);
+                default:
+                    console.log(info);
+            }
         }
-        return next();
+
+        // no user was found with the given token payload id
+        if(!user) {
+            res.clearCookie(authService.ACCESS_TOKEN);
+            return new InvalidTokenError().sendToRes(res);
+        }
+
+        return User.findByUsername(req.params.username)
+            .then(targetUser => {
+                if(!targetUser) { return UserNotFoundError().sendToRes(res); }
+                if(targetUser.username !== user.username){ return new UnauthorizedError().sendToRes(res); }
+                return next();
+            });
     })(req, res, next);
 }
 

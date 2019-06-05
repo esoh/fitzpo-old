@@ -46,30 +46,30 @@ function deleteTokenCookie(req, res){
 // cleaned up by the expired token cleaner
 
 function getUserFromCookie(req, res, next){
-    const token = authService.extractTokenFromCookie(req);
-
-    if(!token) {
-        return res.status(200).send({})
-    }
-
-    var payload;
-    try {
-        payload = authService.decodeToken(token);
-    } catch(err) {
-        res.clearCookie(authService.ACCESS_TOKEN);
-        return new InvalidTokenError().sendToRes(res);
-    }
-
-    User.findByPk(payload.id)
-        .then(user => {
-            if(!user) {
-                res.clearCookie(authService.ACCESS_TOKEN);
-                return new InvalidTokenError().sendToRes(res);
+    passport.authenticate('jwt', function(err, user, info){
+        if(err) { return next(err); }
+        if(info) {
+            switch(info.name){
+                case 'Error':
+                    if(info.message == 'No auth token'){
+                        return res.status(200).send({})
+                    }
+                case 'JsonWebTokenError':
+                    res.clearCookie(authService.ACCESS_TOKEN);
+                    return new InvalidTokenError().sendToRes(res);
+                default:
+                    console.log(info);
             }
+        }
 
-            return res.status(200).send({ user })
-        })
-        .catch(next)
+        // no user was found with the given token payload id
+        if(!user) {
+            res.clearCookie(authService.ACCESS_TOKEN);
+            return new InvalidTokenError().sendToRes(res);
+        }
+
+        return res.status(200).send({ user })
+    })(req, res, next);
 }
 
 module.exports = {
