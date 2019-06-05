@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
                     return reject(err);
                 })
         })
+    };
+
+    User.findByUsername = function(username) {
+        return User.findOne({ where: {username: username} })
     }
 
     return User;
