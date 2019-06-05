@@ -5,7 +5,10 @@ const jwt = require('jsonwebtoken')
 
 const env = process.env.NODE_ENV || 'development'
 const config = require('../config/config.js')[env]
-const {Account} = require('../models')
+const {
+    Account,
+    User,
+} = require('../models')
 
 const ACCESS_TOKEN = 'fitzpo_access_token';
 
