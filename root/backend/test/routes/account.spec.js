@@ -13,18 +13,8 @@ chai.use(chaiHttp)
 
 describe('Accounts API', () => {
 
-    describe('/GET accounts', () => {
-        it('should GET all accounts', (done) => {
-            chai.request(server)
-                .get('/accounts')
-                .end((err, res) => {
-                    expect(res.body).to.be.a('array')
-                    done()
-                })
-        })
-    })
-
     describe('/POST accounts', () => {
+
         describe('Singular request tests', () => {
 
             beforeEach(() => {
