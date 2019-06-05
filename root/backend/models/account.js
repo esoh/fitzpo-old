@@ -70,12 +70,6 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
 
-    // list accounts
-    // limit: up to <limit> accounts shown
-    Account.list = function(limit=20) {
-        return Account.findAll({ limit: limit })
-    }
-
     Account.register = function(username, email, password, userUuid) {
         return new Promise((resolve, reject) => {
             Account.create({

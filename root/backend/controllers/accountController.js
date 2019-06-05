@@ -4,16 +4,6 @@ const {
 } = require('../models');
 const SchemaError = require('../utils/SchemaError');
 
-function listAccounts(req, res, next){
-    // controller calls the method function
-    Account.list()
-        .then(accounts => {
-            // this is where you would generate a view
-            res.send(accounts)
-        })
-        .catch(next)
-}
-
 function registerAccount(req, res, next){
     Account.register(req.body.username, req.body.email, req.body.password)
         .then(account => {
@@ -36,6 +26,5 @@ function registerAccount(req, res, next){
 }
 
 module.exports = {
-    listAccounts,
     registerAccount,
 }
