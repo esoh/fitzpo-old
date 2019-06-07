@@ -21,6 +21,14 @@ function getUserExerciseHistory(req, res, next){
             return ExerciseLog.getExerciseHistory(user.uuid);
         })
         .then(exerciseLogs => {
+            exerciseLogs = exerciseLogs.map(log => {
+                return {
+                    date:           log.date,
+                    exerciseName:   log.exerciseName,
+                    type:           log.type,
+                    progress:       log.progress,
+                }
+            })
             res.status(200).send({ exerciseLogs });
         })
         .catch(next);
