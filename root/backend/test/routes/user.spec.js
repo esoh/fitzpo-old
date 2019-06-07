@@ -87,20 +87,15 @@ describe('User API', () => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.have.property('exerciseLogs');
                     expect(res.body.exerciseLogs).to.be.an('array');
+                    expect(res.body.exerciseLogs.length).to.equal(2);
+                    expect(res.body.exerciseLogs[0]).to.not.have.property('userUuid');
                     var filteredLogs = res.body.exerciseLogs.map(log => { return {
                         exerciseName:   log.exerciseName,
                         type:           log.type,
                         progress:       log.progress,
-                        userUuid:       log.userUuid,
                     } });
-                    expect(filteredLogs).to.deep.include({
-                        ...exercise1,
-                        userUuid:   user.uuid,
-                    })
-                    expect(filteredLogs).to.deep.include({
-                        ...exercise2,
-                        userUuid:   user.uuid,
-                    })
+                    expect(filteredLogs).to.deep.include(exercise1);
+                    expect(filteredLogs).to.deep.include(exercise2);
                 })
         })
 
