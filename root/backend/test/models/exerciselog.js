@@ -79,4 +79,22 @@ describe('models/exerciselog', () => {
                 })
         })
     })
+
+    describe('#addExerciseLog()', () => {
+        it('successfully adds exercise log', () => {
+            return this.ExerciseLog.destroy({ truncate: {cascade: true} })
+                .then(() => {
+                    return this.ExerciseLog.addExerciseLog(testUser.uuid, Date.now(), exercise1.exerciseName, exercise1.type, exercise1.progress)
+                })
+                .then(exerciseLog => {
+                    return this.ExerciseLog.findOne({ where: {
+                        ...exercise1,
+                        userUuid:   testUser.uuid,
+                    } })
+                })
+                .then(exerciseLog => {
+                    expect(exerciseLog).to.be.ok;
+                })
+        })
+    })
 })
