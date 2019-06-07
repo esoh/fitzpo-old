@@ -1,8 +1,8 @@
 const router = require('express').Router();
 
-const userController = require('../controllers/userController');
+const usersController = require('../controllers/usersController');
 
 router.route('/:username/exercise-history')
-    .get(userController.authenticateSelf, userController.getUserExerciseHistory);
+    .get(usersController.authenticateSelf, usersController.getUserExerciseHistory);
 
 module.exports = router;
