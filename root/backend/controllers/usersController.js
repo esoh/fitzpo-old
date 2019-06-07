@@ -35,6 +35,9 @@ function getUserExerciseHistory(req, res, next){
 }
 
 // used to authenticate user to access user's own resources
+// TODO: change this function to check if authorized user has access to target
+// user's resources! (e.g. target user shares history with friends then friend
+// can access it)
 function authenticateSelf(req, res, next){
     passport.authenticate('jwt', function(err, user, info){
         if(err){ return next(err); }
