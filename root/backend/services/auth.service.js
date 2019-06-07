@@ -9,6 +9,10 @@ const {
     Account,
     User,
 } = require('../models')
+const {
+    UnauthorizedError,
+    InvalidTokenError,
+} = require('../utils/APIError');
 
 const ACCESS_TOKEN = 'fitzpo_access_token';
 
@@ -68,7 +72,56 @@ function extractTokenFromCookie(req){
     return token
 }
 
+function authUser(req, res, next){
+    return jwtAuth(req, res)
+        .then(user => {
+            if(!user){
+                res.clearCookie(ACCESS_TOKEN);
+                return new InvalidTokenError().sendToRes(res);
+            }
+            return next();
+        })
+        .catch(err => {
+            switch(err.name){
+                case 'Error':
+                    if(err.message == 'No auth token'){
+                        return new UnauthorizedError().sendToRes(res);
+                    }
+                case 'JsonWebTokenError':
+                    res.clearCookie(ACCESS_TOKEN);
+                    return new InvalidTokenError().sendToRes(res);
+                default:
+                    console.log(err);
+            }
+            return next(err);
+        })
+}
+
+function jwtAuth(req, res){
+    return new Promise((resolve, reject) => {
+        passport.authenticate('jwt', function(err, user, info){
+            if(err) reject(err);
+            if(info) reject(info);
+            req.user = user;
+            resolve(user);
+        })(req, res);
+    });
+}
+
+function localAuth(req, res){
+    return new Promise((resolve, reject) => {
+        passport.authenticate('local', function(err, account, info){
+            if(err) reject(err);
+            if(info) reject(info);
+            resolve(account);
+        })(req, res);
+    });
+}
+
 module.exports = {
     generateToken,
     ACCESS_TOKEN,
+    authUser,
+    jwtAuth,
+    localAuth,
 }

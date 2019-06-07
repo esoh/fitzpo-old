@@ -39,6 +39,7 @@ function getUserExerciseHistory(req, res, next){
 // user's resources! (e.g. target user shares history with friends then friend
 // can access it)
 function authenticateSelf(req, res, next){
+    // TODO: replace this with authservice's jwtAuth
     passport.authenticate('jwt', function(err, user, info){
         if(err){ return next(err); }
         if(info) {
