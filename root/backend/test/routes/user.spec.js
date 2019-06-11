@@ -7,7 +7,7 @@ const expect = chai.expect
 
 chai.use(chaiHttp)
 
-describe('Users API', () => {
+describe('User API', () => {
 
     before(async () => {
         await User.destroy({ truncate: { cascade: true } })
