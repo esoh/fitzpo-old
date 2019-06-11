@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 
-const {InvalidParametersError} = require('../utils/APIError');
+const {
+    InvalidParametersError,
+    DatabaseError,
+} = require('../utils/APIError');
 
 const UNIQUE_VALIDATOR_ERROR = 'UniqueValidatorError';
 const validatorTypes = {
@@ -40,9 +43,21 @@ class SchemaParamError {
 
 class SchemaError {
     constructor(err) {
-        if(!(err instanceof Sequelize.ValidationError)) return null;
-        this.name = 'ValidationError'
-        this.errors = err.errors.map(subErr => new SchemaParamError(subErr));
+        if(err instanceof Sequelize.ValidationError){
+            this.name = 'ValidationError';
+            this.errors = err.errors.map(subErr => new SchemaParamError(subErr));
+        } else if(err instanceof Sequelize.DatabaseError){
+            this.name = 'DatabaseError';
+            this.details = err.message;
+            console.log(err.message);
+        } else {
+            throw new Error('Not a schema error!');
+        }
+    }
+
+    static isSchemaError(err){
+        return (err instanceof Sequelize.ValidationError ||
+                err instanceof Sequelize.DatabaseError);
     }
 
     combineUsernameEmailNotUnique() {
@@ -66,15 +81,18 @@ class SchemaError {
     }
 
     toAPIError() {
-        var invalid_params = this.errors.map(subErr => {
-            return {
-                name: subErr.param,
-                reason: subErr.details,
-                error: subErr.error,
-            }
-        })
-
-        return new InvalidParametersError({ invalid_params })
+        if(this.name === 'ValidationError'){
+            var invalid_params = this.errors.map(subErr => {
+                return {
+                    name: subErr.param,
+                    reason: subErr.details,
+                    error: subErr.error,
+                }
+            })
+            return new InvalidParametersError({ invalid_params });
+        } else {
+            return new DatabaseError({ detail: this.details });
+        }
     }
 }
 

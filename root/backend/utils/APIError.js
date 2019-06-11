@@ -151,6 +151,17 @@ class UnauthorizedError extends APIError {
     }
 }
 
+class DatabaseError extends APIError {
+    constructor(options={}){
+        super(400, {
+            title: 'Database error',
+            detail: 'There was an error performing this action on the database.',
+            code: 1007,
+            ...options
+        })
+    }
+}
+
 module.exports = {
     APIError,
     InvalidTokenError,
@@ -159,4 +170,5 @@ module.exports = {
     InvalidParametersError,
     UserNotFoundError,
     UnauthorizedError,
+    DatabaseError,
 }
