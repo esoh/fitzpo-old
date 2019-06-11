@@ -82,8 +82,7 @@ module.exports = (sequelize, DataTypes) => {
                     return resolve(account)
                 })
                 .catch(err => {
-                    var schemaErr = new SchemaError(err);
-                    if(schemaErr) return reject(schemaErr);
+                    if(SchemaError.isSchemaError(err)) return reject(new SchemaError(err));
                     return reject(err);
                 })
         })
