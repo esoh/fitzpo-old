@@ -114,7 +114,7 @@ describe('User API', () => {
                     .then(res => {
                         expect(res).to.have.status(401);
                         expect(res.body).to.have.property('error');
-                        expect(res.body.error.code).to.eql(1006);
+                        expect(res.body.error.code).to.eql(1008);
                 })
             })
         })
@@ -154,7 +154,7 @@ describe('User API', () => {
                     .then(res => {
                         expect(res).to.have.status(401);
                         expect(res.body).to.have.property('error');
-                        expect(res.body.error.code).to.eql(1006);
+                        expect(res.body.error.code).to.eql(1008);
                     })
             })
 
@@ -165,7 +165,7 @@ describe('User API', () => {
                     .then(res => {
                         expect(res).to.have.status(401);
                         expect(res.body).to.have.property('error');
-                        expect(res.body.error.code).to.eql(1006);
+                        expect(res.body.error.code).to.eql(1008);
                     })
             })
 
