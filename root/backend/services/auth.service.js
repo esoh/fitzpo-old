@@ -10,7 +10,7 @@ const {
     User,
 } = require('../models')
 const {
-    UnauthorizedError,
+    NoTokenError,
     InvalidTokenError,
 } = require('../utils/APIError');
 
@@ -85,7 +85,7 @@ function authUser(req, res, next){
             switch(err.name){
                 case 'Error':
                     if(err.message == 'No auth token'){
-                        return new UnauthorizedError().sendToRes(res);
+                        return new NoTokenError().sendToRes(res);
                     }
                 case 'JsonWebTokenError':
                     res.clearCookie(ACCESS_TOKEN);

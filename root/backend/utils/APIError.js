@@ -162,6 +162,17 @@ class DatabaseError extends APIError {
     }
 }
 
+class NoTokenError extends APIError {
+    constructor(options={}){
+        super(401, {
+            title: 'No login token found',
+            detail: 'Login token not found. Please log in to perform this request.',
+            code: 1008,
+            ...options
+        })
+    }
+}
+
 module.exports = {
     APIError,
     InvalidTokenError,
@@ -171,4 +182,5 @@ module.exports = {
     UserNotFoundError,
     UnauthorizedError,
     DatabaseError,
+    NoTokenError,
 }
