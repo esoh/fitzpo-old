@@ -14,7 +14,7 @@ const {
     InvalidTokenError,
 } = require('../utils/APIError');
 
-const ACCESS_TOKEN = 'fitzpo_access_token';
+const {ACCESS_TOKEN} = require('../utils/constants');
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
@@ -75,10 +75,7 @@ function extractTokenFromCookie(req){
 function authUser(req, res, next){
     return jwtAuth(req, res)
         .then(user => {
-            if(!user){
-                res.clearCookie(ACCESS_TOKEN);
-                return new InvalidTokenError().sendToRes(res);
-            }
+            if(!user) return new InvalidTokenError().sendToRes(res);
             return next();
         })
         .catch(err => {
@@ -88,7 +85,6 @@ function authUser(req, res, next){
                         return new NoTokenError().sendToRes(res);
                     }
                 case 'JsonWebTokenError':
-                    res.clearCookie(ACCESS_TOKEN);
                     return new InvalidTokenError().sendToRes(res);
                 default:
                     console.log(err);
@@ -120,7 +116,6 @@ function localAuth(req, res){
 
 module.exports = {
     generateToken,
-    ACCESS_TOKEN,
     authUser,
     jwtAuth,
     localAuth,

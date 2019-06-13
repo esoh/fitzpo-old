@@ -1,4 +1,5 @@
-const url = require('url')
+const url = require('url');
+const {ACCESS_TOKEN} = require('../utils/constants');
 
 class APIError {
     /**
@@ -62,9 +63,11 @@ class APIError {
             instance,
         }
         this.status = status;
+        this.clearTokenCookie = false;
     }
 
     sendToRes(res) {
+        if(this.clearTokenCookie) res.clearCookie(ACCESS_TOKEN);
         res.status(this.status).send({ error: this.response })
     }
 
@@ -81,6 +84,7 @@ class InvalidTokenError extends APIError {
             code: 1001,
             ...options
         })
+        this.clearTokenCookie = true;
     }
 }
 

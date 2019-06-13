@@ -16,7 +16,7 @@ function getUserExerciseHistory(req, res, next){
     // called after passport, so req.user is set
     return User.findByUsername(req.params.username)
         .then(user => {
-            if(!user) { return new UserNotFoundError().sendToRes(res); }
+            if(!user) return new UserNotFoundError().sendToRes(res);
 
             return ExerciseLog.getExerciseHistory(user.uuid);
         })
@@ -49,7 +49,6 @@ function authenticateSelf(req, res, next){
                         return new UnauthorizedError().sendToRes(res);
                     }
                 case 'JsonWebTokenError':
-                    res.clearCookie(authService.ACCESS_TOKEN);
                     return new InvalidTokenError().sendToRes(res);
                 default:
                     console.log(info);
@@ -57,10 +56,7 @@ function authenticateSelf(req, res, next){
         }
 
         // no user was found with the given token payload id
-        if(!user) {
-            res.clearCookie(authService.ACCESS_TOKEN);
-            return new InvalidTokenError().sendToRes(res);
-        }
+        if(!user) return new InvalidTokenError().sendToRes(res);
 
         return User.findByUsername(req.params.username)
             .then(targetUser => {
