@@ -1,16 +1,16 @@
 // defines the strategy that calls the Account model functions
-const authService = require('../services/auth.service')
+const auth = require('../services/auth.service')
 
 const {
     InvalidUsernameOrPasswordError,
     UserNotFoundError,
     InvalidTokenError,
 } = require('../utils/APIError');
-const {Account, User} = require('../models');
+const {User} = require('../models');
 
 
 function authenticateUser(req, res, next){
-    authService.localAuth(req, res)
+    auth.localAuth(req, res)
         .then(account => {
             if(!account) return new InvalidUsernameOrPasswordError().sendToRes(res);
 
@@ -20,9 +20,9 @@ function authenticateUser(req, res, next){
 
 
                     //TODO: check if user verified (2factor with email) to generate token
-                    let token = authService.generateToken(user);
+                    let token = auth.generateToken(user);
                     // TODO: set expiry date for token and figure out secure https transfer
-                    res.cookie(authService.ACCESS_TOKEN, token, { httpOnly: true })
+                    res.cookie(auth.ACCESS_TOKEN, token, { httpOnly: true })
                     return res.status(201).send({ user });
                 })
         })
@@ -30,7 +30,7 @@ function authenticateUser(req, res, next){
 }
 
 function deleteTokenCookie(req, res){
-    res.clearCookie(authService.ACCESS_TOKEN);
+    res.clearCookie(auth.ACCESS_TOKEN);
     return res.sendStatus(200)
 }
 
@@ -38,10 +38,10 @@ function deleteTokenCookie(req, res){
 // cleaned up by the expired token cleaner
 
 function getUserFromCookie(req, res, next){
-    return authService.jwtAuth(req, res)
+    return auth.jwtAuth(req, res)
         .then(user => {
             if(!user){
-                res.clearCookie(authService.ACCESS_TOKEN);
+                res.clearCookie(auth.ACCESS_TOKEN);
                 return new InvalidTokenError().sendToRes(res);
             }
             return res.status(200).send({ user })
@@ -53,7 +53,7 @@ function getUserFromCookie(req, res, next){
                         return res.status(200).send({})
                     }
                 case 'JsonWebTokenError':
-                    res.clearCookie(authService.ACCESS_TOKEN);
+                    res.clearCookie(auth.ACCESS_TOKEN);
                     return new InvalidTokenError().sendToRes(res);
                 default:
                     console.log(err);
