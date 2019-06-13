@@ -28,9 +28,17 @@ function setupWithURL(url){
 }
 
 describe('App router', () => {
-    it('Should mount no component', () => {
+    it('Should mount home component on undefined route', () => {
         const { wrapper } = setupWithURL('/asdf');
-        expect(wrapper.find(Home).length).toBe(0);
+        expect(wrapper.find(Home).length).toBe(1);
+        expect(wrapper.find(Signup).length).toBe(0);
+        expect(wrapper.find(Login).length).toBe(0);
+        expect(wrapper.find(UserExerciseLogs).length).toBe(0);
+    });
+
+    it('Should mount home component', () => {
+        const { wrapper } = setupWithURL('/');
+        expect(wrapper.find(Home).length).toBe(1);
         expect(wrapper.find(Signup).length).toBe(0);
         expect(wrapper.find(Login).length).toBe(0);
         expect(wrapper.find(UserExerciseLogs).length).toBe(0);
