@@ -1,7 +1,7 @@
 jest.mock('../services/authService');
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { UserHome } from './UserHome';
 import {
@@ -35,6 +35,7 @@ describe('UserHome component', () => {
         expect(wrapper.findWhere(btn => btn.type() == 'button' && btn.text() === 'Log Out').length).toBe(1);
 
         expect(wrapper.findWhere(p => p.type() == 'p' && p.text().toLowerCase().includes('welcome')).length).toBe(1);
+        expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/exercise-logs').length).toBe(1);
     })
 
     it('clicking the button should call deauthLocally and render redirect', () => {
@@ -46,6 +47,7 @@ describe('UserHome component', () => {
         const { wrapper } = setup();
 
         const btn = wrapper.findWhere(elem => elem.type() == 'button' && elem.text() === "Log Out");
+
         expect(wrapper.find(Redirect).length).toBe(0);
         expect(wrapper.state().redirect).toBe(false);
 
