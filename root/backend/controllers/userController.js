@@ -1,7 +1,3 @@
-// defines the strategy that calls the Account model functions
-const authService = require('../services/auth.service');
-const passport = require('passport');
-
 const { ExerciseLog } = require('../models');
 
 function getUserExerciseLogs(req, res, next){

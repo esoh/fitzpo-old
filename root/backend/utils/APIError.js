@@ -48,21 +48,10 @@ class APIError {
             500: 'Internal Server Error',
         }
 
-        if (!type && status) {
-            type = 'about:blank'
-        }
-
-        if (!title && status) {
-            title = statusCodes[status]
-        }
-
-        if (instance) {
-            url.parse(instance)
-        }
-
-        if (type) {
-            url.parse(type)
-        }
+        if (!type && status) type = 'about:blank';
+        if (!title && status) title = statusCodes[status];
+        if (instance) url.parse(instance);
+        if (type) url.parse(type);
 
         this.response = {
             title,
@@ -72,7 +61,6 @@ class APIError {
             invalid_params,
             instance,
         }
-
         this.status = status;
     }
 
