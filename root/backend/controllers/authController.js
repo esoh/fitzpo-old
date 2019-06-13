@@ -7,7 +7,7 @@ const {
     InvalidTokenError,
 } = require('../utils/APIError');
 const {User} = require('../models');
-
+const {ACCESS_TOKEN} = require('../utils/constants');
 
 function authenticateUser(req, res, next){
     auth.localAuth(req, res)
@@ -22,7 +22,7 @@ function authenticateUser(req, res, next){
                     //TODO: check if user verified (2factor with email) to generate token
                     let token = auth.generateToken(user);
                     // TODO: set expiry date for token and figure out secure https transfer
-                    res.cookie(auth.ACCESS_TOKEN, token, { httpOnly: true })
+                    res.cookie(ACCESS_TOKEN, token, { httpOnly: true })
                     return res.status(201).send({ user });
                 })
         })
@@ -30,7 +30,7 @@ function authenticateUser(req, res, next){
 }
 
 function deleteTokenCookie(req, res){
-    res.clearCookie(auth.ACCESS_TOKEN);
+    res.clearCookie(ACCESS_TOKEN);
     return res.sendStatus(200)
 }
 
@@ -40,10 +40,7 @@ function deleteTokenCookie(req, res){
 function getUserFromCookie(req, res, next){
     return auth.jwtAuth(req, res)
         .then(user => {
-            if(!user){
-                res.clearCookie(auth.ACCESS_TOKEN);
-                return new InvalidTokenError().sendToRes(res);
-            }
+            if(!user) return new InvalidTokenError().sendToRes(res);
             return res.status(200).send({ user })
         })
         .catch(err => {
@@ -53,7 +50,6 @@ function getUserFromCookie(req, res, next){
                         return res.status(200).send({})
                     }
                 case 'JsonWebTokenError':
-                    res.clearCookie(auth.ACCESS_TOKEN);
                     return new InvalidTokenError().sendToRes(res);
                 default:
                     console.log(err);
