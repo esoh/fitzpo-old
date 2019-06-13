@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -65,6 +65,7 @@ export class App extends React.Component {
                     <Route path='/signup' component={Signup} />
                     <Route path='/login' component={Login} />
                     <Route path='/exercise-logs' component={UserExerciseLogs} />
+                    <Redirect to='/' />
                 </Switch>
             </Router>
         );
