@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import Signup from '../entry/Signup';
 import Login from '../entry/Login';
 import Home from '../home/Home';
+import UserExerciseLogs from '../user/UserExerciseLogs';
 import appReducer from '../redux/reducers';
 import App from '../App';
 
@@ -32,6 +33,7 @@ describe('App router', () => {
         expect(wrapper.find(Home).length).toBe(0);
         expect(wrapper.find(Signup).length).toBe(0);
         expect(wrapper.find(Login).length).toBe(0);
+        expect(wrapper.find(UserExerciseLogs).length).toBe(0);
     });
 
     it('Should mount the Signup component', () => {
@@ -39,6 +41,7 @@ describe('App router', () => {
         expect(wrapper.find(Home).length).toBe(0);
         expect(wrapper.find(Signup).length).toBe(1);
         expect(wrapper.find(Login).length).toBe(0);
+        expect(wrapper.find(UserExerciseLogs).length).toBe(0);
     });
 
     it('Should mount the Login component', () => {
@@ -46,5 +49,14 @@ describe('App router', () => {
         expect(wrapper.find(Home).length).toBe(0);
         expect(wrapper.find(Signup).length).toBe(0);
         expect(wrapper.find(Login).length).toBe(1);
+        expect(wrapper.find(UserExerciseLogs).length).toBe(0);
+    });
+
+    it('Should mount the UserExerciseLogs component', () => {
+        const { wrapper } = setupWithURL('/exercise-logs');
+        expect(wrapper.find(Home).length).toBe(0);
+        expect(wrapper.find(Signup).length).toBe(0);
+        expect(wrapper.find(Login).length).toBe(0);
+        expect(wrapper.find(UserExerciseLogs).length).toBe(1);
     });
 });

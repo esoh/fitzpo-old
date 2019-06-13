@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { deauthenticateAccountLocally } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
@@ -37,6 +37,7 @@ export class UserHome extends React.Component {
                 <button onClick={this.handleLogout}>
                     Log Out
                 </button>
+                <Link to="/exercise-logs">My Exercise Log</Link>
             </>
         )
     }

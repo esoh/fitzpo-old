@@ -7,6 +7,7 @@ import './App.css';
 import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
+import UserExerciseLogs from './user/UserExerciseLogs';
 import { setLoggedIn } from './redux/actions';
 import { checkLoggedIn, deauthenticateAccountLocally } from './services/authService';
 
@@ -63,6 +64,7 @@ export class App extends React.Component {
                     <Route exact path='/' component={Home} />
                     <Route path='/signup' component={Signup} />
                     <Route path='/login' component={Login} />
+                    <Route path='/exercise-logs' component={UserExerciseLogs} />
                 </Switch>
             </Router>
         );
