@@ -3,7 +3,7 @@ const { ExerciseLog } = require('../models');
 function getUserExerciseLogs(req, res, next){
     // authenticated user will be stored in req.user by passport middleware
     let userId = req.user.uuid;
-    return ExerciseLog.getExerciseHistory(userId)
+    return ExerciseLog.getExerciseLogs(userId)
         .then(exerciseLogs => {
             exerciseLogs = exerciseLogs.map(log => ({
                 id:             log.id,

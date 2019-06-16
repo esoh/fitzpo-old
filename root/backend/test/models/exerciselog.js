@@ -32,7 +32,7 @@ describe('models/exerciselog', () => {
         testUser.uuid = user.uuid;
 
         await this.ExerciseLog.create({
-            date:           Date.now(),
+            date:           new Date(Date.now() - 10000 * 60),
             userUuid:       testUser.uuid,
             ...exercise1,
         });
@@ -44,22 +44,22 @@ describe('models/exerciselog', () => {
     })
 
     it('Should cascading delete user\'s logged exercises when user is deleted', () => {
-        return this.ExerciseLog.getExerciseHistory(testUser.uuid)
+        return this.ExerciseLog.getExerciseLogs(testUser.uuid)
             .then(logs => {
                 expect(logs.length).to.eql(2);
                 return this.User.destroy({ truncate: {cascade: true}});
             })
             .then(() => {
-                return this.ExerciseLog.getExerciseHistory(testUser.uuid)
+                return this.ExerciseLog.getExerciseLogs(testUser.uuid)
             })
             .then(logs => {
                 expect(logs.length).to.eql(0);
             });
     })
 
-    describe('#getExerciseHistory()', () => {
-        it('successfully returns user\'s exercise history as a list', () => {
-            return this.ExerciseLog.getExerciseHistory(testUser.uuid)
+    describe('#getExerciseLogs()', () => {
+        it('successfully returns user\'s exercise history as a list sorted by most recent', () => {
+            return this.ExerciseLog.getExerciseLogs(testUser.uuid)
                 .then(logs => {
                     expect(logs).to.be.an('array');
                     var filteredLogs = logs.map(log => { return {
@@ -68,12 +68,12 @@ describe('models/exerciselog', () => {
                         progress:       log.progress,
                         userUuid:       log.userUuid,
                     } });
-                    expect(filteredLogs).to.deep.include({
-                        ...exercise1,
+                    expect(filteredLogs[0]).to.deep.equal({
+                        ...exercise2,
                         userUuid:   testUser.uuid,
                     })
-                    expect(filteredLogs).to.deep.include({
-                        ...exercise2,
+                    expect(filteredLogs[1]).to.deep.equal({
+                        ...exercise1,
                         userUuid:   testUser.uuid,
                     })
                 })

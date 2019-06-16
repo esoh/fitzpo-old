@@ -29,8 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
-    ExerciseLog.getExerciseHistory = function(userId) {
-        return ExerciseLog.findAll({ where: { userUuid: userId } })
+    ExerciseLog.getExerciseLogs = function(userId) {
+        return ExerciseLog.findAll({
+            where: { userUuid: userId },
+            order: [ ['date', 'DESC'] ],
+        })
     }
 
     ExerciseLog.addExerciseLog = function(userId, date, exerciseName, type, progress){
