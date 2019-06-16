@@ -18,7 +18,7 @@ function getUserExerciseHistory(req, res, next){
         .then(user => {
             if(!user) return new UserNotFoundError().sendToRes(res);
 
-            return ExerciseLog.getExerciseHistory(user.uuid);
+            return ExerciseLog.getExerciseLogs(user.uuid);
         })
         .then(exerciseLogs => {
             exerciseLogs = exerciseLogs.map(log => {
