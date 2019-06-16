@@ -5,39 +5,49 @@ import {
     createExerciseLog,
     getUserExerciseLogs,
 } from '../services/userService';
+import {
+    getLocalHTMLDate,
+    getLocalHTMLTime,
+} from '../utils/utils';
 
 export class UserExerciseLogs extends React.Component {
 
     abortController = new window.AbortController();
 
-    state = {
-        formControls: {
-            date: { value: (new Date()).toString() },
-            exerciseName: { value: '' },
-            type: { value: '' },
-            progress: { value: '' },
-        },
-        messages: [],
-        loginRedirect: false,
-        /*
-        logs: [
-            {
-                id:             1,
-                date:           '6/6',
-                exerciseName:   'Bench Press',
-                type:           '5x5',
-                progress:       'weight: 225, reps: 5/5/5/5/5',
+    constructor(props){
+        super(props);
+        let date = new Date();
+        this.state = {
+            formControls: {
+                date: { value: getLocalHTMLDate(date) },
+                time: { value: getLocalHTMLTime(date) },
+                exerciseName: { value: '' },
+                type: { value: '' },
+                progress: { value: '' },
             },
-            {
-                id:             2,
-                date:           '6/6',
-                exerciseName:   'Lying Tricep Extensions',
-                type:           '3x10',
-                progress:       'weight: 85/85/75, reps: 10/7/10',
-            },
-        ]*/
-        logs: []
+            messages: [],
+            loginRedirect: false,
+            /*
+            logs: [
+                {
+                    id:             1,
+                    date:           '6/6',
+                    exerciseName:   'Bench Press',
+                    type:           '5x5',
+                    progress:       'weight: 225, reps: 5/5/5/5/5',
+                },
+                {
+                    id:             2,
+                    date:           '6/6',
+                    exerciseName:   'Lying Tricep Extensions',
+                    type:           '3x10',
+                    progress:       'weight: 85/85/75, reps: 10/7/10',
+                },
+            ]*/
+            logs: []
+        }
     }
+
 
     componentDidMount() {
         this.updatePageExerciseLogs();
@@ -69,7 +79,8 @@ export class UserExerciseLogs extends React.Component {
 
     logExercise = () => {
         // TODO: implement clientside validation
-        createExerciseLog(this.state.formControls.date.value,
+        var date = new Date(this.state.formControls.date.value + ' ' + this.state.formControls.time.value);
+        createExerciseLog(date,
                           this.state.formControls.exerciseName.value,
                           this.state.formControls.type.value,
                           this.state.formControls.progress.value)
@@ -119,7 +130,7 @@ export class UserExerciseLogs extends React.Component {
 
         var tableData = this.state.logs.map(log => (
             <tr key={log.id}>
-                <td>{log.date}</td>
+                <td>{new Date(log.date).toLocaleString()}</td>
                 <td>{log.exerciseName}</td>
                 <td>{log.type}</td>
                 <td>{log.progress}</td>
@@ -131,7 +142,11 @@ export class UserExerciseLogs extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Date:
-                        <input name="date" type="text" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                        <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                    </label>
+                    <label>
+                        Time:
+                        <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
                     </label>
                     <label>
                         Exercise Name:

@@ -10,12 +10,16 @@ import {
     createExerciseLog,
     getUserExerciseLogs,
 } from '../services/userService';
+import {
+    getLocalHTMLDate,
+    getLocalHTMLTime,
+} from '../utils/utils';
 
 function shallowSetup() {
     return shallow(<UserExerciseLogs />);
 }
-
-var date = new Date().toString();
+var date = new Date();
+date = new Date(date - date.getSeconds()*1000 - date.getMilliseconds());
 
 const exerciseLog1 = {
     id:             1,
@@ -47,6 +51,7 @@ describe('User Exercise Logs Component', () => {
 
         it('Should have exercise log input form', () => {
             expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'exerciseName').length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'type').length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'progress').length).toBe(1);
@@ -118,6 +123,7 @@ describe('User Exercise Logs Component', () => {
             wrapper = wrapper.find(UserExerciseLogs);
 
             const exerciseLogDate = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').at(0);
+            const exerciseLogTime = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').at(0);
             const exerciseName = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'exerciseName').at(0);
             const exerciseType = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'type').at(0);
             const exerciseLogProgress = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'progress').at(0);
@@ -127,8 +133,13 @@ describe('User Exercise Logs Component', () => {
             expect(wrapper.state().formControls.type.value).toEqual('');
             expect(wrapper.state().formControls.progress.value).toEqual('');
 
-            exerciseLogDate.getDOMNode().value = exerciseLog1.date;
+            const date = getLocalHTMLDate(exerciseLog1.date);
+            const time = getLocalHTMLTime(exerciseLog1.date);
+
+            exerciseLogDate.getDOMNode().value = date;
             exerciseLogDate.simulate('change');
+            exerciseLogTime.getDOMNode().value = time;
+            exerciseLogTime.simulate('change');
             exerciseName.getDOMNode().value = exerciseLog1.exerciseName;
             exerciseName.simulate('change');
             exerciseType.getDOMNode().value = exerciseLog1.type;
@@ -136,7 +147,8 @@ describe('User Exercise Logs Component', () => {
             exerciseLogProgress.getDOMNode().value = exerciseLog1.progress;
             exerciseLogProgress.simulate('change');
 
-            expect(wrapper.state().formControls.date.value).toEqual(exerciseLog1.date.toString());
+            expect(wrapper.state().formControls.date.value).toEqual(date);
+            expect(wrapper.state().formControls.time.value).toEqual(time);
             expect(wrapper.state().formControls.exerciseName.value).toEqual(exerciseLog1.exerciseName);
             expect(wrapper.state().formControls.type.value).toEqual(exerciseLog1.type);
             expect(wrapper.state().formControls.progress.value).toEqual(exerciseLog1.progress);
@@ -150,7 +162,8 @@ describe('User Exercise Logs Component', () => {
 
             var state = {
                 formControls: {
-                    date: { value: exerciseLog1.date },
+                    date: { value: getLocalHTMLDate(exerciseLog1.date) },
+                    time: { value: getLocalHTMLTime(exerciseLog1.date) },
                     exerciseName: { value: exerciseLog1.exerciseName },
                     type: { value: exerciseLog1.type },
                     progress: { value: exerciseLog1.progress },
@@ -170,7 +183,7 @@ describe('User Exercise Logs Component', () => {
 
             await promise2.then(() => {
                 expect(createExerciseLog.mock.calls.length).toBe(1);
-                expect(createExerciseLog.mock.calls[0][0]).toBe(exerciseLog1.date);
+                expect(createExerciseLog.mock.calls[0][0]).toEqual(exerciseLog1.date);
                 expect(createExerciseLog.mock.calls[0][1]).toBe(exerciseLog1.exerciseName);
                 expect(createExerciseLog.mock.calls[0][2]).toBe(exerciseLog1.type);
                 expect(createExerciseLog.mock.calls[0][3]).toBe(exerciseLog1.progress);
@@ -243,7 +256,7 @@ describe('User Exercise Logs Component', () => {
 
             const wrapper = shallowSetup();
             wrapper.setState(state);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.date).length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.prop('children') == exerciseLog1.date.toLocaleString()).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.exerciseName).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.type).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.progress).length).toBe(1);
