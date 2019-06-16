@@ -256,7 +256,7 @@ describe('User Exercise Logs Component', () => {
 
             const wrapper = shallowSetup();
             wrapper.setState(state);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.prop('children') == exerciseLog1.date.toLocaleString()).length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.prop('children') == exerciseLog1.date.toLocaleTimeString()).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.exerciseName).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.type).length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.progress).length).toBe(1);

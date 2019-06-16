@@ -122,20 +122,43 @@ export class UserExerciseLogs extends React.Component {
         console.log(error);
     }
 
+    groupLogsByDate(logs){
+        var dateLogsMap = {};
+        logs.forEach((log) => {
+            let date = new Date(log.date).toLocaleDateString();
+            if(dateLogsMap[date]) dateLogsMap[date].push(log); else dateLogsMap[date] = [log];
+        })
+        return dateLogsMap;
+    }
+
+    logToTableRow(log){
+        return (
+            <tr key={log.id}>
+                <td>{new Date(log.date).toLocaleTimeString()}</td>
+                <td>{log.exerciseName}</td>
+                <td>{log.type}</td>
+                <td>{log.progress}</td>
+            </tr>
+        )
+    }
+
     render() {
 
         if (this.state.loginRedirect) return <Redirect to='/login' />;
 
         var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
-        var tableData = this.state.logs.map(log => (
-            <tr key={log.id}>
-                <td>{new Date(log.date).toLocaleString()}</td>
-                <td>{log.exerciseName}</td>
-                <td>{log.type}</td>
-                <td>{log.progress}</td>
-            </tr>
-        ));
+        var logsByDate = this.groupLogsByDate(this.state.logs);
+
+        var tableData = [];
+        for(var date in logsByDate){
+            tableData.push((
+                <tr key={date}>
+                    <td><b>{date}</b></td>
+                </tr>
+            ))
+            tableData = tableData.concat(logsByDate[date].map(this.logToTableRow));
+        };
 
         return (
             <>
