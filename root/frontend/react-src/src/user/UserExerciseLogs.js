@@ -10,6 +10,7 @@ import {
     getLocalHTMLDate,
     getLocalHTMLTime,
 } from '../utils/utils';
+import styles from './UserExerciseLogs.module.scss';
 
 export class UserExerciseLogs extends React.Component {
 
@@ -159,7 +160,7 @@ export class UserExerciseLogs extends React.Component {
         };
 
         return (
-            <>
+            <div className={styles.container}>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Date:
@@ -188,7 +189,7 @@ export class UserExerciseLogs extends React.Component {
 
                 {tableData}
                 <Link to="/">Back Home</Link>
-            </>
+            </div>
         )
     }
 }
