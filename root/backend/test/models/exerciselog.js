@@ -97,4 +97,27 @@ describe('models/exerciselog', () => {
                 })
         })
     })
+
+    describe('#deleteExerciseLog()', () => {
+        it('successfully deletes exercise log', () => {
+            var id;
+            return this.ExerciseLog.findOne({ where: {
+                ...exercise1,
+                userUuid:   testUser.uuid,
+            } })
+                .then(exerciseLog => {
+                    id = exerciseLog.id;
+                    return this.ExerciseLog.deleteExerciseLog(id);
+                })
+                .then(() => {
+                    return this.ExerciseLog.findOne({ where: {
+                        ...exercise1,
+                        userUuid:   testUser.uuid,
+                    } })
+                })
+                .then(exerciseLog => {
+                    expect(exerciseLog).to.not.be.ok;
+                })
+        })
+    })
 })

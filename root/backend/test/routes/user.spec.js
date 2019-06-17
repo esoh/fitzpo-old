@@ -18,12 +18,19 @@ describe('User API', () => {
     describe('user/exercise-logs', () => {
 
         var cookie;
+        var cookie2;
         var expiredcookie;
         var invalidcookie;
         var user;
+        var user2;
         var account = {
             username: 'Test_username',
             email: 'test@email.com',
+            password: 'Password!123',
+        }
+        var account2 = {
+            username: 'test_username2',
+            email: 'test2@email.com',
             password: 'Password!123',
         }
         var exercise1 = {
@@ -37,9 +44,9 @@ describe('User API', () => {
             progress:       'weight: 85/85/75, reps: 10/7/10',
         };
 
-        before(() => {
+        before(async () => {
             // create an account, emulate a login, and store the token
-            return chai.request(server)
+            await chai.request(server)
                 .post('/accounts')
                 .set('Content-Type', 'application/json')
                 .send(account)
@@ -63,6 +70,21 @@ describe('User API', () => {
                     invalidcookie = [ token.slice(0, token.indexOf('=')) + '=invalidtoken' + token.slice(token.indexOf(';')) ];
 
                     user = res.body.user;
+                });
+
+            await chai.request(server)
+                .post('/accounts')
+                .set('Content-Type', 'application/json')
+                .send(account2)
+                .then(() => {
+                    return chai.request(server)
+                        .post('/auth/token')
+                        .set('Content-Type', 'application/json')
+                        .send(account2);
+                })
+                .then(res => {
+                    cookie2 = res.headers['set-cookie'];
+                    user2 = res.body.user;
                 });
         })
 
@@ -181,5 +203,100 @@ describe('User API', () => {
             })
 
         })
+
+        describe('/DELETE user/exercise-logs', () => {
+            var exerciseLog1id;
+            var exerciseLog2id;
+            before(async () => {
+                await ExerciseLog.destroy({ truncate: { cascade: true } });
+                await ExerciseLog.create({
+                    ...exercise1,
+                    userUuid:   user.uuid,
+                    date:       Date.now(),
+                })
+                await ExerciseLog.create({
+                    ...exercise2,
+                    userUuid:   user.uuid,
+                    date:       Date.now(),
+                })
+                await ExerciseLog.findOne({ where: {
+                    ...exercise1,
+                    userUuid:   user.uuid,
+                } })
+                    .then(log => {
+                        exerciseLog1id = log.id;
+                    });
+                await ExerciseLog.findOne({ where: {
+                    ...exercise2,
+                    userUuid:   user.uuid,
+                } })
+                    .then(log => {
+                        exerciseLog2id = log.id;
+                    });
+            })
+
+            it('successfully deletes exercise log', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + exerciseLog1id)
+                    .set('Cookie', cookie)
+                    .then(res => {
+                        expect(res).to.have.status(200);
+                    })
+            })
+
+            it('returns error if log to delete doesn\'t exist', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + 9999)
+                    .set('Cookie', cookie)
+                    .then(res => {
+                        expect(res.body).to.have.property('error');
+                        expect(res.body.error.code).to.eql(1009);
+                    })
+            })
+
+            it('returns unauthorized error if user is trying to delete log of which it is not the owner', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + exerciseLog2id)
+                    .set('Cookie', cookie2)
+                    .then(res => {
+                        expect(res.body).to.have.property('error');
+                        expect(res.body.error.code).to.eql(1006);
+                    })
+            })
+
+            it('fails to delete exercise with no auth cookie', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + exerciseLog2id)
+                    .then(res => {
+                        expect(res).to.have.status(401);
+                        expect(res.body).to.have.property('error');
+                        expect(res.body.error.code).to.eql(1008);
+                    })
+            })
+
+            it('fails to delete exercise with expired cookie', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + exerciseLog2id)
+                    .set('Cookie', expiredcookie)
+                    .then(res => {
+                        expect(res).to.have.status(401);
+                        expect(res.body).to.have.property('error');
+                        expect(res.body.error.code).to.eql(1008);
+                    })
+            })
+
+            it('fails to delete exercise with invalid cookie', () => {
+                return chai.request(server)
+                    .delete('/user/exercise-logs/' + exerciseLog2id)
+                    .set('Cookie', invalidcookie)
+                    .then(res => {
+                        expect(res).to.have.status(400);
+                        expect(res.body).to.have.property('error');
+                        expect(res.body.error.code).to.eql(1001);
+                    })
+            })
+
+        })
+
     })
 })

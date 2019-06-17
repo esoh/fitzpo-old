@@ -55,5 +55,9 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
 
+    ExerciseLog.deleteExerciseLog = function(logId){
+        return ExerciseLog.destroy({where: {id: logId}});
+    }
+
     return ExerciseLog;
 };

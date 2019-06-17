@@ -165,6 +165,17 @@ class NoTokenError extends APIError {
     }
 }
 
+class ResourceNotFoundError extends APIError {
+    constructor(options={}){
+        super(404, {
+            title: 'Resource not found',
+            detail: 'Resource could not be found in the database. Please check your parameters.',
+            code: 1009,
+            ...options
+        })
+    }
+}
+
 module.exports = {
     APIError,
     InvalidTokenError,
@@ -175,4 +186,5 @@ module.exports = {
     UnauthorizedError,
     DatabaseError,
     NoTokenError,
+    ResourceNotFoundError,
 }
