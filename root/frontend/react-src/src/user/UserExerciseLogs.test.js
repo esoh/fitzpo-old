@@ -9,6 +9,7 @@ import { UserExerciseLogs } from './UserExerciseLogs';
 import {
     createExerciseLog,
     getUserExerciseLogs,
+    deleteExerciseLog,
 } from '../services/userService';
 import {
     getLocalHTMLDate,
@@ -263,6 +264,49 @@ describe('User Exercise Logs Component', () => {
             expect(props.datetime).toEqual(exerciseLog1.date);
             expect(props.type).toEqual(exerciseLog1.type);
             expect(props.progress).toEqual(exerciseLog1.progress);
+        })
+    })
+
+    describe('Deleting exercise log', () => {
+        beforeEach(() => {
+            deleteExerciseLog.mockClear();
+            getUserExerciseLogs.mockClear();
+        })
+
+        it('Exercise Log card props delete should call correct function with correct params', async () => {
+            var promise = Promise.resolve();
+            deleteExerciseLog.mockReturnValue(promise);
+            var promise2 = Promise.resolve({ exerciseLogs: [exerciseLog1] });
+            getUserExerciseLogs.mockReturnValue(promise2);
+
+            expect(getUserExerciseLogs.mock.calls.length).toBe(0);
+            const wrapper = shallowSetup();
+
+            await promise2.then(() => {
+                expect(getUserExerciseLogs.mock.calls.length).toBe(1);
+            })
+
+            expect(wrapper.find(ExerciseLogCard).length).toBe(1);
+            let card = wrapper.find(ExerciseLogCard).at(0);
+
+            expect(deleteExerciseLog.mock.calls.length).toBe(0);
+            expect(getUserExerciseLogs.mock.calls.length).toBe(1);
+            promise2 = Promise.resolve({ exerciseLogs: [] });
+            getUserExerciseLogs.mockReturnValue(promise2);
+
+            card.props().deleteLog();
+
+            await promise.then(() => {
+                expect(deleteExerciseLog.mock.calls.length).toBe(1);
+                expect(deleteExerciseLog.mock.calls[0][0]).toBe(exerciseLog1.id);
+            })
+
+            await promise2.then(() => {
+                wrapper.update()
+            }).then(() => {
+                expect(wrapper.find(ExerciseLogCard).length).toBe(0);
+                expect(getUserExerciseLogs.mock.calls.length).toBe(2);
+            })
         })
     })
 })

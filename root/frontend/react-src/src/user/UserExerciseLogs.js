@@ -6,6 +6,7 @@ import CardGroup from './CardGroup';
 import {
     createExerciseLog,
     getUserExerciseLogs,
+    deleteExerciseLog,
 } from '../services/userService';
 import {
     getLocalHTMLDate,
@@ -89,7 +90,7 @@ export class UserExerciseLogs extends React.Component {
                           this.state.formControls.progress.value)
             .then(res => {
                 // TODO: maybe add the returned log to the list client-side?
-                if(res.error) return this.handleErrorResponse(res.error);
+                if(res && res.error) return this.handleErrorResponse(res.error);
                 this.updatePageExerciseLogs();
             })
             .catch(err => {
@@ -98,10 +99,10 @@ export class UserExerciseLogs extends React.Component {
             });
     }
 
-    updatePageExerciseLogs() {
+    updatePageExerciseLogs = () => {
         getUserExerciseLogs()
             .then(res => {
-                if(res.error) return this.handleErrorResponse(res.error);
+                if(res && res.error) return this.handleErrorResponse(res.error);
 
                 if(res.exerciseLogs){
                     this.setState({ logs: res.exerciseLogs })
@@ -112,7 +113,7 @@ export class UserExerciseLogs extends React.Component {
             .catch(this.handleError);
     }
 
-    handleErrorResponse(error){
+    handleErrorResponse = (error) => {
         if(error.code === 1008) return this.setState({ loginRedirect: true });
 
         this.setState({
@@ -134,14 +135,23 @@ export class UserExerciseLogs extends React.Component {
         return dateLogsMap;
     }
 
-    logToTableRow(log){
+    deleteLog = (id) => {
+        deleteExerciseLog(id)
+            .then(res => {
+                if(res && res.error) return this.handleErrorResponse(res.error);
+                this.updatePageExerciseLogs();
+            })
+            .catch(this.handleError);
+    }
+
+    logToTableRow = (log) => {
         var props = {
             exerciseName: log.exerciseName,
             type: log.type,
             progress: log.progress,
             datetime: new Date(log.date),
         }
-        return (<ExerciseLogCard key={log.id} {...props}/>);
+        return (<ExerciseLogCard key={log.id} {...props} deleteLog={() => this.deleteLog(log.id)}/>);
     }
 
     render() {

@@ -49,7 +49,7 @@ class Signup extends React.Component {
                         this.state.formControls.email.value,
                         this.state.formControls.password.value)
             .then(result => {
-                if(result.error){
+                if(result && result.error){
                     switch(result.error.code){
                         case 1004:
                             this.setState({

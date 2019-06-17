@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './ExerciseLogCard.module.scss';
 
 function ExerciseLogCard(props){
-    var time = (props.datetime) ? props.datetime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
+    //var time = (props.datetime) ? props.datetime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
     var type = (props.type) ? props.type : '';
     return (
         <div className={styles.exerciseLog}>
@@ -18,7 +18,7 @@ function ExerciseLogCard(props){
                 </div>
             </div>
             <div className={styles.footer}>
-                <p className={styles.timestamp}>{time}</p>
+                <button onClick={props.deleteLog}>Delete</button>
             </div>
         </div>
     );
@@ -28,7 +28,8 @@ ExerciseLogCard.propTypes = {
     exerciseName: PropTypes.string.isRequired,
     type: PropTypes.string,
     progress: PropTypes.string.isRequired,
-    datetime: PropTypes.instanceOf(Date),
+    //datetime: PropTypes.instanceOf(Date),
+    deleteLog: PropTypes.func.isRequired,
 }
 
 export default ExerciseLogCard;
