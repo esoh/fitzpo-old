@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
 import ExerciseLogCard from './ExerciseLogCard';
+import CardGroup from './CardGroup';
 import {
     createExerciseLog,
     getUserExerciseLogs,
@@ -154,9 +155,10 @@ export class UserExerciseLogs extends React.Component {
         var tableData = [];
         for(var date in logsByDate){
             tableData.push((
-                <h4 key={date}><b>{date}</b></h4>
-            ))
-            tableData = tableData.concat(logsByDate[date].map(this.logToTableRow));
+                <CardGroup title={date} key={date}>
+                    {logsByDate[date].map(this.logToTableRow)}
+                </CardGroup>
+            ));
         };
 
         return (
