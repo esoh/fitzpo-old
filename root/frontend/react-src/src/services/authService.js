@@ -29,7 +29,7 @@ function checkLoggedIn(){
             .then(res => res.json())
             .then(data => {
                 // possibly invalid cookie
-                if(data.error){
+                if(data && data.error){
                     reject({error: data.error})
                 }
 

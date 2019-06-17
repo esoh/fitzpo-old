@@ -17,7 +17,15 @@ function getUserExerciseLogs(){
         .then(res => res.json());
 }
 
+function deleteExerciseLog(id){
+    // have to make sure user is authorized to do this
+    // check if user extracted from cookie is owner of this exercise log
+    console.log("DELETING EXERCISE " + id);
+    return fetch('/user/exercise-logs/' + id, { method: 'DELETE' });
+}
+
 module.exports = {
     createExerciseLog,
     getUserExerciseLogs,
+    deleteExerciseLog,
 }

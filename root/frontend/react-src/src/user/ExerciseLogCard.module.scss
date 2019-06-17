@@ -60,11 +60,16 @@
     }
 
     .footer {
+        display: flex;
+        justify-content: space-evenly;
+
         // time will be on the bottom right
-        .timestamp {
-            float: right;
-            font-size: 0.75em;
-        }
+        /*
+         * .timestamp {
+         *   float: right;
+         *   font-size: 0.75em;
+         * }
+         */
     }
 
     p {

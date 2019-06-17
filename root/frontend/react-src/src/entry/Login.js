@@ -49,7 +49,7 @@ export class Login extends React.Component {
                          this.state.formControls.password.value)
             .then(result => {
                 console.log(result)
-                if(result.error){
+                if(result && result.error){
                     this.setState({
                         messages: [result.error.title]
                     })
