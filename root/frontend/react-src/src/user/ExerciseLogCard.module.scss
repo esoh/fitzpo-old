@@ -1,0 +1,67 @@
+.exerciseLog {
+    // vertical
+    display: flex;
+    flex-direction: column;
+    // fill parent width
+    width: 100%;
+    // TODO: calculate min-width and remove border
+    border: 1px solid black;
+
+    .body {
+        // body is horizontal
+        display: flex;
+        flex-direction: row;
+
+        // horizontal margins between every child
+        * {
+            margin: 0 0.25rem;
+        }
+
+        // descriptor includes title and subtitle, float to left
+        .descriptor {
+            float: left;
+            width: 10rem;
+            // min-width is 0 for auto min-width to work bc of text overflow
+            // can't set this to something different
+            min-width: 0;
+
+            // title and subtitle should not wrap to break text
+            // text overflow instead, but overflow means min-width: auto in parent
+            // doesn't work
+            span {
+                white-space: nowrap;
+                display: block;
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                text-align: left;
+            }
+
+            .title {
+                font-weight: bold;
+            }
+
+            .subtitle {
+                color: gray;
+            }
+        }
+
+        // content should be centered vertically
+        .content {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .footer {
+        // time will be on the bottom right
+        .timestamp {
+            float: right;
+            font-size: 0.75em;
+        }
+    }
+
+    p {
+        margin: 0.1rem;
+    }
+}

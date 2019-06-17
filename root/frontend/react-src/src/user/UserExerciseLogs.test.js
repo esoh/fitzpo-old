@@ -14,6 +14,7 @@ import {
     getLocalHTMLDate,
     getLocalHTMLTime,
 } from '../utils/utils';
+import ExerciseLogCard from './ExerciseLogCard';
 
 function shallowSetup() {
     return shallow(<UserExerciseLogs />);
@@ -43,10 +44,6 @@ describe('User Exercise Logs Component', () => {
 
         it('Should have link back to home', () => {
             expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/').length).toBe(1);
-        })
-
-        it('Should have table', () => {
-            expect(wrapper.findWhere(elem => elem.type() == 'table').length).toBe(1);
         })
 
         it('Should have exercise log input form', () => {
@@ -249,17 +246,23 @@ describe('User Exercise Logs Component', () => {
             expect(wrapper.findWhere(elem => elem.type() == 'p' && elem.text() === 'test').length).toBe(1);
         })
 
-        it('Should render correct DOM table elemtns from state logs values', () => {
+        it('Should generate view components with correct props from state logs values', () => {
             var state = {
                 logs: [exerciseLog1],
             }
 
             const wrapper = shallowSetup();
             wrapper.setState(state);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.prop('children') == exerciseLog1.date.toLocaleTimeString()).length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.exerciseName).length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.type).length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'td' && elem.text() === exerciseLog1.progress).length).toBe(1);
+
+            let exerciseLogCards = wrapper.find(ExerciseLogCard);
+            expect(exerciseLogCards.length).toBe(1);
+
+            let props = exerciseLogCards.at(0).props();
+
+            expect(props.exerciseName).toEqual(exerciseLog1.exerciseName);
+            expect(props.datetime).toEqual(exerciseLog1.date);
+            expect(props.type).toEqual(exerciseLog1.type);
+            expect(props.progress).toEqual(exerciseLog1.progress);
         })
     })
 })
