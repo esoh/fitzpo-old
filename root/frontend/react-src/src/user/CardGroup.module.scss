@@ -1,0 +1,20 @@
+.cardGroup {
+    margin: 0.5rem 0;
+    border-width: 1px 1px 0;
+    border-color: #e6e6e6;
+    border-style: solid;
+    background-color: #fafafa;
+    box-sizing: border-box;
+
+    & > *{
+        border-bottom: 1px solid #e6e6e6;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    .title {
+        font-size: 12px;
+        padding-left: 0.5rem;
+    }
+
+}

@@ -6,8 +6,12 @@
     // fill parent width
     width: 100%;
     // TODO: calculate min-width and handle stacked borders
-    border: 1px solid #e6e6e6;
-    border-radius: 1px;
+    /*
+     * border: 1px solid #e6e6e6;
+     * border-radius: 1px;
+     */
+    // border should be calculated in element width
+    box-sizing: border-box;
 
     .body {
         // body is horizontal
