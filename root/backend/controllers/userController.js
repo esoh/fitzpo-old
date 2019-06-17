@@ -1,4 +1,8 @@
 const { ExerciseLog } = require('../models');
+const {
+    ResourceNotFoundError,
+    UnauthorizedError,
+} = require('../utils/APIError');
 
 function getUserExerciseLogs(req, res, next){
     // authenticated user will be stored in req.user by passport middleware
@@ -34,7 +38,22 @@ function createExerciseLog(req, res, next){
         .catch(next);
 }
 
+function deleteExerciseLog(req, res, next){
+    let userId = req.user.uuid;
+    return ExerciseLog.findByPk(req.params.id)
+        .then(log => {
+            if(!log) return new ResourceNotFoundError().sendToRes(res);
+            if(log.userUuid != userId) return new UnauthorizedError().sendToRes(res);
+            return ExerciseLog.deleteExerciseLog(req.params.id)
+                .then(() => {
+                    res.sendStatus(200);
+                })
+        })
+        .catch(next);
+}
+
 module.exports = {
     getUserExerciseLogs,
     createExerciseLog,
+    deleteExerciseLog,
 };
