@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
+import ExerciseLogCard from './ExerciseLogCard';
 import {
     createExerciseLog,
     getUserExerciseLogs,
@@ -132,14 +133,13 @@ export class UserExerciseLogs extends React.Component {
     }
 
     logToTableRow(log){
-        return (
-            <tr key={log.id}>
-                <td>{new Date(log.date).toLocaleTimeString()}</td>
-                <td>{log.exerciseName}</td>
-                <td>{log.type}</td>
-                <td>{log.progress}</td>
-            </tr>
-        )
+        var props = {
+            exerciseName: log.exerciseName,
+            type: log.type,
+            progress: log.progress,
+            datetime: new Date(log.date),
+        }
+        return (<ExerciseLogCard key={log.id} {...props}/>);
     }
 
     render() {
@@ -153,9 +153,7 @@ export class UserExerciseLogs extends React.Component {
         var tableData = [];
         for(var date in logsByDate){
             tableData.push((
-                <tr key={date}>
-                    <td><b>{date}</b></td>
-                </tr>
+                <h4 key={date}><b>{date}</b></h4>
             ))
             tableData = tableData.concat(logsByDate[date].map(this.logToTableRow));
         };
@@ -188,19 +186,7 @@ export class UserExerciseLogs extends React.Component {
 
                 {messages}
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Exercise</th>
-                            <th>Type</th>
-                            <th>Progress</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableData}
-                    </tbody>
-                </table>
+                {tableData}
                 <Link to="/">Back Home</Link>
             </>
         )
