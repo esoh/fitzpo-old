@@ -1,0 +1,15 @@
+a {
+    margin: 0 0.5rem;
+}
+
+section {
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    background-color: #f6f6f6;
+    flex-grow: 1;
+}

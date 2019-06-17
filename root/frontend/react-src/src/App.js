@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import './App.css';
+import './App.scss';
 import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
@@ -59,15 +59,19 @@ export class App extends React.Component {
 
     render() {
         return (
-            <Router>
-                <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route path='/signup' component={Signup} />
-                    <Route path='/login' component={Login} />
-                    <Route path='/exercise-logs' component={UserExerciseLogs} />
-                    <Redirect to='/' />
-                </Switch>
-            </Router>
+            <section>
+                <main>
+                    <Router>
+                        <Switch>
+                            <Route exact path='/' component={Home} />
+                            <Route path='/signup' component={Signup} />
+                            <Route path='/login' component={Login} />
+                            <Route path='/exercise-logs' component={UserExerciseLogs} />
+                            <Redirect to='/' />
+                        </Switch>
+                    </Router>
+                </main>
+            </section>
         );
     }
 }

@@ -1,11 +1,13 @@
 .exerciseLog {
+    background-color: #fff;
     // vertical
     display: flex;
     flex-direction: column;
     // fill parent width
     width: 100%;
-    // TODO: calculate min-width and remove border
-    border: 1px solid black;
+    // TODO: calculate min-width and handle stacked borders
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
 
     .body {
         // body is horizontal
