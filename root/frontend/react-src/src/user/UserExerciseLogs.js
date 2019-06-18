@@ -14,7 +14,7 @@ import {
 } from '../utils/utils';
 import styles from './UserExerciseLogs.module.scss';
 
-export class UserExerciseLogs extends React.Component {
+class UserExerciseLogs extends React.Component {
 
     abortController = new window.AbortController();
 

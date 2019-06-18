@@ -5,7 +5,7 @@ jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter as Router } from "react-router-dom";
 import { shallow, mount } from 'enzyme';
 
-import { UserExerciseLogs } from './UserExerciseLogs';
+import UserExerciseLogs from './UserExerciseLogs';
 import {
     createExerciseLog,
     getUserExerciseLogs,
