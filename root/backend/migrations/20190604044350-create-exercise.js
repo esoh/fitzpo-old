@@ -48,7 +48,7 @@ module.exports = {
             },
         })
             .then(() => {
-                queryInterface.addIndex('Exercises', {
+                return queryInterface.addIndex('Exercises', {
                     fields: ['name', 'from'],
                     type: 'UNIQUE',
                 })
