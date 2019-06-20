@@ -79,11 +79,11 @@ export class Login extends React.Component {
                         <form onSubmit={this.handleSubmit}>
                             <label>
                                 Username:
-                                <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
+                                <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} autoComplete="username"/>
                             </label>
                             <label>
                                 Password:
-                                <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
+                                <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} autoComplete="current-password"/>
                             </label>
                             <input type="submit" value="Login" />
                         </form>
