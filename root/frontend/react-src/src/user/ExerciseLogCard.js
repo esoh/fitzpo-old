@@ -16,6 +16,11 @@ class ExerciseLogCard extends React.Component {
     mouseLeave = (e) => {
         this.setState({ toolbarVisible: false })
     }
+    mouseHover = (e) => {
+        this.setState((state) => {
+            return (state.toolbarVisible) ? null : { toolbarVisible: true };
+        })
+    }
 
     render() {
         var type = (this.props.type) ? this.props.type : '';
@@ -23,7 +28,7 @@ class ExerciseLogCard extends React.Component {
         var visibility = this.state.toolbarVisible ? styles.show : styles.hide;
         var footerClass = classNames(styles.footer, visibility);
         return (
-            <div className={styles.exerciseLog} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
+            <div className={styles.exerciseLog} onMouseOver={this.mouseHover} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
                 <div className={styles.body}>
                     <div className={styles.descriptor}>
                         <span className={styles.title}>{this.props.exerciseName}</span>
