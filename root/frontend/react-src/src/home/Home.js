@@ -4,15 +4,21 @@ import PropTypes from 'prop-types';
 
 import GuestHome from './GuestHome';
 import UserHome from './UserHome';
+import styles from './Home.module.scss';
 
 export function Home(props) {
     const isLoggedIn = props.isLoggedIn;
 
-    if(isLoggedIn === true) {
-        return <UserHome />;
-    } else if(isLoggedIn === false){
-        return <GuestHome />;
+    if(isLoggedIn !== null){
+        return (
+            <div className={styles.center}>
+                <div className={styles.content}>
+                    {(isLoggedIn) ? <UserHome /> : <GuestHome />}
+                </div>
+            </div>
+        )
     }
+
     // login state not yet retrieved from api server
     return null;
 }

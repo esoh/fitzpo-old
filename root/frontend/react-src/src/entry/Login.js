@@ -3,9 +3,9 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import './Entry.css';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
+import styles from './Entry.module.scss';
 
 export class Login extends React.Component {
 
@@ -73,22 +73,26 @@ export class Login extends React.Component {
         var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
         return (
-            <div className="entry">
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Username:
-                        <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Password:
-                        <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Login" />
-                </form>
-                {messages}
-                <div>
-                    <Link to="/">Home</Link>
-                    <Link to="/signup">Sign Up</Link>
+            <div className={styles.center}>
+                <div className={styles.content}>
+                    <div className={styles.entry}>
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Username:
+                                <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
+                            </label>
+                            <label>
+                                Password:
+                                <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
+                            </label>
+                            <input type="submit" value="Login" />
+                        </form>
+                        {messages}
+                        <div>
+                            <Link to="/">Home</Link>
+                            <Link to="/signup">Sign Up</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
