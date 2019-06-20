@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
 import { registerAccount } from '../services/authService';
-import './Entry.css';
+import styles from './Entry.module.scss';
 
 // TODO: Add verify password field
 
@@ -81,26 +81,30 @@ class Signup extends React.Component {
         var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
         return (
-            <div className="entry">
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Username:
-                        <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Email:
-                        <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Password:
-                        <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Sign Up" />
-                </form>
-                {messages}
-                <div>
-                    <Link to="/">Home</Link>
-                    <Link to="/login">Log In</Link>
+            <div className={styles.center}>
+                <div className={styles.content}>
+                    <div className={styles.entry}>
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Username:
+                                <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} />
+                            </label>
+                            <label>
+                                Email:
+                                <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} />
+                            </label>
+                            <label>
+                                Password:
+                                <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} />
+                            </label>
+                            <input type="submit" value="Sign Up" />
+                        </form>
+                        {messages}
+                        <div>
+                            <Link to="/">Home</Link>
+                            <Link to="/login">Log In</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
