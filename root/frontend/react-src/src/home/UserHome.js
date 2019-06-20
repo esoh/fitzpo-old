@@ -34,10 +34,10 @@ export class UserHome extends React.Component {
         return (
             <>
                 <p>Welcome {this.props.username}</p>
+                <Link to="/exercise-logs">My Exercise Log</Link>
                 <button onClick={this.handleLogout}>
                     Log Out
                 </button>
-                <Link to="/exercise-logs">My Exercise Log</Link>
             </>
         )
     }
