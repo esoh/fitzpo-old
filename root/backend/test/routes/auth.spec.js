@@ -77,6 +77,75 @@ describe('Auth API', () => {
                 })
         })
 
+        it('fail to validate account with empty username', (done) => {
+            chai.request(server)
+                .post('/auth/token')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   '',
+                    password:   'Password!123'
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
+                    expect(res).to.not.have.header('Set-Cookie');
+                    done()
+                })
+        })
+
+        it('fail to validate account with no username', (done) => {
+            chai.request(server)
+                .post('/auth/token')
+                .set('Content-Type', 'application/json')
+                .send({
+                    password:   'Password!123'
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
+                    expect(res).to.not.have.header('Set-Cookie');
+                    done()
+                })
+        })
+
+        it('fail to validate account with empty password', (done) => {
+            chai.request(server)
+                .post('/auth/token')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'username',
+                    password:   ''
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
+                    expect(res).to.not.have.header('Set-Cookie');
+                    done()
+                })
+        })
+
+        it('fail to validate account with no password', (done) => {
+            chai.request(server)
+                .post('/auth/token')
+                .set('Content-Type', 'application/json')
+                .send({
+                    username:   'username',
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.property('error')
+                    expect(res.body.error.code).to.eql(1003)
+                    expect(res).to.not.have.header('Set-Cookie');
+                    done()
+                })
+        })
     })
 
     describe('/DELETE auth/cookie', () => {
