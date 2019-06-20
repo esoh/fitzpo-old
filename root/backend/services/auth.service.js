@@ -108,7 +108,6 @@ function localAuth(req, res){
     return new Promise((resolve, reject) => {
         passport.authenticate('local', function(err, account, info){
             if(err) reject(err);
-            if(info) reject(info);
             resolve(account);
         })(req, res);
     });
