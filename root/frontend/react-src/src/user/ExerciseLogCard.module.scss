@@ -1,15 +1,13 @@
+@import '../styles/colors';
+
 .exerciseLog {
-    background-color: #fff;
+    background-color: $color-elem-bg-primary;
     // vertical
     display: flex;
     flex-direction: column;
     // fill parent width
     width: 100%;
-    // TODO: calculate min-width and handle stacked borders
-    /*
-     * border: 1px solid #e6e6e6;
-     * border-radius: 1px;
-     */
+    // TODO: calculate min-width
     // border should be calculated in element width
     box-sizing: border-box;
 

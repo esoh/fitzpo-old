@@ -8,6 +8,7 @@ import { App } from './App';
 import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
+import Navbar from './navbar/Navbar';
 
 import {
     checkLoggedIn,
@@ -52,6 +53,11 @@ describe('App component', () => {
         expect(pathMap['/']).toBe(Home);
         expect(pathMap['/signup']).toBe(Signup);
         expect(pathMap['/login']).toBe(Login);
+    })
+
+    it('Should render navbar', () => {
+        const { wrapper } = setup();
+        expect(wrapper.find(Navbar).length).toBe(1);
     })
 
     it('Should call mocked checkLoggedIn which returns a valid account then call setLoggedIn with param true', () => {

@@ -1,15 +1,21 @@
-a {
-    margin: 0 0.5rem;
-}
-
 section {
     min-height: 100%;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
 main {
     background-color: #f6f6f6;
     flex-grow: 1;
+    order: 1;
+}
+
+nav {
+    order: 0;
+}
+
+div, section, main, nav {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
 }

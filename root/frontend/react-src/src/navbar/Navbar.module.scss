@@ -1,0 +1,42 @@
+@import '../styles/shared';
+@import '../styles/colors';
+
+$nav-height: 55px;
+
+.spacer {
+    flex-basis: $nav-height;
+}
+
+.nav {
+
+    div {
+        flex-direction: row;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .navFixed {
+        border-bottom: 1px solid $color-elem-border;
+        height: $nav-height;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        background-color: $color-elem-bg-primary;
+    }
+
+    .brandIcon {
+        height: 25px;
+        width: 25px;
+        margin-right: .375rem;
+        fill: $color-primary;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 768px;
+        display: flex;
+        padding: 0 1rem;
+        justify-content: space-between;
+        height: 100%;
+    }
+}

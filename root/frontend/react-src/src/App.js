@@ -8,6 +8,7 @@ import Signup from './entry/Signup';
 import Login from './entry/Login';
 import Home from './home/Home';
 import UserExerciseLogs from './user/UserExerciseLogs';
+import Navbar from './navbar/Navbar';
 import { setLoggedIn } from './redux/actions';
 import { checkLoggedIn, deauthenticateAccountLocally } from './services/authService';
 
@@ -59,9 +60,10 @@ export class App extends React.Component {
 
     render() {
         return (
-            <section>
-                <main>
-                    <Router>
+            <Router>
+                <section>
+                    <Navbar />
+                    <main>
                         <Switch>
                             <Route exact path='/' component={Home} />
                             <Route path='/signup' component={Signup} />
@@ -69,9 +71,9 @@ export class App extends React.Component {
                             <Route path='/exercise-logs' component={UserExerciseLogs} />
                             <Redirect to='/' />
                         </Switch>
-                    </Router>
-                </main>
-            </section>
+                    </main>
+                </section>
+            </Router>
         );
     }
 }
