@@ -6,4 +6,12 @@
 
 .active {
     color: $color-text-primary;
+
+    // inset box-shadow negative vertical means that shadow will be cast from
+    // bottom up. (it's like the element depressed into the page.)
+    // then we use 0 blur.
+    // -1px spread is used to start the shadow 1px away from where it's supposed
+    // to start (for inset the shadow starts more outwards with negative.)
+    // this effectively gives this box a 2px bottom border.
+    box-shadow: 0 -3px 0 -1px $color-primary inset;
 }
