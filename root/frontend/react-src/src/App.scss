@@ -1,3 +1,5 @@
+@import 'styles/colors';
+
 section {
     min-height: 100%;
     overflow: hidden;
@@ -19,3 +21,13 @@ div, section, main, nav {
     flex-direction: column;
     flex-shrink: 0;
 }
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: $color-text-primary;
+}
+
