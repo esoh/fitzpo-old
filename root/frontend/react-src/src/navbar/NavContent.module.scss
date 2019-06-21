@@ -1,0 +1,9 @@
+@import '../styles/colors';
+
+.link {
+    color: $color-text-inactive;
+}
+
+.active {
+    color: $color-text-primary;
+}
