@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import GuestHome from './GuestHome';
 import UserHome from './UserHome';
@@ -12,7 +13,7 @@ export function Home(props) {
     if(isLoggedIn !== null){
         return (
             <div className={styles.center}>
-                <div className={styles.content}>
+                <div className={classNames(styles.content, styles.home)}>
                     {(isLoggedIn) ? <UserHome /> : <GuestHome />}
                 </div>
             </div>
