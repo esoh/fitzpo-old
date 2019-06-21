@@ -1,11 +1,17 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
-export default function UserNavContent(props){
+import styles from './NavContent.module.scss'
+
+export default function UserNavContent(){
+    let linkProps = {
+        className: styles.link,
+        activeClassName: styles.active,
+    }
     return (
-        <div>
-            <Link to='/'>Home</Link>
-            <Link to='/exercise-logs'>My Logs</Link>
-        </div>
+        <>
+            <NavLink {...linkProps} exact to='/'>Home</NavLink>
+            <NavLink {...linkProps} to='/exercise-logs'>My Logs</NavLink>
+        </>
     )
 }
