@@ -1,17 +1,19 @@
 @import '../styles/colors';
 
-.cardGroup {
+.feedItem {
     margin: 0.5rem 0;
     border-width: 1px 1px 0;
     border-color: $color-elem-border;
     border-style: solid;
     background-color: $color-elem-bg-secondary;
-    box-sizing: border-box;
 
-    & > *{
+    & > * {
         border-bottom: 1px solid $color-elem-border;
         box-sizing: border-box;
         margin: 0;
+    }
+    & > *:not(.title){
+        background-color: $color-elem-bg-primary;
     }
 
     .title {

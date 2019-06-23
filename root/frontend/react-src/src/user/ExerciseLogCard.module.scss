@@ -1,19 +1,12 @@
 @import '../styles/colors';
 
 .exerciseLog {
-    background-color: $color-elem-bg-primary;
-    // vertical
-    display: flex;
-    flex-direction: column;
     // fill parent width
     width: 100%;
     // TODO: calculate min-width
-    // border should be calculated in element width
-    box-sizing: border-box;
 
     .body {
         // body is horizontal
-        display: flex;
         flex-direction: row;
 
         // horizontal margins between every child
@@ -58,7 +51,6 @@
     }
 
     .footer {
-        display: flex;
         justify-content: space-evenly;
 
         // time will be on the bottom right

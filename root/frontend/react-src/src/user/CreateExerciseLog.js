@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FeedItem from './FeedItem';
 import { createExerciseLog } from '../services/userService';
 import {
     getLocalHTMLDate,
@@ -88,7 +89,7 @@ class CreateExerciseLog extends React.Component {
         var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
         return (
-            <>
+            <FeedItem title="Log an exercise">
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Date:
@@ -113,7 +114,7 @@ class CreateExerciseLog extends React.Component {
                     <input type="submit" value="Log Exercise" />
                 </form>
                 {messages}
-            </>
+            </FeedItem>
         )
     }
 }

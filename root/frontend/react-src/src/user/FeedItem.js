@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './CardGroup.module.scss';
+import styles from './FeedItem.module.scss';
 
-export default function CardGroup(props){
+export default function FeedItem(props){
     return (
-        <div className={styles.cardGroup}>
+        <div className={styles.feedItem}>
             <h3 className={styles.title}>{props.title}</h3>
             {props.children}
         </div>

@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 import ExerciseLogCard from './ExerciseLogCard';
-import CardGroup from './CardGroup';
+import FeedItem from './FeedItem';
 import CreateExerciseLog from './CreateExerciseLog';
 import {
     getUserExerciseLogs,
@@ -106,9 +106,9 @@ export class UserExerciseLogs extends React.Component {
         var tableData = [];
         for(var date in logsByDate){
             tableData.push((
-                <CardGroup title={date} key={date}>
+                <FeedItem title={date} key={date}>
                     {logsByDate[date].map(this.logToTableRow)}
-                </CardGroup>
+                </FeedItem>
             ));
         };
 
