@@ -38,18 +38,15 @@ describe('UserHome component', () => {
         expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/exercise-logs').length).toBe(1);
     })
 
-    it('clicking the button should call deauthLocally and render redirect', () => {
-        expect(deauthenticateAccountLocally.mock.calls.length).toBe(0);
-        expect(setLoggedIn.mock.calls.length).toBe(0);
+    it('clicking the button should call deauthLocally and set setLoggedIn to false', () => {
         const deauth = Promise.resolve();
         deauthenticateAccountLocally.mockReturnValue(deauth);
 
         const { wrapper } = setup();
+        expect(deauthenticateAccountLocally.mock.calls.length).toBe(0);
+        expect(setLoggedIn.mock.calls.length).toBe(0);
 
         const btn = wrapper.findWhere(elem => elem.type() == 'button' && elem.text() === "Log Out");
-
-        expect(wrapper.find(Redirect).length).toBe(0);
-        expect(wrapper.state().redirect).toBe(false);
 
         btn.simulate('click');
         expect(deauthenticateAccountLocally.mock.calls.length).toBe(1);
@@ -59,8 +56,6 @@ describe('UserHome component', () => {
         }).then(() => {
             expect(setLoggedIn.mock.calls.length).toBe(1);
             expect(setLoggedIn.mock.calls[0][0]).toBe(false);
-            expect(wrapper.state().redirect).toBe(true);
-            expect(wrapper.find(Redirect).length).toBe(1);
         })
     })
 })
