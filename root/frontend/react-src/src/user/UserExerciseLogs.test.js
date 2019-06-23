@@ -3,64 +3,76 @@ jest.mock('../services/userService');
 import React from 'react';
 jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter as Router } from "react-router-dom";
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
+import CreateExerciseLog from './CreateExerciseLog';
 import { UserExerciseLogs } from './UserExerciseLogs';
 import {
     createExerciseLog,
     getUserExerciseLogs,
     deleteExerciseLog,
 } from '../services/userService';
-import {
-    getLocalHTMLDate,
-    getLocalHTMLTime,
-} from '../utils/utils';
 import ExerciseLogCard from './ExerciseLogCard';
 
-var props = { setLoggedIn: jest.fn(), };
+var setLoggedIn = jest.fn();
+var props = { setLoggedIn };
 
 function shallowSetup() {
     return shallow(<UserExerciseLogs {...props} />);
 }
+
 var date = new Date();
 date = new Date(date - date.getSeconds()*1000 - date.getMilliseconds());
-
 const exerciseLog1 = {
     id:             1,
     date:           date,
     exerciseName:   'Bench Press',
     type:           '5x5',
     progress:       '5/5/5/5/5'
-}
+};
 
 const noTokenErrorRes = {
     error: {
         code: 1008
     }
-}
+};
+
 
 describe('User Exercise Logs Component', () => {
 
     describe('Existing components and elements', () => {
-        getUserExerciseLogs.mockReturnValue(Promise.resolve({ exerciseLogs: [] }));
-        const wrapper = shallowSetup();
-
-        it('Should have link back to home', () => {
-            expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/').length).toBe(1);
+        beforeEach(() => {
+            getUserExerciseLogs.mockClear();
         })
 
-        it('Should have exercise log input form', () => {
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'exerciseName').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'type').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'progress').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('type') == 'submit').length).toBe(1);
+        it('Should render CreateExerciseLog component with correct props', async () => {
+            var promise = Promise.resolve({ exerciseLogs: [] });
+            getUserExerciseLogs.mockReturnValue(promise);
+            expect(getUserExerciseLogs.mock.calls.length).toBe(0);
+            const wrapper = shallowSetup();
+
+            var creator = wrapper.find(CreateExerciseLog)
+            expect(creator.length).toBe(1);
+            creator = creator.at(0);
+
+            await promise.then(() => {
+                expect(getUserExerciseLogs.mock.calls.length).toBe(1);
+            });
+
+            creator.props().updatePageExerciseLogs();
+
+            await promise.then(() => {
+                expect(getUserExerciseLogs.mock.calls.length).toBe(2);
+            });
+
+            expect(setLoggedIn.mock.calls.length).toBe(0);
+            expect(wrapper.state().loginRedirect).toBe(false);
+            creator.props().logout();
+            expect(setLoggedIn.mock.calls.length).toBe(1);
+            expect(setLoggedIn.mock.calls[0][0]).toBe(false);
+            expect(wrapper.state().loginRedirect).toBe(true);
         })
 
-        it('Date state value should be set to a valid date', () => {
-            expect(isNaN(Date.parse(wrapper.state().formControls.date.value))).toBe(false);
-        })
     })
 
     describe('Get user\'s exercise logs', () => {
@@ -102,137 +114,6 @@ describe('User Exercise Logs Component', () => {
                 .then(() => {
                     expect(wrapper.state().loginRedirect).toBe(true);
                 });
-        })
-    })
-
-    describe('Log exercise', () => {
-        beforeEach(() => {
-            getUserExerciseLogs.mockClear();
-            createExerciseLog.mockClear();
-        })
-
-        it('Form input fields should update their respective state values', () => {
-            getUserExerciseLogs.mockReturnValue(Promise.resolve({exerciseLogs: []}));
-
-            var wrapper = mount(
-                <Router>
-                    <UserExerciseLogs />
-                </Router>
-            );
-
-            wrapper = wrapper.find(UserExerciseLogs);
-
-            const exerciseLogDate = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').at(0);
-            const exerciseLogTime = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').at(0);
-            const exerciseName = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'exerciseName').at(0);
-            const exerciseType = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'type').at(0);
-            const exerciseLogProgress = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'progress').at(0);
-
-            expect(isNaN(Date.parse(wrapper.state().formControls.date.value))).toBe(false);
-            expect(wrapper.state().formControls.exerciseName.value).toEqual('');
-            expect(wrapper.state().formControls.type.value).toEqual('');
-            expect(wrapper.state().formControls.progress.value).toEqual('');
-
-            const date = getLocalHTMLDate(exerciseLog1.date);
-            const time = getLocalHTMLTime(exerciseLog1.date);
-
-            exerciseLogDate.getDOMNode().value = date;
-            exerciseLogDate.simulate('change');
-            exerciseLogTime.getDOMNode().value = time;
-            exerciseLogTime.simulate('change');
-            exerciseName.getDOMNode().value = exerciseLog1.exerciseName;
-            exerciseName.simulate('change');
-            exerciseType.getDOMNode().value = exerciseLog1.type;
-            exerciseType.simulate('change');
-            exerciseLogProgress.getDOMNode().value = exerciseLog1.progress;
-            exerciseLogProgress.simulate('change');
-
-            expect(wrapper.state().formControls.date.value).toEqual(date);
-            expect(wrapper.state().formControls.time.value).toEqual(time);
-            expect(wrapper.state().formControls.exerciseName.value).toEqual(exerciseLog1.exerciseName);
-            expect(wrapper.state().formControls.type.value).toEqual(exerciseLog1.type);
-            expect(wrapper.state().formControls.progress.value).toEqual(exerciseLog1.progress);
-        })
-
-        it('Submitting the form should call createExerciseLog with set state values and call GET on exercise-logs', async () => {
-            const promise = Promise.resolve({exerciseLogs: []});
-            const promise2 = Promise.resolve({ exerciseLog: exerciseLog1 });
-            getUserExerciseLogs.mockReturnValue(promise);
-            createExerciseLog.mockReturnValue(promise2);
-
-            var state = {
-                formControls: {
-                    date: { value: getLocalHTMLDate(exerciseLog1.date) },
-                    time: { value: getLocalHTMLTime(exerciseLog1.date) },
-                    exerciseName: { value: exerciseLog1.exerciseName },
-                    type: { value: exerciseLog1.type },
-                    progress: { value: exerciseLog1.progress },
-                }
-            };
-
-            expect(createExerciseLog.mock.calls.length).toBe(0);
-            expect(getUserExerciseLogs.mock.calls.length).toBe(0);
-            const wrapper = shallowSetup();
-            wrapper.setState(state);
-
-            await promise.then(() => {
-                expect(getUserExerciseLogs.mock.calls.length).toBe(1);
-            });
-
-            wrapper.find('form').at(0).simulate('submit', { preventDefault() {} });
-
-            await promise2.then(() => {
-                expect(createExerciseLog.mock.calls.length).toBe(1);
-                expect(createExerciseLog.mock.calls[0][0]).toEqual(exerciseLog1.date);
-                expect(createExerciseLog.mock.calls[0][1]).toBe(exerciseLog1.exerciseName);
-                expect(createExerciseLog.mock.calls[0][2]).toBe(exerciseLog1.type);
-                expect(createExerciseLog.mock.calls[0][3]).toBe(exerciseLog1.progress);
-                expect(getUserExerciseLogs.mock.calls.length).toBe(2);
-            })
-        })
-
-        it('Should call not get exercise-logs API call upon invalid exercise log that is 1008(NoTokenError) and set redirect', async () => {
-            const promise = Promise.resolve({exerciseLogs: []});
-            const promise2 = Promise.resolve(noTokenErrorRes);
-            getUserExerciseLogs.mockReturnValue(promise);
-            createExerciseLog.mockReturnValue(promise2);
-
-            expect(createExerciseLog.mock.calls.length).toBe(0);
-            expect(getUserExerciseLogs.mock.calls.length).toBe(0);
-            const wrapper = shallowSetup();
-
-            expect(wrapper.state().loginRedirect).toBe(false);
-
-            await promise.then(() => {
-                expect(getUserExerciseLogs.mock.calls.length).toBe(1);
-            });
-
-            wrapper.find('form').at(0).simulate('submit', { preventDefault() {} });
-
-            await promise2.then(() => {
-                expect(createExerciseLog.mock.calls.length).toBe(1);
-                expect(getUserExerciseLogs.mock.calls.length).toBe(1);
-                expect(wrapper.state().loginRedirect).toBe(true);
-            })
-        })
-
-        it('Should update state with error message from API response error that is not 1008(NoTokenError) when attempting to log', () => {
-            const promise = Promise.resolve({
-                error: {
-                    code: -1,
-                    detail: 'testdetail',
-                }
-            })
-
-            createExerciseLog.mockReturnValue(promise);
-
-            const wrapper = shallowSetup();
-            expect(wrapper.state().messages).toEqual([]);
-            wrapper.find('form').at(0).simulate('submit', { preventDefault() {} });
-
-            return promise.then(() => {
-                expect(wrapper.state().messages).toEqual(['testdetail']);
-            })
         })
     })
 

@@ -1,19 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 import ExerciseLogCard from './ExerciseLogCard';
 import CardGroup from './CardGroup';
+import CreateExerciseLog from './CreateExerciseLog';
 import {
-    createExerciseLog,
     getUserExerciseLogs,
     deleteExerciseLog,
 } from '../services/userService';
-import {
-    getLocalHTMLDate,
-    getLocalHTMLTime,
-} from '../utils/utils';
 import { setLoggedIn } from '../redux/actions';
 import styles from './UserExerciseLogs.module.scss';
 
@@ -23,35 +19,10 @@ export class UserExerciseLogs extends React.Component {
 
     constructor(props){
         super(props);
-        let date = new Date();
         this.state = {
-            formControls: {
-                date: { value: getLocalHTMLDate(date) },
-                time: { value: getLocalHTMLTime(date) },
-                exerciseName: { value: '' },
-                type: { value: '' },
-                progress: { value: '' },
-            },
             messages: [],
             loginRedirect: false,
-            /*
-            logs: [
-                {
-                    id:             1,
-                    date:           '6/6',
-                    exerciseName:   'Bench Press',
-                    type:           '5x5',
-                    progress:       'weight: 225, reps: 5/5/5/5/5',
-                },
-                {
-                    id:             2,
-                    date:           '6/6',
-                    exerciseName:   'Lying Tricep Extensions',
-                    type:           '3x10',
-                    progress:       'weight: 85/85/75, reps: 10/7/10',
-                },
-            ]*/
-            logs: []
+            logs: [],
         }
     }
 
@@ -62,44 +33,6 @@ export class UserExerciseLogs extends React.Component {
 
     componentWillUnmount() {
         this.abortController.abort();
-    }
-
-    handleChange = (event) => {
-        const field = event.target.name;
-        const value = event.target.value;
-
-        this.setState({
-            formControls: {
-                ...this.state.formControls,
-                [field]: {
-                    ...this.state.formControls[field],
-                    value
-                }
-            }
-        });
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.logExercise();
-    }
-
-    logExercise = () => {
-        // TODO: implement clientside validation
-        var date = new Date(this.state.formControls.date.value + ' ' + this.state.formControls.time.value);
-        createExerciseLog(date,
-                          this.state.formControls.exerciseName.value,
-                          this.state.formControls.type.value,
-                          this.state.formControls.progress.value)
-            .then(res => {
-                // TODO: maybe add the returned log to the list client-side?
-                if(res && res.error) return this.handleErrorResponse(res.error);
-                this.updatePageExerciseLogs();
-            })
-            .catch(err => {
-                this.handleError(err)
-                this.updatePageExerciseLogs();
-            });
     }
 
     updatePageExerciseLogs = () => {
@@ -116,11 +49,13 @@ export class UserExerciseLogs extends React.Component {
             .catch(this.handleError);
     }
 
+    logout = () => {
+        this.props.setLoggedIn(false);
+        this.setState({ loginRedirect: true });
+    }
+
     handleErrorResponse = (error) => {
-        if(error.code === 1008){
-            this.props.setLoggedIn(false);
-            return this.setState({ loginRedirect: true });
-        }
+        if(error.code === 1008) return this.logout()
 
         this.setState({
             messages: [error.detail]
@@ -179,34 +114,12 @@ export class UserExerciseLogs extends React.Component {
 
         return (
             <div className={styles.container}>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Date:
-                        <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Time:
-                        <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Exercise Name:
-                        <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Type:
-                        <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Progress:
-                        <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Log Exercise" />
-                </form>
+
+                <CreateExerciseLog logout={this.logout} updatePageExerciseLogs={this.updatePageExerciseLogs}/>
 
                 {messages}
 
                 {tableData}
-                <Link to="/">Back Home</Link>
             </div>
         )
     }
