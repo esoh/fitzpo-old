@@ -19,8 +19,8 @@ export class UserHome extends React.Component {
     handleLogout = (event) => {
         deauthenticateAccountLocally()
             .then(res => {
+                this.props.setLoggedIn(false);
                 this.setState({ redirect: true })
-                this.props.setLoggedIn(false)
             })
             .catch(err => {
                 if (err.name === 'AbortError') return;

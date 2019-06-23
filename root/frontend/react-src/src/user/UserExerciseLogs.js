@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, Redirect } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import ExerciseLogCard from './ExerciseLogCard';
 import CardGroup from './CardGroup';
@@ -12,9 +14,10 @@ import {
     getLocalHTMLDate,
     getLocalHTMLTime,
 } from '../utils/utils';
+import { setLoggedIn } from '../redux/actions';
 import styles from './UserExerciseLogs.module.scss';
 
-class UserExerciseLogs extends React.Component {
+export class UserExerciseLogs extends React.Component {
 
     abortController = new window.AbortController();
 
@@ -114,7 +117,10 @@ class UserExerciseLogs extends React.Component {
     }
 
     handleErrorResponse = (error) => {
-        if(error.code === 1008) return this.setState({ loginRedirect: true });
+        if(error.code === 1008){
+            this.props.setLoggedIn(false);
+            return this.setState({ loginRedirect: true });
+        }
 
         this.setState({
             messages: [error.detail]
@@ -206,4 +212,11 @@ class UserExerciseLogs extends React.Component {
     }
 }
 
-export default UserExerciseLogs;
+UserExerciseLogs.propTypes = {
+    setLoggedIn: PropTypes.func.isRequired,
+}
+
+export default connect(
+    null,
+    { setLoggedIn }
+)(UserExerciseLogs)
