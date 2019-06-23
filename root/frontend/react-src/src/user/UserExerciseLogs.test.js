@@ -5,7 +5,7 @@ jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter as Router } from "react-router-dom";
 import { shallow, mount } from 'enzyme';
 
-import UserExerciseLogs from './UserExerciseLogs';
+import { UserExerciseLogs } from './UserExerciseLogs';
 import {
     createExerciseLog,
     getUserExerciseLogs,
@@ -17,8 +17,10 @@ import {
 } from '../utils/utils';
 import ExerciseLogCard from './ExerciseLogCard';
 
+var props = { setLoggedIn: jest.fn(), };
+
 function shallowSetup() {
-    return shallow(<UserExerciseLogs />);
+    return shallow(<UserExerciseLogs {...props} />);
 }
 var date = new Date();
 date = new Date(date - date.getSeconds()*1000 - date.getMilliseconds());
