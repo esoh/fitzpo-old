@@ -104,6 +104,7 @@ class Signup extends React.Component {
                                     value={this.state.formControls.email.value}
                                     onChange={this.handleChangeFor('email')}
                                     autoComplete="email"
+                                    placeholder="name@example.com"
                                 />
                                 <FormInput
                                     label="Password:"
