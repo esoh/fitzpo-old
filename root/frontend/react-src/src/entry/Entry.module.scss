@@ -1,12 +1,6 @@
-@import '../styles/shared';
+@import '../styles/form';
 
 .entry {
-    label {
-        display: block;
-    }
-
-    form {
-        margin: 0 auto;
-        border: solid black 1px;
-    }
+    background-color: $color-elem-bg-primary;
+    border: 1px solid $color-elem-border;
 }

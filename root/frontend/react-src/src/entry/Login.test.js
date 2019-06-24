@@ -35,10 +35,9 @@ describe('Login component', () => {
         expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('type') == 'submit').length).toBe(1);
     })
 
-    it('Should have links to signup and home', () => {
+    it('Should have link to signup', () => {
         const { wrapper } = setup();
 
-        expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/').length).toBe(1);
         expect(wrapper.find(Link).findWhere(link => link.props()['to'] === '/signup').length).toBe(1);
     });
 
