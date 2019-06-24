@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
+import FormInput from '../common/FormInput';
 import { registerAccount } from '../services/authService';
 import styles from './Entry.module.scss';
 
@@ -24,8 +25,9 @@ class Signup extends React.Component {
         this.abortController.abort();
     }
 
-    handleChange = (event) => {
-        const field = event.target.name;
+    // given a field, returns a function to have this state value listen for
+    // changes
+    handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
         this.setState({
@@ -89,18 +91,30 @@ class Signup extends React.Component {
                                 <h1>Sign Up</h1>
                             </div>
                             <div className={styles.body}>
-                                <label>
-                                    Username:
-                                    <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} autoComplete="username"/>
-                                </label>
-                                <label>
-                                    Email:
-                                    <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} autoComplete="email"/>
-                                </label>
-                                <label>
-                                    Password:
-                                    <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} autoComplete="new-password"/>
-                                </label>
+                                <FormInput
+                                    label="Username:"
+                                    name="username"
+                                    type="text"
+                                    value={this.state.formControls.username.value}
+                                    onChange={this.handleChangeFor('username')}
+                                    autoComplete="username"
+                                />
+                                <FormInput
+                                    label="Email:"
+                                    name="email"
+                                    type="email"
+                                    value={this.state.formControls.email.value}
+                                    onChange={this.handleChangeFor('email')}
+                                    autoComplete="email"
+                                />
+                                <FormInput
+                                    label="Password:"
+                                    name="password"
+                                    type="password"
+                                    value={this.state.formControls.password.value}
+                                    onChange={this.handleChangeFor('password')}
+                                    autoComplete="new-password"
+                                />
                             </div>
                             <div className={styles.footer}>
                                 <input type="submit" value="Sign Up" />
