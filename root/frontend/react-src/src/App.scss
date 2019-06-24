@@ -43,6 +43,6 @@ input, button {
     border-radius: 2px;
 }
 
-input:focus {
+input:focus, button:focus {
     outline: 0;
 }

@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'shared';
+@import 'button';
 
 .form {
     padding: 0.25rem;
@@ -32,8 +33,12 @@
         font-size: 0.8em;
     }
 
-    input[type="submit"] {
-        @extend .primary;
+    button:not([type="submit"]) {
+        @extend .btnSecondaryOutline
+    }
+
+    *[type="submit"] {
+        @extend .btnPrimary
     }
 
     .header {
