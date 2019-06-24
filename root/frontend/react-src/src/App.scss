@@ -36,54 +36,5 @@ a, span, h1, h2, h3, h4, p {
 }
 
 button {
-    border: 1px solid $color-elem-border;
     font-size: 0.8em;
-}
-
-form {
-
-    label, input {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    label {
-        font-size: 0.8em;
-    }
-
-    input {
-        font-size: 1em;
-    }
-
-    input:not([type="submit"]) {
-        margin: 0.2rem 0;
-        border: 1px solid $color-elem-border;
-    }
-
-    div {
-        // every label that is preceded by a label will get margin-left
-        * + * {
-            padding-left: 0.25rem;
-        }
-    }
-
-    & > * {
-        padding: 0.25rem;
-    }
-
-    input[type="submit"], button{
-        padding: 0.3rem;
-        font-size: 0.8em;
-    }
-
-    input[type="submit"] {
-        border: none;
-        background-color: $color-primary;
-    }
-
-    button {
-        border: 1px solid $color-primary;
-        background-color: $color-secondary;
-    }
 }

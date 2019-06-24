@@ -105,36 +105,38 @@ class CreateExerciseLog extends React.Component {
 
         return (
             <FeedItem title="Log an exercise">
-                <form onSubmit={this.handleSubmit}>
-                    <div className={styles.row}>
-                        <label>
-                            Exercise Name:
-                            <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange} placeholder="e.g. Bench Press"/>
-                        </label>
-                        <label>
-                            Type:
-                            <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange} placeholder="e.g. 5x5"/>
-                        </label>
-                    </div>
-                    <label>
-                        Progress:
-                        <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange} placeholder="e.g. 5/5/5/5/5"/>
-                    </label>
-                    { this.state.moreOpts ? (
+                <form onSubmit={this.handleSubmit} className={styles.form}>
+                    <div className={styles.body}>
                         <div className={styles.row}>
                             <label>
-                                Date:
-                                <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                                Exercise Name:
+                                <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange} placeholder="e.g. Bench Press"/>
                             </label>
                             <label>
-                                Time:
-                                <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
+                                Type:
+                                <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange} placeholder="e.g. 5x5"/>
                             </label>
                         </div>
-                    ) : null }
+                        <label>
+                            Progress:
+                            <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange} placeholder="e.g. 5/5/5/5/5"/>
+                        </label>
+                        { this.state.moreOpts ? (
+                            <div className={styles.row}>
+                                <label>
+                                    Date:
+                                    <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                                </label>
+                                <label>
+                                    Time:
+                                    <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
+                                </label>
+                            </div>
+                        ) : null }
+                    </div>
                     <div className={classNames(styles.row, styles.footer)}>
-                        <button type="button" onClick={this.toggleMoreOptions}>{this.state.moreOpts ? "Less Options" : "More Options"}</button>
-                        <input type="submit" value="Log Exercise" />
+                        <button type="button" onClick={this.toggleMoreOptions} className={styles.secondary}>{this.state.moreOpts ? "Less Options" : "More Options"}</button>
+                        <input type="submit" value="Log Exercise" className={styles.primary}/>
                     </div>
                 </form>
                 {messages}

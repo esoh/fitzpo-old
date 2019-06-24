@@ -1,0 +1,53 @@
+@import 'colors';
+@import 'shared';
+
+.form {
+    label, input {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    label {
+        font-size: 0.8em;
+    }
+
+    input {
+        font-size: 1em;
+    }
+
+    input:not([type="submit"]) {
+        margin: 0.2rem 0;
+        border: 1px solid $color-elem-border;
+    }
+
+    input[type="submit"], button{
+        padding: 0.3rem;
+        font-size: 0.8em;
+    }
+
+    & > .header, & > .footer, & > .body {
+        padding: 0.25rem;
+    }
+
+    .body {
+        padding-top: 0.5rem;
+        & > * {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+    }
+
+    .footer {
+        padding-top: 1rem;
+        button {
+            padding: 0 0.5rem;
+        }
+    }
+
+    .row {
+        & > * + * {
+            margin-left: 0.25rem;
+        }
+    }
+}
