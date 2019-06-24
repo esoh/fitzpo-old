@@ -84,26 +84,30 @@ class Signup extends React.Component {
             <div className={styles.center}>
                 <div className={styles.content}>
                     <div className={styles.entry}>
-                        <form onSubmit={this.handleSubmit}>
-                            <label>
-                                Username:
-                                <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} autoComplete="username"/>
-                            </label>
-                            <label>
-                                Email:
-                                <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} autoComplete="email"/>
-                            </label>
-                            <label>
-                                Password:
-                                <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} autoComplete="new-password"/>
-                            </label>
-                            <input type="submit" value="Sign Up" />
+                        <form onSubmit={this.handleSubmit} className={styles.form}>
+                            <div className={styles.header}>
+                                <h1>Sign Up</h1>
+                            </div>
+                            <div className={styles.body}>
+                                <label>
+                                    Username:
+                                    <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} autoComplete="username"/>
+                                </label>
+                                <label>
+                                    Email:
+                                    <input name="email" type="email" value={this.state.formControls.email.value} onChange={this.handleChange} autoComplete="email"/>
+                                </label>
+                                <label>
+                                    Password:
+                                    <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} autoComplete="new-password"/>
+                                </label>
+                            </div>
+                            <div className={styles.footer}>
+                                <input type="submit" value="Sign Up" />
+                                <Link to="/login">Log In</Link>
+                            </div>
                         </form>
                         {messages}
-                        <div>
-                            <Link to="/">Home</Link>
-                            <Link to="/login">Log In</Link>
-                        </div>
                     </div>
                 </div>
             </div>
