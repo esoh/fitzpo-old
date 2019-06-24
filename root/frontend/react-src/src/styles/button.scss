@@ -1,0 +1,30 @@
+@import 'colors';
+
+.btnPrimary {
+    background-color: $color-primary;
+    border: none;
+
+    &:hover{
+        color: $color-secondary;
+        background-color: $color-primary-dark;
+    }
+
+    &:active{
+        color: $color-secondary;
+        background-color: $color-primary-darker;
+    }
+}
+
+.btnSecondaryOutline {
+    background-color: $color-secondary;
+    border: 1px solid $color-primary;
+
+    &:hover{
+        background-color: $color-secondary-dark;
+    }
+
+    &:active{
+        background-color: $color-secondary-darker;
+    }
+}
+

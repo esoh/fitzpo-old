@@ -155,8 +155,8 @@ class CreateExerciseLog extends React.Component {
                         ) : null }
                     </div>
                     <div className={classNames(styles.row, styles.footer)}>
-                        <button type="button" onClick={this.toggleMoreOptions} className={styles.secondary}>{this.state.moreOpts ? "Less Options" : "More Options"}</button>
-                        <input type="submit" value="Log Exercise" className={styles.primary}/>
+                        <button type="button" onClick={this.toggleMoreOptions}>{this.state.moreOpts ? "Less Options" : "More Options"}</button>
+                        <input type="submit" value="Log Exercise"/>
                     </div>
                 </form>
                 {messages}

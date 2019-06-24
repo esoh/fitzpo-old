@@ -20,14 +20,3 @@ div.center {
 div.row {
     flex-direction: row;
 }
-
-.primary {
-    background-color: $color-primary;
-    border: none;
-}
-
-.secondary {
-    box-sizing: border-box;
-    border: 1px solid $color-primary;
-    background-color: $color-secondary;
-}
