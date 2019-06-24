@@ -35,6 +35,11 @@ a, span, h1, h2, h3, h4, p {
     color: $color-text-primary;
 }
 
+button {
+    border: 1px solid $color-elem-border;
+    font-size: 0.8em;
+}
+
 form {
 
     label, input {
@@ -64,15 +69,21 @@ form {
     }
 
     & > * {
-        width: 100%;
         padding: 0.25rem;
     }
 
-    input[type="submit"]{
-        margin-top: 1rem;
+    input[type="submit"], button{
         padding: 0.3rem;
-        background-color: $color-primary;
-        border: none;
         font-size: 0.8em;
+    }
+
+    input[type="submit"] {
+        border: none;
+        background-color: $color-primary;
+    }
+
+    button {
+        border: 1px solid $color-primary;
+        background-color: $color-secondary;
     }
 }

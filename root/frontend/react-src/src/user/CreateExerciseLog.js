@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import FeedItem from './FeedItem';
 import { createExerciseLog } from '../services/userService';
@@ -25,6 +26,7 @@ class CreateExerciseLog extends React.Component {
                 progress: { value: '' },
             },
             messages: [],
+            moreOpts: false,
         }
     }
 
@@ -54,7 +56,13 @@ class CreateExerciseLog extends React.Component {
 
     logExercise = () => {
         // TODO: implement clientside validation
-        var date = new Date(this.state.formControls.date.value + ' ' + this.state.formControls.time.value);
+        var date;
+        if(this.state.moreOpts){
+            date = new Date(this.state.formControls.date.value + ' ' + this.state.formControls.time.value);
+        } else {
+            date = new Date();
+        }
+
         createExerciseLog(date,
                           this.state.formControls.exerciseName.value,
                           this.state.formControls.type.value,
@@ -85,6 +93,12 @@ class CreateExerciseLog extends React.Component {
         console.log(error);
     }
 
+    toggleMoreOptions = () => {
+        this.setState({
+            moreOpts: !this.state.moreOpts
+        })
+    }
+
     render() {
 
         var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
@@ -106,17 +120,20 @@ class CreateExerciseLog extends React.Component {
                         Progress:
                         <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange} placeholder="e.g. 5/5/5/5/5"/>
                     </label>
-                    <div className={styles.row}>
-                        <label>
-                            Date:
-                            <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
-                        </label>
-                        <label>
-                            Time:
-                            <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <div>
+                    { this.state.moreOpts ? (
+                        <div className={styles.row}>
+                            <label>
+                                Date:
+                                <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                            </label>
+                            <label>
+                                Time:
+                                <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
+                            </label>
+                        </div>
+                    ) : null }
+                    <div className={classNames(styles.row, styles.footer)}>
+                        <button type="button" onClick={this.toggleMoreOptions}>{this.state.moreOpts ? "Less Options" : "More Options"}</button>
                         <input type="submit" value="Log Exercise" />
                     </div>
                 </form>

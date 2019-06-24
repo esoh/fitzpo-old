@@ -1,1 +1,14 @@
 @import '../styles/shared';
+
+.footer {
+    padding-top: 1rem;
+
+    * + * {
+        margin-left: 0.25rem;
+    }
+
+    button {
+        padding: 0 0.5rem;
+        min-width: 7rem;
+    }
+}
