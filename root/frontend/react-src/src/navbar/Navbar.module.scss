@@ -9,6 +9,11 @@ $nav-height: 55px;
 
 .nav {
 
+    a {
+        font-size: 0.9em;
+        font-weight: normal;
+    }
+
     div {
         flex-direction: row;
         display: inline-flex;
