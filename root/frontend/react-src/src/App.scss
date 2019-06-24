@@ -29,6 +29,50 @@ p {
 
 a {
     text-decoration: none;
+}
+
+a, span, h1, h2, h3, h4, p {
     color: $color-text-primary;
 }
 
+form {
+
+    label, input {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    label {
+        font-size: 0.8em;
+    }
+
+    input {
+        font-size: 1em;
+    }
+
+    input:not([type="submit"]) {
+        margin: 0.2rem 0;
+        border: 1px solid $color-elem-border;
+    }
+
+    div {
+        // every label that is preceded by a label will get margin-left
+        * + * {
+            padding-left: 0.25rem;
+        }
+    }
+
+    & > * {
+        width: 100%;
+        padding: 0.25rem;
+    }
+
+    input[type="submit"]{
+        margin-top: 1rem;
+        padding: 0.3rem;
+        background-color: $color-primary;
+        border: none;
+        font-size: 0.8em;
+    }
+}
