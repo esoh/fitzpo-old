@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter } from 'react-router-dom';
 
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 import { Login } from './Login';
 jest.mock('../services/authService');
 import { authenticateUser } from '../services/authService';

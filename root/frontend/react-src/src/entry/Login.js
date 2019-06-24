@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 import styles from './Entry.module.scss';

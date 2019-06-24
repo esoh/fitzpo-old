@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 import FeedItem from './FeedItem';
 import { createExerciseLog } from '../services/userService';
 import {
