@@ -1,6 +1,10 @@
 @import '../styles/form';
 
 .entry {
+    padding: 1rem;
     background-color: $color-elem-bg-primary;
     border: 1px solid $color-elem-border;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 15rem;
 }

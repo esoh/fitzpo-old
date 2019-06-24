@@ -6,13 +6,17 @@ function FormInput(props){
         label,
         errorMessages,
         helper,
+        errorClassName,
+        isError,
         ...inputAttr
     } = props;
+
+    let styleClassName = isError ? errorClassName : '';
 
     return (
         <label>
             {label}
-            <input {...inputAttr}/>
+            <input {...inputAttr} className={styleClassName}/>
         </label>
     )
 }

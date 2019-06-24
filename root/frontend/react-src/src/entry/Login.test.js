@@ -135,7 +135,7 @@ describe('Login component', () => {
         }).then(() => {
             expect(wrapper.find(Redirect).length).toBe(0);
             expect(wrapper.find('form').length).toBe(1);
-            expect(wrapper.state().messages).toEqual(['testerror']);
+            expect(wrapper.state().errorMessages).toEqual(['testerror']);
             expect(setLoggedIn.mock.calls.length).toBe(0);
         })
     });

@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { FormInput } from '../common/form';
+import { FormInput, FormError } from '../common/form';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 import styles from './Entry.module.scss';
@@ -14,10 +14,16 @@ export class Login extends React.Component {
 
     state = {
         formControls: {
-            username: { value: '' },
-            password: { value: '' }
+            username: {
+                value: '',
+                isError: false,
+            },
+            password: {
+                value: '',
+                isError: false,
+            }
         },
-        messages: [],
+        errorMessages: [],
         redirect: false,
     }
 
@@ -30,15 +36,15 @@ export class Login extends React.Component {
     handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
-        this.setState({
+        this.setState(prevState => ({
             formControls: {
-                ...this.state.formControls,
+                ...prevState.formControls,
                 [field]: {
-                    ...this.state.formControls[field],
+                    ...prevState.formControls[field],
                     value
                 }
             }
-        });
+        }));
     }
 
     handleSubmit = (event) => {
@@ -50,11 +56,29 @@ export class Login extends React.Component {
         authenticateUser(this.state.formControls.username.value,
                          this.state.formControls.password.value)
             .then(result => {
-                console.log(result)
                 if(result && result.error){
-                    this.setState({
-                        messages: [result.error.title]
-                    })
+                    switch (result.error.code){
+                        case 1003:
+                            this.setState(prevState => ({
+                                formControls: {
+                                    ...prevState.formControls,
+                                    username: {
+                                        ...prevState.formControls.username,
+                                        isError: true,
+                                    },
+                                    password: {
+                                        ...prevState.formControls.password,
+                                        isError: true,
+                                    }
+                                },
+                                errorMessages: ['The username or password you\'ve entered is incorrect.', 'Please try again.']
+                            }));
+                            break;
+                        default:
+                            this.setState({
+                                errorMessages: [result.error.title]
+                            })
+                    }
                 } else {
                     alert("User authenticated!")
                     this.props.setLoggedIn(true)
@@ -72,8 +96,6 @@ export class Login extends React.Component {
 
         if (this.state.redirect) return <Redirect to='/' />;
 
-        var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
-
         return (
             <div className={styles.center}>
                 <div className={styles.content}>
@@ -90,6 +112,8 @@ export class Login extends React.Component {
                                     value={this.state.formControls.username.value}
                                     onChange={this.handleChangeFor('username')}
                                     autoComplete="username"
+                                    errorClassName={styles.error}
+                                    isError={this.state.formControls.username.isError}
                                 />
                                 <FormInput
                                     label="Password:"
@@ -98,14 +122,16 @@ export class Login extends React.Component {
                                     value={this.state.formControls.password.value}
                                     onChange={this.handleChangeFor('password')}
                                     autoComplete="current-password"
+                                    errorClassName={styles.error}
+                                    isError={this.state.formControls.password.isError}
                                 />
                             </div>
+                            <FormError className={styles.formError} errors={this.state.errorMessages}/>
                             <div className={styles.footer}>
                                 <input type="submit" value="Login" />
                                 <Link to="/signup">Sign Up</Link>
                             </div>
                         </form>
-                        {messages}
                     </div>
                 </div>
             </div>

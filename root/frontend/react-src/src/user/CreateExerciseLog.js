@@ -40,15 +40,15 @@ class CreateExerciseLog extends React.Component {
     handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
-        this.setState({
+        this.setState(prevState => ({
             formControls: {
-                ...this.state.formControls,
+                ...prevState.formControls,
                 [field]: {
-                    ...this.state.formControls[field],
+                    ...prevState.formControls[field],
                     value
                 }
             }
-        });
+        }));
     }
 
     handleSubmit = (event) => {
