@@ -6,15 +6,16 @@ import { Link, Redirect, BrowserRouter } from 'react-router-dom';
 jest.mock('../services/authService');
 import { registerAccount } from '../services/authService';
 import Signup from './Signup';
+import FormInput from '../common/FormInput';
 
 describe('Signup component', () => {
 
     it('Should have username, email, and password fields', () => {
         const wrapper = shallow(<Signup />);
 
-        expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'username').length).toBe(1);
-        expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'email').length).toBe(1);
-        expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'password').length).toBe(1);
+        expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'username').length).toBe(1);
+        expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'email').length).toBe(1);
+        expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'password').length).toBe(1);
         expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('type') == 'submit').length).toBe(1);
     });
 

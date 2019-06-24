@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme';
 jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter } from 'react-router-dom';
 
+import FormInput from '../common/FormInput';
 import { Login } from './Login';
 jest.mock('../services/authService');
 import { authenticateUser } from '../services/authService';
@@ -30,8 +31,8 @@ describe('Login component', () => {
     it('Should have username and password fields', () => {
         const { wrapper } = setup();
 
-        expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'username').length).toBe(1);
-        expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'password').length).toBe(1);
+        expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'username').length).toBe(1);
+        expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'password').length).toBe(1);
         expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('type') == 'submit').length).toBe(1);
     })
 

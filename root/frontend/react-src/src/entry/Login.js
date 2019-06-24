@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import FormInput from '../common/FormInput';
 import { authenticateUser } from '../services/authService';
 import { setLoggedIn } from '../redux/actions';
 import styles from './Entry.module.scss';
@@ -24,8 +25,9 @@ export class Login extends React.Component {
         this.abortController.abort();
     }
 
-    handleChange = (event) => {
-        const field = event.target.name;
+    // given a field, returns a function to have this state value listen for
+    // changes
+    handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
         this.setState({
@@ -81,14 +83,22 @@ export class Login extends React.Component {
                                 <h1>Log In</h1>
                             </div>
                             <div className={styles.body}>
-                                <label>
-                                    Username:
-                                    <input name="username" type="text" value={this.state.formControls.username.value} onChange={this.handleChange} autoComplete="username"/>
-                                </label>
-                                <label>
-                                    Password:
-                                    <input name="password" type="password" value={this.state.formControls.password.value} onChange={this.handleChange} autoComplete="current-password"/>
-                                </label>
+                                <FormInput
+                                    label="Username:"
+                                    name="username"
+                                    type="text"
+                                    value={this.state.formControls.username.value}
+                                    onChange={this.handleChangeFor('username')}
+                                    autoComplete="username"
+                                />
+                                <FormInput
+                                    label="Password:"
+                                    name="password"
+                                    type="password"
+                                    value={this.state.formControls.password.value}
+                                    onChange={this.handleChangeFor('password')}
+                                    autoComplete="current-password"
+                                />
                             </div>
                             <div className={styles.footer}>
                                 <input type="submit" value="Login" />

@@ -1,9 +1,10 @@
 jest.mock('../services/userService');
 
 import React from 'react';
-import CreateExerciseLog from './CreateExerciseLog';
 import { shallow, mount } from 'enzyme';
 
+import FormInput from '../common/FormInput';
+import CreateExerciseLog from './CreateExerciseLog';
 import {
     getLocalHTMLDate,
     getLocalHTMLTime,
@@ -44,12 +45,38 @@ describe('CreateExerciseLog Component', () => {
 
     describe('Initial render', () => {
         it('Should have exercise log input form', () => {
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'exerciseName').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'type').length).toBe(1);
-            expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'progress').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'exerciseName').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'type').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'progress').length).toBe(1);
             expect(wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('type') == 'submit').length).toBe(1);
+        })
+
+        it('Should have functional more options button', () => {
+            var btn = wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'More Options');
+            expect(wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'Less Options').length).toBe(0);
+            expect(btn.length).toBe(1);
+
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'date').length).toBe(0);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'time').length).toBe(0);
+
+            btn = btn.at(0);
+            btn.simulate('click');
+            var btn = wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'Less Options');
+            expect(btn.length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'More Options').length).toBe(0);
+
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'date').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'time').length).toBe(1);
+
+            btn = btn.at(0);
+            btn.simulate('click');
+
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'date').length).toBe(0);
+            expect(wrapper.findWhere(elem => elem.type() == FormInput && elem.prop('name') == 'time').length).toBe(0);
+
+            expect(wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'More Options').length).toBe(1);
+            expect(wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'Less Options').length).toBe(0);
+
         })
 
         it('Date state value should be set to a valid date', () => {
@@ -66,6 +93,7 @@ describe('CreateExerciseLog Component', () => {
         it('Form input fields should update their respective state values', () => {
 
             var wrapper = mount( <CreateExerciseLog {...props}/>);
+            wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'More Options').simulate('click');
 
             const exerciseLogDate = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'date').at(0);
             const exerciseLogTime = wrapper.findWhere(elem => elem.type() == 'input' && elem.prop('name') == 'time').at(0);
@@ -117,6 +145,8 @@ describe('CreateExerciseLog Component', () => {
             expect(updatePageExerciseLogs.mock.calls.length).toBe(0);
             const wrapper = shallowSetup();
             wrapper.setState(state);
+
+            wrapper.findWhere(elem => elem.type() == 'button' && elem.prop('children') == 'More Options').simulate('click');
 
             wrapper.find('form').at(0).simulate('submit', { preventDefault() {} });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import FormInput from '../common/FormInput';
 import FeedItem from './FeedItem';
 import { createExerciseLog } from '../services/userService';
 import {
@@ -34,8 +35,9 @@ class CreateExerciseLog extends React.Component {
         this.abortController.abort();
     }
 
-    handleChange = (event) => {
-        const field = event.target.name;
+    // given a field, returns a function to have this state value listen for
+    // changes
+    handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
         this.setState({
@@ -108,29 +110,47 @@ class CreateExerciseLog extends React.Component {
                 <form onSubmit={this.handleSubmit} className={styles.form}>
                     <div className={styles.body}>
                         <div className={styles.row}>
-                            <label>
-                                Exercise Name:
-                                <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange} placeholder="e.g. Bench Press"/>
-                            </label>
-                            <label>
-                                Type:
-                                <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange} placeholder="e.g. 5x5"/>
-                            </label>
+                            <FormInput
+                                label="Exercise Name:"
+                                name="exerciseName"
+                                type="text"
+                                value={this.state.formControls.exerciseName.value}
+                                onChange={this.handleChangeFor('exerciseName')}
+                                placeholder="e.g. Bench Press"
+                            />
+                            <FormInput
+                                label="Type:"
+                                name="type"
+                                type="text"
+                                value={this.state.formControls.type.value}
+                                onChange={this.handleChangeFor('type')}
+                                placeholder="e.g. 5x5"
+                            />
                         </div>
-                        <label>
-                            Progress:
-                            <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange} placeholder="e.g. 5/5/5/5/5"/>
-                        </label>
+                        <FormInput
+                            label="Progress:"
+                            name="progress"
+                            type="text"
+                            value={this.state.formControls.progress.value}
+                            onChange={this.handleChangeFor('progress')}
+                            placeholder="e.g. 5/5/5/5/5"
+                        />
                         { this.state.moreOpts ? (
                             <div className={styles.row}>
-                                <label>
-                                    Date:
-                                    <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
-                                </label>
-                                <label>
-                                    Time:
-                                    <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
-                                </label>
+                                <FormInput
+                                    label="Date:"
+                                    name="date"
+                                    type="date"
+                                    value={this.state.formControls.date.value}
+                                    onChange={this.handleChangeFor('date')}
+                                />
+                                <FormInput
+                                    label="Time:"
+                                    name="time"
+                                    type="time"
+                                    value={this.state.formControls.time.value}
+                                    onChange={this.handleChangeFor('time')}
+                                />
                             </div>
                         ) : null }
                     </div>
