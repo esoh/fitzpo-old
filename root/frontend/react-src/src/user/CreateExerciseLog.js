@@ -7,6 +7,7 @@ import {
     getLocalHTMLDate,
     getLocalHTMLTime,
 } from '../utils/utils';
+import styles from './CreateExerciseLog.module.scss';
 
 class CreateExerciseLog extends React.Component {
 
@@ -91,27 +92,33 @@ class CreateExerciseLog extends React.Component {
         return (
             <FeedItem title="Log an exercise">
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Date:
-                        <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Time:
-                        <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Exercise Name:
-                        <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        Type:
-                        <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange}/>
-                    </label>
+                    <div className={styles.row}>
+                        <label>
+                            Exercise Name:
+                            <input name="exerciseName" type="text" value={this.state.formControls.exerciseName.value} onChange={this.handleChange} placeholder="e.g. Bench Press"/>
+                        </label>
+                        <label>
+                            Type:
+                            <input name="type" type="text" value={this.state.formControls.type.value} onChange={this.handleChange} placeholder="e.g. 5x5"/>
+                        </label>
+                    </div>
                     <label>
                         Progress:
-                        <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange}/>
+                        <input name="progress" type="text" value={this.state.formControls.progress.value} onChange={this.handleChange} placeholder="e.g. 5/5/5/5/5"/>
                     </label>
-                    <input type="submit" value="Log Exercise" />
+                    <div className={styles.row}>
+                        <label>
+                            Date:
+                            <input name="date" type="date" value={this.state.formControls.date.value} onChange={this.handleChange}/>
+                        </label>
+                        <label>
+                            Time:
+                            <input name="time" type="time" value={this.state.formControls.time.value} onChange={this.handleChange}/>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="submit" value="Log Exercise" />
+                    </div>
                 </form>
                 {messages}
             </FeedItem>
