@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 import { registerAccount } from '../services/authService';
 import styles from './Entry.module.scss';
 

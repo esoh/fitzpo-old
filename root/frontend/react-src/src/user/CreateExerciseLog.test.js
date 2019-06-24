@@ -3,7 +3,7 @@ jest.mock('../services/userService');
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 import CreateExerciseLog from './CreateExerciseLog';
 import {
     getLocalHTMLDate,

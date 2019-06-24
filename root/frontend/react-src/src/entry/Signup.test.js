@@ -6,7 +6,7 @@ import { Link, Redirect, BrowserRouter } from 'react-router-dom';
 jest.mock('../services/authService');
 import { registerAccount } from '../services/authService';
 import Signup from './Signup';
-import FormInput from '../common/FormInput';
+import { FormInput } from '../common/form';
 
 describe('Signup component', () => {
 
