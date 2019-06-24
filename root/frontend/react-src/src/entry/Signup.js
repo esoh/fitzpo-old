@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 
-import { FormInput } from '../common/form';
+import { FormInput, FormError } from '../common/form';
 import { registerAccount } from '../services/authService';
 import styles from './Entry.module.scss';
 
@@ -17,7 +17,7 @@ class Signup extends React.Component {
             email: { value: '' },
             password: { value: '' }
         },
-        messages: [],
+        errorMessages: [],
         redirect: false,
     }
 
@@ -30,15 +30,15 @@ class Signup extends React.Component {
     handleChangeFor = (field) => (event) => {
         const value = event.target.value;
 
-        this.setState({
+        this.setState(prevState => ({
             formControls: {
-                ...this.state.formControls,
+                ...prevState.formControls,
                 [field]: {
-                    ...this.state.formControls[field],
+                    ...prevState.formControls[field],
                     value
                 }
             }
-        });
+        }));
     }
 
     handleSubmit = (event) => {
@@ -55,12 +55,12 @@ class Signup extends React.Component {
                     switch(result.error.code){
                         case 1004:
                             this.setState({
-                                messages: result.error.invalid_params.map(param => param.name + ": " + param.reason)
+                                errorMessages: result.error.invalid_params.map(param => param.name + ": " + param.reason)
                             });
                             break;
                         default:
                             this.setState({
-                                messages: [result.error.title]
+                                errorMessages: [result.error.title]
                             })
                     }
                 } else {
@@ -79,8 +79,6 @@ class Signup extends React.Component {
     render() {
 
         if (this.state.redirect) return <Redirect to='/' />;
-
-        var messages = this.state.messages.map(msg => <p key={msg}>{msg}</p>);
 
         return (
             <div className={styles.center}>
@@ -116,12 +114,12 @@ class Signup extends React.Component {
                                     autoComplete="new-password"
                                 />
                             </div>
+                            <FormError className={styles.formError} errors={this.state.errorMessages}/>
                             <div className={styles.footer}>
                                 <input type="submit" value="Sign Up" />
                                 <Link to="/login">Log In</Link>
                             </div>
                         </form>
-                        {messages}
                     </div>
                 </div>
             </div>
