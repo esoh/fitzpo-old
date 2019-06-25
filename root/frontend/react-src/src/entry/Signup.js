@@ -233,7 +233,10 @@ class Signup extends React.Component {
                             <FormError className={styles.formError} errors={this.state.errorMessages}/>
                             <div className={styles.footer}>
                                 <input type="submit" value="Sign Up" />
-                                <Link to="/login">Log In</Link>
+                                <span className={styles.altEntry}>
+                                    Already have an account?
+                                    <Link to="/login">Log In</Link>
+                                </span>
                             </div>
                         </form>
                     </div>
