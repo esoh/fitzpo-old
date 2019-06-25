@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 function FormInput(props){
     let {
         label,
-        errorMessages,
+        errorMessages: errors,
         helper,
         errorClassName,
         isError,
         ...inputAttr
     } = props;
+
+    var errorMessages;
+    if(errors) errorMessages = errors.map(msg => <p className={errorClassName} key={msg}>{msg}</p>);
 
     let styleClassName = isError ? errorClassName : '';
 
@@ -17,6 +20,7 @@ function FormInput(props){
         <label>
             {label}
             <input {...inputAttr} className={styleClassName}/>
+            {errorMessages}
         </label>
     )
 }

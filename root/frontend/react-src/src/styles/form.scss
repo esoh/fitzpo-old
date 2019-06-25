@@ -12,7 +12,11 @@
     }
 
     label {
-        font-size: 0.8em;
+        font-size: 0.82em;
+        .error:not(input) {
+            font-size: 0.78em;
+            color: $color-error-primary;
+        }
     }
 
     input {
@@ -20,7 +24,7 @@
     }
 
     input:not([type="submit"]) {
-        margin: 0.2rem 0;
+        margin: 0.1rem 0;
         border: 1px solid $color-elem-border;
     }
 
