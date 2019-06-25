@@ -157,7 +157,7 @@ class Signup extends React.Component {
                 break;
             default:
                 this.setState({
-                    errorMessages: [error.title + ': ' + error.message]
+                    errorMessages: [error.title]
                 });
         }
     }
