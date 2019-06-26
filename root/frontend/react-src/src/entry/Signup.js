@@ -15,21 +15,19 @@ class Signup extends React.Component {
         formControls: {
             username: {
                 value: '',
-                isError: false,
                 errorMessages: [],
             },
             email: {
                 value: '',
-                isError: false,
                 errorMessages: [],
             },
             password: {
                 value: '',
-                isError: false,
                 errorMessages: [],
             },
         },
         errorMessages: [],
+        errorlinks: new Set(),
         redirect: false,
     }
 
@@ -49,8 +47,19 @@ class Signup extends React.Component {
                     ...prevState.formControls[field],
                     value
                 }
-            }
+            },
+            errorlinks: this._getNewErrorLinksFromChange(field, prevState),
         }));
+    }
+
+    _getNewErrorLinksFromChange = (inputField, prevState) => {
+        var errorlinks = [];
+        prevState.errorlinks.forEach(link => {
+            if(!link.includes(inputField)){
+                errorlinks.push(link);
+            }
+        })
+        return errorlinks;
     }
 
     handleSubmit = (event) => {
@@ -79,87 +88,123 @@ class Signup extends React.Component {
         }
     }
 
-    clearErrors = () => {
+    paramStrings = {
+        usernameOrEmail: ['username', 'email'],
+    }
+
+    // used for error clearing.
+    // e.g. usernameOrEmail wrong means that correcting either username or email
+    // will clear both errors
+    _getLinkedParams = (paramStr) => {
+        // if can't find param string in form controls then try to find params
+        // in this.paramStrings
+        if(this.state.formControls[paramStr] === undefined){
+            // can't find parameters!
+            if(this.paramStrings[paramStr] === undefined){
+                throw new Error("Unhanlded parameter error string: " + paramStr);
+            }
+
+            return this.paramStrings[paramStr];
+        } else {
+        // else if it's in form control that means it's just one parameter
+            return [paramStr];
+        }
+    }
+
+    _clearErrors = () => {
         this.setState(prevState => ({
             formControls: {
                 ...prevState.formControls,
                 username: {
                     ...prevState.formControls.username,
-                    isError: false,
                     errorMessages: [],
                 },
                 email: {
                     ...prevState.formControls.email,
-                    isError: false,
                     errorMessages: [],
                 },
                 password: {
                     ...prevState.formControls.password,
-                    isError: false,
                     errorMessages: [],
                 },
             },
             errorMessages: [],
+            errorlinks: new Set(),
         }));
     }
 
     setStateErrorMessages = (error) => {
+        var newState = {};
+
         switch(error.code) {
             // invalid parameters
             case 1004:
-                this.clearErrors();
+                this._clearErrors();
+
+                newState.errorlinks = new Set();
+                newState.formControls = {};
+
+                var modifiedParams = new Set();
+
+                // for each invalid parameter error:
                 error.invalid_params.forEach(param => {
 
+                    // get client error message
                     var errorMessages = [param.name + ': ' + param.reason];
                     if(this.errorCodeAndParamToStr[param.error] && this.errorCodeAndParamToStr[param.error][param.name]){
                         errorMessages = this.errorCodeAndParamToStr[param.error][param.name];
                     }
 
+                    // set errorMessages
+
                     // edge case: param not in formControl
                     if(this.state.formControls[param.name] === undefined){
+                        newState.errorMessages = errorMessages;
 
-                        if(param.name === "usernameOrEmail" && param.error === "UniqueValidatorError"){
-                            this.setState(prevState => ({
-                                formControls: {
-                                    ...prevState.formControls,
-                                    username: {
-                                        ...prevState.formControls.username,
-                                        isError: true,
-                                    },
-                                    email: {
-                                        ...prevState.formControls.email,
-                                        isError: true,
-                                    },
-                                },
-                                errorMessages: errorMessages,
-                            }));
-                        } else {
-                            this.setState(prevState => ({
-                                errorMessages: prevState.errorMessages + errorMessages,
-                            }));
-                        }
-
-                    // main handler
                     } else {
-                        this.setState(prevState => ({
-                            formControls: {
-                                ...prevState.formControls,
-                                [param.name]: {
-                                    ...prevState.formControls[param.name],
-                                    isError: true,
-                                    errorMessages: errorMessages,
-                                },
-                            },
-                        }));
+                        newState.formControls[param.name] = {
+                            errorMessages: errorMessages
+                        }
+                        modifiedParams.add(param.name);
                     }
 
+                    // set error links
+                    newState.errorlinks.add(this._getLinkedParams(param.name));
                 });
+
+
+                this.setState(prevState => {
+                    modifiedParams.forEach(paramName => {
+                        Object.assign(prevState.formControls[paramName], newState.formControls[paramName]);
+                    });
+
+                    return {
+                        ...prevState,
+                        ...newState,
+                        formControls: {
+                            ...prevState.formControls
+                        }
+                    };
+                });
+
                 break;
             default:
                 this.setState({
                     errorMessages: [error.title]
                 });
         }
+    }
+
+    getFieldErrorState = () => {
+        var fieldErrors = {};
+
+        this.state.errorlinks.forEach(errorlist => {
+            errorlist.forEach(param => {
+                fieldErrors[param] = true;
+            })
+        })
+
+        return fieldErrors;
     }
 
     signup = () => {
@@ -186,6 +231,8 @@ class Signup extends React.Component {
 
         if (this.state.redirect) return <Redirect to='/' />;
 
+        var fieldErrors = this.getFieldErrorState();
+
         return (
             <div className={styles.center}>
                 <div className={styles.content}>
@@ -202,7 +249,7 @@ class Signup extends React.Component {
                                     value={this.state.formControls.username.value}
                                     onChange={this.handleChangeFor('username')}
                                     autoComplete="username"
-                                    isError={this.state.formControls.username.isError}
+                                    isError={(!!fieldErrors.username)}
                                     errorMessages={this.state.formControls.username.errorMessages}
                                     errorClassName={styles.error}
                                 />
@@ -214,7 +261,7 @@ class Signup extends React.Component {
                                     onChange={this.handleChangeFor('email')}
                                     autoComplete="email"
                                     placeholder="name@example.com"
-                                    isError={this.state.formControls.email.isError}
+                                    isError={(!!fieldErrors.email)}
                                     errorMessages={this.state.formControls.email.errorMessages}
                                     errorClassName={styles.error}
                                 />
@@ -225,7 +272,7 @@ class Signup extends React.Component {
                                     value={this.state.formControls.password.value}
                                     onChange={this.handleChangeFor('password')}
                                     autoComplete="new-password"
-                                    isError={this.state.formControls.password.isError}
+                                    isError={(!!fieldErrors.password)}
                                     errorMessages={this.state.formControls.password.errorMessages}
                                     errorClassName={styles.error}
                                 />
