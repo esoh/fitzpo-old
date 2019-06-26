@@ -92,6 +92,12 @@ class Signup extends React.Component {
         usernameOrEmail: ['username', 'email'],
     }
 
+    helpers = {
+        username: ['Username should only contain letters, numbers, and the characters "-" and "_".'],
+        email: ['Email must be of the format: johndoe@email.com'],
+        password: ['Password must: ', '\u00b7 have at least one number', '\u00b7 have at least one letter', '\u00b7 have at least one special character (@$.!%*#?&)', '\u00b7 be at least 8 characters long'],
+    }
+
     // used for error clearing.
     // e.g. usernameOrEmail wrong means that correcting either username or email
     // will clear both errors
@@ -252,6 +258,8 @@ class Signup extends React.Component {
                                     isError={(!!fieldErrors.username)}
                                     errorMessages={this.state.formControls.username.errorMessages}
                                     errorClassName={styles.error}
+                                    helper={this.helpers.username}
+                                    helperClassName={styles.helper}
                                 />
                                 <FormInput
                                     label="Email:"
@@ -264,6 +272,8 @@ class Signup extends React.Component {
                                     isError={(!!fieldErrors.email)}
                                     errorMessages={this.state.formControls.email.errorMessages}
                                     errorClassName={styles.error}
+                                    helper={this.helpers.email}
+                                    helperClassName={styles.helper}
                                 />
                                 <FormInput
                                     label="Password:"
@@ -275,6 +285,8 @@ class Signup extends React.Component {
                                     isError={(!!fieldErrors.password)}
                                     errorMessages={this.state.formControls.password.errorMessages}
                                     errorClassName={styles.error}
+                                    helper={this.helpers.password}
+                                    helperClassName={styles.helper}
                                 />
                             </div>
                             <FormError className={styles.formError} errors={this.state.errorMessages}/>
