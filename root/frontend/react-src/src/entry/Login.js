@@ -16,14 +16,13 @@ export class Login extends React.Component {
         formControls: {
             username: {
                 value: '',
-                isError: false,
             },
             password: {
                 value: '',
-                isError: false,
             }
         },
         errorMessages: [],
+        errorlinks: new Set(),
         redirect: false,
     }
 
@@ -43,13 +42,31 @@ export class Login extends React.Component {
                     ...prevState.formControls[field],
                     value
                 }
-            }
+            },
+            errorlinks: this._getNewErrorLinksFromChange(field, prevState),
         }));
+    }
+
+    _getNewErrorLinksFromChange = (inputField, prevState) => {
+        var errorlinks = [];
+        prevState.errorlinks.forEach(link => {
+            if(!link.includes(inputField)){
+                errorlinks.push(link);
+            }
+        })
+        return errorlinks;
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         this.login();
+    }
+
+    _clearErrors = () => {
+        this.setState({
+            errorMessages: [],
+            errorlinks: new Set(),
+        });
     }
 
     login = () => {
@@ -59,19 +76,11 @@ export class Login extends React.Component {
                 if(result && result.error){
                     switch (result.error.code){
                         case 1003:
-                            this.setState(prevState => ({
-                                formControls: {
-                                    ...prevState.formControls,
-                                    username: {
-                                        ...prevState.formControls.username,
-                                        isError: true,
-                                    },
-                                    password: {
-                                        ...prevState.formControls.password,
-                                        isError: true,
-                                    }
-                                },
-                                errorMessages: ['The username or password you\'ve entered is incorrect.', 'Please try again.']
+                            this._clearErrors();
+
+                            this.setState(({
+                                errorMessages: ['The username or password you\'ve entered is incorrect.', 'Please try again.'],
+                                errorlinks: new Set([['username', 'password']]),
                             }));
                             break;
                         default:
@@ -92,9 +101,23 @@ export class Login extends React.Component {
             })
     }
 
+    getFieldErrorState = () => {
+        var fieldErrors = {};
+
+        this.state.errorlinks.forEach(errorlist => {
+            errorlist.forEach(param => {
+                fieldErrors[param] = true;
+            })
+        })
+
+        return fieldErrors;
+    }
+
     render() {
 
         if (this.state.redirect) return <Redirect to='/' />;
+
+        var fieldErrors = this.getFieldErrorState();
 
         return (
             <div className={styles.center}>
@@ -113,7 +136,7 @@ export class Login extends React.Component {
                                     onChange={this.handleChangeFor('username')}
                                     autoComplete="username"
                                     errorClassName={styles.error}
-                                    isError={this.state.formControls.username.isError}
+                                    isError={!!fieldErrors.username}
                                 />
                                 <FormInput
                                     label="Password:"
@@ -123,7 +146,7 @@ export class Login extends React.Component {
                                     onChange={this.handleChangeFor('password')}
                                     autoComplete="current-password"
                                     errorClassName={styles.error}
-                                    isError={this.state.formControls.password.isError}
+                                    isError={!!fieldErrors.password}
                                 />
                             </div>
                             <FormError className={styles.formError} errors={this.state.errorMessages}/>
