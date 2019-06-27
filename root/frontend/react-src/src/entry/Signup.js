@@ -95,7 +95,7 @@ class Signup extends React.Component {
     helpers = {
         username: ['Username can contain letters, numbers, and the characters "-" and "_".'],
         email: ['Email must be of the format: johndoe@email.com'],
-        password: ['Password must: ', '\u00b7 have at least one number', '\u00b7 have at least one letter', '\u00b7 have at least one special character (@$.!%*#?&)', '\u00b7 be at least 8 characters long'],
+        password: ['Password must have: ', '\u00b7 at least one number', '\u00b7 at least one letter', '\u00b7 at least one special character (@$.!%*#?&)', '\u00b7 at least 8 characters'],
     }
 
     // used for error clearing.
