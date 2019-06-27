@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import styles from './FormInput.module.scss';
 
+import { Tooltip } from '../popper';
+
 class FormInput extends React.Component{
 
     state = {
@@ -53,9 +55,9 @@ class FormInput extends React.Component{
                     onBlur={this.onBlur}
                 />
                 {(this.state.showHelper) ? (
-                    <div className={styles.helper} htmlFor={inputAttr.name}>
+                    <Tooltip htmlFor={inputAttr.name}>
                         {helper.map(msg => (<p key={msg}>{msg}</p>))}
-                    </div>
+                    </Tooltip>
                 ) : null}
                 {errorMessages}
             </label>
