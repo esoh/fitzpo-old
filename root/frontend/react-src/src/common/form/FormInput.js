@@ -12,8 +12,10 @@ class FormInput extends React.Component{
         showHelper: false,
     }
 
+    hasHelper = !!this.props.helper
+
     onFocus = (e) => {
-        if(this.props.helper !== undefined){
+        if(this.hasHelper){
             this.setState({
                 showHelper: true,
             })
@@ -21,7 +23,7 @@ class FormInput extends React.Component{
     }
 
     onBlur = (e) => {
-        if(this.props.helper !== undefined){
+        if(this.hasHelper){
             this.setState({
                 showHelper: false,
             })
@@ -54,8 +56,8 @@ class FormInput extends React.Component{
                     onFocus={this.onFocus}
                     onBlur={this.onBlur}
                 />
-                {(this.state.showHelper) ? (
-                    <Tooltip htmlFor={inputAttr.name}>
+                {(this.hasHelper) ? (
+                    <Tooltip htmlFor={inputAttr.name} visible={this.state.showHelper}>
                         {helper.map(msg => (<p key={msg}>{msg}</p>))}
                     </Tooltip>
                 ) : null}

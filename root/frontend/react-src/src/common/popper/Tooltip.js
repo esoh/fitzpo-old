@@ -1,10 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import styles from './Tooltip.module.scss';
 
-function Tooltip(props) {
-    return (
-        <div {...props} className={styles.tooltip}/>
-    )
+class Tooltip extends React.Component{
+    render() {
+
+        let {
+            visible,
+            ...attributes
+        } = this.props;
+
+        if(!visible) return null;
+
+        return (
+            <div {...attributes} className={styles.tooltip}/>
+        );
+    }
+}
+
+Tooltip.propTypes = {
+    visible: PropTypes.bool.isRequired,
 }
 
 export default Tooltip;
