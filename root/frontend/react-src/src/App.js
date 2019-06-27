@@ -9,7 +9,7 @@ import Login from './entry/Login';
 import Home from './home/Home';
 import UserExerciseLogs from './user/UserExerciseLogs';
 import Navbar from './navbar/Navbar';
-import { setLoggedIn } from './redux/actions';
+import { setLoggedIn, setWindowDims } from './redux/actions';
 import { checkLoggedIn, deauthenticateAccountLocally } from './services/authService';
 
 export class App extends React.Component {
@@ -17,7 +17,18 @@ export class App extends React.Component {
     abortController = new window.AbortController();
 
     componentDidMount() {
-        checkLoggedIn()
+        this._updateLoginStatus();
+        this._updateWindowDims();
+        window.addEventListener('resize', this._updateWindowDims);
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
+        window.removeEventListener('resize', this._updateWindowDims);
+    }
+
+    _updateLoginStatus = () => {
+        return checkLoggedIn()
             .then(response => {
                 if(!response){
                     return this.props.setLoggedIn(false);
@@ -54,8 +65,9 @@ export class App extends React.Component {
             })
     }
 
-    componentWillUnmount() {
-        this.abortController.abort();
+    // set redux store state
+    _updateWindowDims = () => {
+        this.props.setWindowDims(window.innerWidth, window.innerHeight);
     }
 
     render() {
@@ -84,5 +96,5 @@ App.propTypes = {
 
 export default connect(
     null,
-    { setLoggedIn }
+    { setLoggedIn, setWindowDims }
 )(App)

@@ -2,6 +2,7 @@
 
 $color-bg: $color-secondary-dark;
 $tooltip-space-away: 2px;
+$arrow-height: 5px;
 
 .tooltipContainer{
     position: absolute;
@@ -11,23 +12,40 @@ $tooltip-space-away: 2px;
         padding: 0.2rem;
         background-color: $color-bg;
         font-size: 0.8em;
-        max-width: 200px;
         border-radius: 2px;
-        margin-left: $tooltip-space-away;
+
+        &.right {
+            margin-left: $tooltip-space-away;
+            max-width: 190px;
+        }
+
+        &.down {
+            margin-top: $tooltip-space-away;
+            margin-right: 2px;
+            min-width: 100px;
+        }
     }
 
     .arrow {
         position: absolute;
         content: '';
-        border: 5px solid transparent;
+        border: $arrow-height solid transparent;
     }
 
     .leftArrow{
         @extend .arrow;
-        left: -5px + $tooltip-space-away;
-        margin-top: -5px;
+        left: -$arrow-height + $tooltip-space-away;
+        margin-top: -$arrow-height;
         border-left-width: 0;
         border-right-color: $color-bg;
+    }
+
+    .upArrow{
+        @extend .arrow;
+        top: -$arrow-height + $tooltip-space-away;
+        margin-left: -$arrow-height;
+        border-top-width: 0;
+        border-bottom-color: $color-bg;
     }
 }
 

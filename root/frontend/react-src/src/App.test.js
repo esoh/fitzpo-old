@@ -16,10 +16,12 @@ import {
 } from './services/authService';
 
 const setLoggedIn = jest.fn();
+const setWindowDims = jest.fn();
 
 function setup(){
     const props = {
         setLoggedIn,
+        setWindowDims,
     };
 
     const wrapper = shallow(<App {...props}/>);

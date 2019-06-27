@@ -2,11 +2,14 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 jest.unmock('react-router-dom');
 import { Link, Redirect, BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 jest.mock('../services/authService');
 import { registerAccount } from '../services/authService';
 import Signup from './Signup';
 import { FormInput } from '../common/form';
+import appReducer from '../redux/reducers';
 
 describe('Signup component', () => {
 
@@ -26,10 +29,13 @@ describe('Signup component', () => {
     });
 
     it('Should update state when username/email/password input is set', () => {
+        const store = createStore(appReducer);
         var wrapper = mount(
-            <BrowserRouter>
-                <Signup />
-            </BrowserRouter>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Signup />
+                </BrowserRouter>
+            </Provider>
         );
 
         wrapper = wrapper.find(Signup);
