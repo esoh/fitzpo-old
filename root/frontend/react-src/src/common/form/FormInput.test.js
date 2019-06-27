@@ -6,7 +6,7 @@ import FormInput from './FormInput';
 var props = {
     label: 'testlabel',
     errorMessages: ['error1', 'error2'],
-    helper: 'testhelper',
+    helper: ['testhelper'],
 
     name: 'testname',
     type: 'testtype',
