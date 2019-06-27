@@ -6,7 +6,7 @@ import styles from './FormInput.module.scss';
 
 import { Tooltip } from '../popper';
 
-class FormInput extends React.Component{
+export class FormInput extends React.Component{
 
     state = {
         showHelper: false,

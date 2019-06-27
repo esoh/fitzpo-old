@@ -1,7 +1,10 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import appReducer from '../../redux/reducers';
 
-import FormInput from './FormInput';
+import { FormInput } from './FormInput';
 
 var props = {
     label: 'testlabel',
@@ -34,7 +37,12 @@ describe('FormInput component', () => {
     })
 
     it('Should trigger onChange', () => {
-        let wrapper = mount(<FormInput {...props}/>);
+        const store = createStore(appReducer);
+        let wrapper = mount(
+            <Provider store={store}>
+                <FormInput {...props}/>
+            </Provider>
+        );
         let field = wrapper.find('input').at(0);
 
         expect(props.onChange.mock.calls.length).toBe(0);
