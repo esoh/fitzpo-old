@@ -5,42 +5,6 @@
 .form {
     padding: 0.25rem;
 
-    label, input {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    label {
-        font-size: 0.82em;
-        .error:not(input) {
-            font-size: 0.78em;
-            color: $color-error-primary;
-        }
-
-        .helper {
-            border-bottom-left-radius: 2px;
-            border-bottom-right-radius: 2px;
-            padding: 0.2rem;
-            background-color: $color-secondary-dark;
-            font-size: 0.8em;
-        }
-    }
-
-    input {
-        font-size: 1em;
-
-        &:not([type="submit"]) {
-            margin: 0.1rem 0 0;
-            border: 1px solid $color-elem-border;
-        }
-
-        &.error {
-            border-color: $color-error-secondary;
-        }
-
-    }
-
     input[type="submit"], button{
         padding: 0.3rem;
         font-size: 0.8em;

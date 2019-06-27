@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import styles from './FormInput.module.scss';
 
 class FormInput extends React.Component{
 
@@ -28,22 +31,29 @@ class FormInput extends React.Component{
             label,
             errorMessages: errors,
             helper,
-            helperClassName, // only show helper if input on focus
-            errorClassName,
             isError,
             ...inputAttr
         } = this.props;
 
         var errorMessages;
-        if(errors) errorMessages = errors.map(msg => <p className={errorClassName} key={msg}>{msg}</p>);
-        let inputClassName = isError ? errorClassName : '';
+        if(errors) errorMessages = errors.map(msg => <p className={styles.error} key={msg}>{msg}</p>);
+
+        var inputClassObj = {};
+        inputClassObj[styles.input] = true;
+        inputClassObj[styles.error] = isError;
 
         return (
-            <label>
+            <label className={styles.label}>
                 {label}
-                <input id={inputAttr.name} {...inputAttr} className={inputClassName} onFocus={this.onFocus} onBlur={this.onBlur}/>
+                <input
+                    id={inputAttr.name}
+                    {...inputAttr}
+                    className={classNames(inputClassObj)}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBlur}
+                />
                 {(this.state.showHelper) ? (
-                    <div className={helperClassName} for={inputAttr.name}>
+                    <div className={styles.helper} htmlFor={inputAttr.name}>
                         {helper.map(msg => (<p key={msg}>{msg}</p>))}
                     </div>
                 ) : null}
@@ -57,8 +67,6 @@ FormInput.propTypes = {
     label: PropTypes.string.isRequired,
     errorMessages: PropTypes.array,
     helper: PropTypes.array,
-    errorClassName: PropTypes.string,
-    helperClassName: PropTypes.string,
 
     // below are input tag attributes
     name: PropTypes.string.isRequired,
