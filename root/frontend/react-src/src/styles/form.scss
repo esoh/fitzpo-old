@@ -15,7 +15,8 @@
     }
 
     *[type="submit"] {
-        @extend .btnPrimary
+        @extend .btnPrimary;
+        width: 100%;
     }
 
     .header {
