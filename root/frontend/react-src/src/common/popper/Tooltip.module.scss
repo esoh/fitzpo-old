@@ -11,8 +11,8 @@ $arrow-height: 5px;
     .tooltip {
         padding: 0.2rem;
         background-color: $color-bg;
-        font-size: 0.8em;
         border-radius: 2px;
+        margin-right: 2px;
 
         &.right {
             margin-left: $tooltip-space-away;
@@ -21,7 +21,6 @@ $arrow-height: 5px;
 
         &.down {
             margin-top: $tooltip-space-away;
-            margin-right: 2px;
             min-width: 100px;
         }
     }
