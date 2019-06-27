@@ -10,18 +10,32 @@ class FormInput extends React.Component{
 
     state = {
         showHelper: false,
+        rect: null,
     }
 
     hasHelper = !!this.props.helper
 
+    // show helper on focus if helper exists
     onFocus = (e) => {
         if(this.hasHelper){
+            // get the box of the input field
+            var rect = e.currentTarget.getBoundingClientRect();
+            // extract values given for every browser
+            rect = {
+                left: rect.left,
+                top: rect.top,
+                right: rect.right,
+                bottom: rect.bottom,
+            }
+
             this.setState({
                 showHelper: true,
+                rect,
             })
         }
     }
 
+    // hide helper if helper exists
     onBlur = (e) => {
         if(this.hasHelper){
             this.setState({
@@ -57,7 +71,11 @@ class FormInput extends React.Component{
                     onBlur={this.onBlur}
                 />
                 {(this.hasHelper) ? (
-                    <Tooltip htmlFor={inputAttr.name} visible={this.state.showHelper}>
+                    <Tooltip
+                        htmlFor={inputAttr.name}
+                        visible={this.state.showHelper}
+                        targetRect={this.state.rect}
+                    >
                         {helper.map(msg => (<p key={msg}>{msg}</p>))}
                     </Tooltip>
                 ) : null}
