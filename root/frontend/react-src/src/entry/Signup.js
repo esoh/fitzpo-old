@@ -257,9 +257,7 @@ class Signup extends React.Component {
                                     autoComplete="username"
                                     isError={(!!fieldErrors.username)}
                                     errorMessages={this.state.formControls.username.errorMessages}
-                                    errorClassName={styles.error}
                                     helper={this.helpers.username}
-                                    helperClassName={styles.helper}
                                 />
                                 <FormInput
                                     label="Email:"
@@ -271,9 +269,7 @@ class Signup extends React.Component {
                                     placeholder="name@example.com"
                                     isError={(!!fieldErrors.email)}
                                     errorMessages={this.state.formControls.email.errorMessages}
-                                    errorClassName={styles.error}
                                     helper={this.helpers.email}
-                                    helperClassName={styles.helper}
                                 />
                                 <FormInput
                                     label="Password:"
@@ -284,9 +280,7 @@ class Signup extends React.Component {
                                     autoComplete="new-password"
                                     isError={(!!fieldErrors.password)}
                                     errorMessages={this.state.formControls.password.errorMessages}
-                                    errorClassName={styles.error}
                                     helper={this.helpers.password}
-                                    helperClassName={styles.helper}
                                 />
                             </div>
                             <FormError className={styles.formError} errors={this.state.errorMessages}/>

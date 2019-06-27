@@ -135,7 +135,6 @@ export class Login extends React.Component {
                                     value={this.state.formControls.username.value}
                                     onChange={this.handleChangeFor('username')}
                                     autoComplete="username"
-                                    errorClassName={styles.error}
                                     isError={!!fieldErrors.username}
                                 />
                                 <FormInput
@@ -145,7 +144,6 @@ export class Login extends React.Component {
                                     value={this.state.formControls.password.value}
                                     onChange={this.handleChangeFor('password')}
                                     autoComplete="current-password"
-                                    errorClassName={styles.error}
                                     isError={!!fieldErrors.password}
                                 />
                             </div>
