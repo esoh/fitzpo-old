@@ -29,19 +29,16 @@
 
     input {
         font-size: 1em;
-    }
 
-    input:not([type="submit"]) {
-        margin: 0.1rem 0 0;
-        border: 1px solid $color-elem-border;
-        &:focus {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+        &:not([type="submit"]) {
+            margin: 0.1rem 0 0;
+            border: 1px solid $color-elem-border;
         }
-    }
 
-    input.error {
-        border-color: $color-error-secondary;
+        &.error {
+            border-color: $color-error-secondary;
+        }
+
     }
 
     input[type="submit"], button{
