@@ -5,6 +5,8 @@ import styles from './Tooltip.module.scss';
 
 class Tooltip extends React.Component{
 
+    //minWidthOnRight = '180px';
+
     render() {
 
         let {
@@ -15,17 +17,26 @@ class Tooltip extends React.Component{
 
         if(!visible) return null;
 
+        let arrowAttr = {
+            className: styles.leftArrow,
+            style: {
+                top: (targetRect.bottom - targetRect.top)/2,
+            }
+        }
+
         let position = {
             left: targetRect.right,
             top: targetRect.top,
         }
 
         return (
-            <div
-                {...attributes}
-                className={styles.tooltip}
-                style={position}
-            />
+            <div className={styles.tooltipContainer} style={position}>
+                <div
+                    {...attributes}
+                    className={styles.tooltip}
+                />
+                <div {...arrowAttr}/>
+            </div>
         );
     }
 }
