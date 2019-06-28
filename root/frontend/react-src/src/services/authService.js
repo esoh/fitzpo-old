@@ -1,3 +1,5 @@
+import { toJson } from './errorService';
+
 function registerAccount(username, email, password){
     return fetch('/accounts', {
             method: "POST",
@@ -8,7 +10,7 @@ function registerAccount(username, email, password){
                 password,
             })
         })
-            .then(res => res.json())
+            .then(res => toJson(res))
 }
 
 function authenticateUser(username, password){
@@ -20,13 +22,13 @@ function authenticateUser(username, password){
                 password: password,
             })
         })
-            .then(res => res.json())
+            .then(res => toJson(res))
 }
 
 function checkLoggedIn(){
     return new Promise((resolve, reject) => {
         fetch('/auth/me')
-            .then(res => res.json())
+            .then(res => toJson(res))
             .then(data => {
                 // possibly invalid cookie
                 if(data && data.error){
@@ -51,7 +53,7 @@ function deauthenticateAccountLocally(){
     return fetch('/auth/cookie', { method: "DELETE" });
 }
 
-module.exports = {
+export {
     registerAccount,
     authenticateUser,
     checkLoggedIn,

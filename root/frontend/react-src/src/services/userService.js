@@ -1,3 +1,5 @@
+import { toJson } from './errorService';
+
 function createExerciseLog(date, exerciseName, type, progress){
     return fetch('/user/exercise-logs', {
         method: "POST",
@@ -9,12 +11,12 @@ function createExerciseLog(date, exerciseName, type, progress){
             progress,
         })
     })
-        .then(res => res.json());
+        .then(res => toJson(res));
 }
 
 function getUserExerciseLogs(){
     return fetch('/user/exercise-logs')
-        .then(res => res.json());
+        .then(res => toJson(res));
 }
 
 function deleteExerciseLog(id){
@@ -23,7 +25,7 @@ function deleteExerciseLog(id){
     return fetch('/user/exercise-logs/' + id, { method: 'DELETE' });
 }
 
-module.exports = {
+export {
     createExerciseLog,
     getUserExerciseLogs,
     deleteExerciseLog,

@@ -1,4 +1,2 @@
-module.exports = {
-    SET_LOGGED_IN: 'SET_LOGGED_IN',
-    SET_WINDOW_DIMS: 'SET_WINDOW_DIMS',
-}
+export const SET_LOGGED_IN = 'SET_LOGGED_IN';
+export const SET_WINDOW_DIMS= 'SET_WINDOW_DIMS';

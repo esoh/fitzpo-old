@@ -16,7 +16,7 @@ function getLocalHTMLTime(date){
     return hour + ':' + minute;
 }
 
-module.exports = {
+export {
     getLocalHTMLDate,
     getLocalHTMLTime,
 }
