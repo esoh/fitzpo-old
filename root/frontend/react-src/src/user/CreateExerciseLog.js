@@ -133,7 +133,7 @@ class CreateExerciseLog extends React.Component {
                             type="text"
                             value={this.state.formControls.progress.value}
                             onChange={this.handleChangeFor('progress')}
-                            placeholder="e.g. 5/5/5/5/5"
+                            placeholder="e.g. 50lb 5/5/5/5/5"
                         />
                         { this.state.moreOpts ? (
                             <div className={styles.row}>
