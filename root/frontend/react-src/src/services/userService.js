@@ -1,7 +1,7 @@
 import { toJson } from './errorService';
 
 function createExerciseLog(date, exerciseName, type, progress){
-    return fetch('/user/exercise-logs', {
+    return fetch('/api/user/exercise-logs', {
         method: "POST",
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify({
@@ -15,14 +15,14 @@ function createExerciseLog(date, exerciseName, type, progress){
 }
 
 function getUserExerciseLogs(){
-    return fetch('/user/exercise-logs')
+    return fetch('/api/user/exercise-logs')
         .then(res => toJson(res));
 }
 
 function deleteExerciseLog(id){
     // have to make sure user is authorized to do this
     // check if user extracted from cookie is owner of this exercise log
-    return fetch('/user/exercise-logs/' + id, { method: 'DELETE' });
+    return fetch('/api/user/exercise-logs/' + id, { method: 'DELETE' });
 }
 
 export {

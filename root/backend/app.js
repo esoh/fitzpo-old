@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(passport.initialize())
 
-app.use('/', routes)
+app.use(config.app_path, routes)
 
 // error handling middleware, must be defined last
 app.use(errorHandler.schemaErrorHandler)
@@ -43,7 +43,7 @@ const server = http.createServer(app)
 models.sequelize.sync()
     .then(() => {
         server.listen(config.app_port, () => {
-            console.log('Server listening on port ' + config.app_port)
+            console.log('Server listening on localhost:' + config.app_port + '' + config.app_path)
         })
 
         server.on('error', onError)
