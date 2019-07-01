@@ -23,6 +23,7 @@ defaults = {
 
     // define your own
     app_port:       parseInt(process.env.APP_PORT)  ||  8080,
+    app_path:       process.env.APP_PATH            ||  '/api',
     auth_secret:    process.env.AUTH_SECRET         ||  'server secret',
     S3: {
         secretAccessKey:    process.env.S3_SECRET_KEY,
@@ -43,6 +44,7 @@ module.exports = {
         logging:        setWithStrBool(process.env.DEV_DB_LOGGING, defaults.logging),
 
         app_port:       parseInt(process.env.DEV_APP_PORT)  ||  defaults.app_port,
+        app_path:       parseInt(process.env.DEV_APP_PATH)  ||  defaults.app_path,
         auth_secret:    process.env.DEV_AUTH_SECRET         ||  defaults.auth_secret,
         S3:                                                     defaults.S3
     },
@@ -56,6 +58,7 @@ module.exports = {
         logging:        setWithStrBool(process.env.TEST_DB_LOGGING, defaults.logging),
 
         app_port:       parseInt(process.env.TEST_APP_PORT)  ||  defaults.app_port,
+        app_path:       parseInt(process.env.TEST_APP_PATH)  ||  '/',
         auth_secret:    process.env.TEST_AUTH_SECRET         ||  defaults.auth_secret,
         S3:                                                      defaults.S3
     },
@@ -69,6 +72,7 @@ module.exports = {
         logging:        false,
 
         app_port:       parseInt(process.env.PROD_APP_PORT),
+        app_path:       process.env.PROD_APP_PATH           || '/',
         auth_secret:    process.env.PROD_AUTH_SECRET,
         S3:             defaults.S3
     }
