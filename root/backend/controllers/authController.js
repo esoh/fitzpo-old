@@ -8,6 +8,10 @@ const {
 } = require('../utils/APIError');
 const {User} = require('../models');
 const {ACCESS_TOKEN} = require('../utils/constants');
+const cookieOpts = (process.env.NODE_ENV === 'production') ? {
+    httpOnly: true,
+    secure: true,
+} : {};
 
 function authenticateUser(req, res, next){
     auth.localAuth(req, res)
@@ -21,8 +25,8 @@ function authenticateUser(req, res, next){
 
                     //TODO: check if user verified (2factor with email) to generate token
                     let token = auth.generateToken(user);
-                    // TODO: set expiry date for token and figure out secure https transfer
-                    res.cookie(ACCESS_TOKEN, token, { httpOnly: true })
+                    // TODO: set expiry date for token
+                    res.cookie(ACCESS_TOKEN, token, cookieOpts)
                     return res.status(201).send({ user });
                 })
         })
