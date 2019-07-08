@@ -16,6 +16,7 @@ function registerAccount(username, email, password){
 function authenticateUser(username, password){
     return fetch('/api/auth/token', {
             method: "POST",
+            credentials: 'same-origin',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
                 username: username,
@@ -27,7 +28,9 @@ function authenticateUser(username, password){
 
 function checkLoggedIn(){
     return new Promise((resolve, reject) => {
-        fetch('/api/auth/me')
+        fetch('/api/auth/me', {
+            credentials: 'same-origin',
+        })
             .then(res => toJson(res))
             .then(data => {
                 // possibly invalid cookie
@@ -50,7 +53,10 @@ function checkLoggedIn(){
 }
 
 function deauthenticateAccountLocally(){
-    return fetch('/api/auth/cookie', { method: "DELETE" });
+    return fetch('/api/auth/cookie', {
+        method: "DELETE",
+        credentials: 'same-origin',
+    });
 }
 
 export {
